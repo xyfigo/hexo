@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>LVM简单介绍 - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            LVM简单介绍
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-22T05:22:23.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            10 分钟 读完 (约 1543 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>原文见：<a href="http://www.debian-administration.org/articles/410" target="_blank" rel="noopener">http://www.debian-administration.org/articles/410</a></p>
+<p>LVM允许你用一种有效地方法创建和管理服务器上的存储，按照意愿增加、移除、改变分区大小。刚开始接触LVM会使初学者感到疑惑，而这篇文字就用简单的方式讲述LVM的基本知识。</p>
+<p>以下术语对你学习使用LVM很重要，是你必须知道的：</p>
+<ul>
+<li><p>物理卷（physical volumes）</p>
+<p>这是你的物理硬盘或磁盘分区，例如/dev/hda或/dev/hdb1.这是你在mounting/unmounting时经常使用的。利用LVM能够合并多个物理卷成为卷群（volume groups）</p>
+</li>
+<li><p>卷群（volume groups）</p>
+<p>卷群由真实的物理卷组成，它能够用来创建逻辑卷（logical volumes）。你能够创建、改变大小、移除、使用逻辑卷。可以认为卷群是一个由任意数量的物理卷组成的虚拟分区。</p>
+</li>
+<li><p>逻辑卷（logical volumes）</p>
+<p>逻辑卷是你最终在系统上挂载的，它们能够快速的添加、移除、改变大小。因为逻辑卷由卷群组成，所有它的空间能大于组成它的单一物理卷的空间。例如由4个5G大小的硬盘（逻辑卷）能够组合成20G的卷群，所有你能在此基础上创建两个10G的逻辑卷。</p>
+</li>
+</ul>
+<p>在逻辑层面上，他们的概念层次自上而下如图所示。</p>
+<img src="/2018/10/22/LVM简单介绍/LVM_hierarchy.png" title="LVM的概念层次">
+<h1 id="创建卷群（Volume-Group）"><a href="#创建卷群（Volume-Group）" class="headerlink" title="创建卷群（Volume Group）"></a>创建卷群（Volume Group）</h1><p>使用LVM你至少需要一个分区，并使用LVM进行初始化。然后把它加入一个卷群。怎样操作呢？</p>
+<p>在我的例子中，我的笔记本有如下设置：</p>
+<h3 id="Name-Flags-Part-Type-FS-Type-Label-Size-MB"><a href="#Name-Flags-Part-Type-FS-Type-Label-Size-MB" class="headerlink" title="Name        Flags    Part Type   FS Type          [Label]        Size (MB)"></a>Name        Flags    Part Type   FS Type          [Label]        Size (MB)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hda1        Boot        Primary   		Linux ext3       [/]             8000.01 </span><br><span class="line">hda2                    Primary   		Linux swap 		/ Solaris        1000.20</span><br><span class="line">hda3                    Primary   		Linux                            31007.57</span><br></pre></td></tr></table></figure>
+<p>这里我有一个7GB的根分区，用来存储我的Debian GNU/Linux安装。我有一个28GB的分区用来给LVM使用。按照我的设置，我能用LVM创建一个专用的/home分区，而且我能够在空间不足时扩展/home分区增大空间。</p>
+<p>在这个例子中hda1、hda2、hda3是物理卷。我对hda3进行物理卷初始化：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~<span class="comment"># pvcreate /dev/hda3</span></span><br></pre></td></tr></table></figure>
+<p>如果你想合并硬盘或者分区，你可以像这样操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# pvcreate /dev/hdb</span><br><span class="line">root@lappy:~# pvcreate /dev/hdc</span><br></pre></td></tr></table></figure>
+<p>一旦你初始化好了分区或磁盘驱动器，我们用这些物理卷来创建卷群：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# vgcreate skx-vol /dev/hda3</span><br></pre></td></tr></table></figure></p>
+<p>这里skx-vol是卷群的名称。如果你想跨两个磁盘创建卷群，你可以使用“vgcreate skx-vol /dev/hdb /dev/hdc”的方式。</p>
+<p>如果你操作正确，你可以通过vgscan命令查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# vgscan</span><br><span class="line">  Reading all physical volumes.  This may take a while...</span><br><span class="line">  Found volume group "skx-vol" using metadata type lvm2</span><br></pre></td></tr></table></figure>
+<p>这样我们就创建好了一个名为skx-vol的卷群，我们下面开始使用他。</p>
+<h1 id="创建和使用逻辑卷（Working-with-logical-volumes）"><a href="#创建和使用逻辑卷（Working-with-logical-volumes）" class="headerlink" title="创建和使用逻辑卷（Working with logical volumes）"></a>创建和使用逻辑卷（Working with logical volumes）</h1><p>我们真正想要的是创建一个能够挂载和使用的逻辑卷。如果以后我们的逻辑卷空间不足，可以对其空间进行重新分配，增加新的存储空间。当然这取决于你算则的文件系统类型。</p>
+<p>我们将创建一个名为test的卷：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvcreate -n test --size 1g skx-vol</span><br><span class="line">Logical volume "test" created</span><br></pre></td></tr></table></figure>
+<p>这个命令创建了一个大小为1G名为test的逻辑卷，它在LVM卷群skx-vol之上。</p>
+<p>现在这个逻辑卷可以通过/dev/skx-vol/test进行操作，它能像其他分区一样进行格式化和挂载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# mkfs.ext3 /dev/skx-vol/test</span><br><span class="line">root@lappy:~# mkdir /home/test</span><br><span class="line">root@lappy:~# mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure>
+<p>很酷是吧？</p>
+<p>下面的操作将更有意思！我们假设这个test分区空间已满，我们要对这个分区进行扩大。首先，我们可以通过lvdisplay命令查看当前硬盘的状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvdisplay </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                /dev/skx-vol/test</span><br><span class="line">  VG Name                skx-vol</span><br><span class="line">  LV UUID                J5XlaT-e0Zj-4mHz-wtET-P6MQ-wsDV-Lk2o5A</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Status              available</span><br><span class="line"><span class="meta">  #</span><span class="bash"> open                 0</span></span><br><span class="line">  LV Size                1.00 GB</span><br><span class="line">  Current LE             256</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     0</span><br><span class="line">  Block device           254:0</span><br></pre></td></tr></table></figure>
+<p>我们能看到test分区大小为1G。在我们对它重新分配空间时记得要先卸载这个卷（unmount）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# umount  /home/test/</span><br><span class="line">root@lappy:~# lvextend -L+1g /dev/skx-vol/test </span><br><span class="line">Extending logical volume test to 2.00 GB</span><br><span class="line">Logical volume test successfully resized</span><br></pre></td></tr></table></figure></p>
+<p>(注意：ext3文件系统可以在挂载状态重划大小，但是我建议还是先把它卸载掉，这样可以免除不必要的担心)</p>
+<p>在此通过lvdisplay命令查看，test卷已经重新分配了大小：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvdisplay </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                /dev/skx-vol/test</span><br><span class="line">  VG Name                skx-vg</span><br><span class="line">  LV UUID                uh7umg-7DqT-G2Ve-nNSX-03rs-KzFA-4fEwPX</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Status              available</span><br><span class="line"><span class="meta">  #</span><span class="bash"> open                 0</span></span><br><span class="line">  LV Size                2.00 GB</span><br><span class="line">  Current LE             512</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     0</span><br><span class="line">  Block device           254:0</span><br></pre></td></tr></table></figure></p>
+<p>需要着重提醒的是，即使这个卷的空间重新分配，但是它上面的ext3文件系统却没有改变，我们需要对文件系统重划大小满足扩大了的卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# e2fsck -f /dev/skx-vol/test </span><br><span class="line">root@lappy:~# resize2fs /dev/skx-vol/test</span><br></pre></td></tr></table></figure></p>
+<p>然后对test卷重新挂载后你会发现它的空间变成了2G。</p>
+<p>当然你也可以通过lvremove操纵移除这个卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvremove /dev/skx-vol/test</span><br><span class="line">Do you really want to remove active logical volume "test"? [y/n]: y</span><br><span class="line">Logical volume "test" successfully removed</span><br></pre></td></tr></table></figure></p>
+<h1 id="挂载逻辑卷（Mounting-Logical-Volumes）"><a href="#挂载逻辑卷（Mounting-Logical-Volumes）" class="headerlink" title="挂载逻辑卷（Mounting Logical Volumes）"></a>挂载逻辑卷（Mounting Logical Volumes）</h1><p>在之前的章节，我们使用如下的命令来挂载一个逻辑卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure></p>
+<p>如果你想在开机引导的时候就挂载你的分区，你可以编辑/etc/fstab文件，增加如下内容：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/dev/skx-vol/home    /home       ext3  noatime  0 2</span><br><span class="line">/dev/skx-vol/backups /backups    ext3  noatime  0 2</span><br></pre></td></tr></table></figure></p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Linux-LVM/">#Linux LVM</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2018/10/25/ORA-00604-递归-SQL-级别-1-出现错误-ORA-01653-表-SYS-AUD-无法通过-8192-在表空间-SYSTEM-中-扩展/"> ORA-00604: 递归 SQL 级别 1 出现错误 ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2018/06/28/空间数据库索引综述/">空间数据库索引综述</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bca03367b9b8c57"></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'dFKWAKQMOWFegpmxBmcPAKYs-gzGzoHsz',
+        app_key: '8GcXGC2fPHu8puRWbgX1zSS4',
+        placeholder: ''
+    });
+</script>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

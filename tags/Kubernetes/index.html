@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>标签: Kubernetes - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5>#Kubernetes</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/12/17/Kubectl-常用命令/" itemprop="url">Kubectl 常用命令</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-17T05:26:24.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            几秒 读完 (约 51 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="1-进入某个pod"><a href="#1-进入某个pod" class="headerlink" title="1.进入某个pod"></a>1.进入某个pod</h1><p>如何进入kubernetes的一个pod呢，其实和进入docker的一个容器相似：</p>
+<p>进入docker容器 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -ti  &lt;your-container-name&gt;   /bin/sh</span><br></pre></td></tr></table></figure>
+<p>进入pod：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl exec -ti &lt;your-pod-name&gt;  -n &lt;your-namespace&gt;  -- /bin/sh</span><br></pre></td></tr></table></figure>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/12/14/Kubernetes-V1-9-6-安装Dashboard/" itemprop="url">Kubernetes V1.9.6 安装Dashboard</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-14T15:19:59.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1380 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>[TOC]</p>
+<p>今天想为测试用的Kubernetes V1.9.6版本集群安装Dashboard，以便更直观的了解各种Kubernetes概念。然后参照网上的教程进行了操作，遇到了HTTPS证书的问题，始终打不开网页。经过Google了一番，终于找到了解决方案，在此记录一下。</p>
+<h1 id="安装Dashboard"><a href="#安装Dashboard" class="headerlink" title="安装Dashboard"></a>安装Dashboard</h1><h2 id="1-下载文件"><a href="#1-下载文件" class="headerlink" title="1. 下载文件"></a>1. 下载文件</h2><p>  wget <a href="https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml" target="_blank" rel="noopener">https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml</a></p>
+<h2 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h2><p>添加type: NodePort，暴露Dashboard服务。注意这里只添加行type: NodePort和nodePort: 30001即可，其他配置不用改，大概位置在末尾的Dashboard Service的spec中，参考如下。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">NodePort</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">    - port:</span> <span class="number">443</span></span><br><span class="line"><span class="attr">      targetPort:</span> <span class="number">8443</span></span><br><span class="line"><span class="attr">      nodePort:</span> <span class="number">30001</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-下载镜像-每个节点"><a href="#3-下载镜像-每个节点" class="headerlink" title="3. 下载镜像 (每个节点)"></a>3. 下载镜像 (每个节点)</h2><p>由于网络原因，配置文件中的k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3镜像无法下载，所以需要进行以下操作提前下载好。由于我使用了docker 代理，并且在代理机器上拨了翻墙VPN，所以可以访问到谷歌的镜像库下周k8s有关插件的镜像。</p>
+<h2 id="4-安装dashboard"><a href="#4-安装dashboard" class="headerlink" title="4. 安装dashboard"></a>4. 安装dashboard</h2><p>kubectl create -f kubernetes-dashboard.yaml</p>
+<h2 id="5-授予Dashboard账户集群管理权限"><a href="#5-授予Dashboard账户集群管理权限" class="headerlink" title="5. 授予Dashboard账户集群管理权限"></a>5. 授予Dashboard账户集群管理权限</h2><p>编写配置文件</p>
+<p>vim kubernetes-dashboard-admin.rbac.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-admin</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRoleBinding</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-admin</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line"><span class="attr">  apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line"><span class="attr">  kind:</span> <span class="string">ClusterRole</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">cluster-admin</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line"><span class="attr">- kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-admin</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br></pre></td></tr></table></figure>
+<p>创建账户管理</p>
+<p>kubectl create -f kubernetes-dashboard-admin.rbac.yaml</p>
+<h2 id="6-查看dashboard运行的node的IP"><a href="#6-查看dashboard运行的node的IP" class="headerlink" title="6. 查看dashboard运行的node的IP"></a>6. 查看dashboard运行的node的IP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n kube-system get pods -o wide|grep dashboard|awk &apos;&#123;print $7&#125;&apos;</span><br></pre></td></tr></table></figure>
+<h1 id="排除NET-ERR-CERT-INVALID错误"><a href="#排除NET-ERR-CERT-INVALID错误" class="headerlink" title="排除NET::ERR_CERT_INVALID错误"></a>排除NET::ERR_CERT_INVALID错误</h1><p>可以通过之前设置的MasterIP：端口访问到dashboard，但是如果没有设置签名证书，而是用了原始的证书，会出现认证问题，即打开浏览器访问，会报告NET::ERR_CERT_INVALID错误，如下图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img  ERR_CERT_INVALID.png NET::ERR_CERT_INVALID%&#125;</span><br></pre></td></tr></table></figure>
+<p>如访问提示了证书错误<code>NET::ERR_CERT_INVALID</code>，原因是由于物理机的浏览器证书不可用。我们可以生成一个私有证书或者使用公有证书，下面开始配置证书。</p>
+<h2 id="1-查看kubernetes-dashboard-容器跑在哪台node节点上，这里跑在docker-slave2上"><a href="#1-查看kubernetes-dashboard-容器跑在哪台node节点上，这里跑在docker-slave2上" class="headerlink" title="1.查看kubernetes-dashboard 容器跑在哪台node节点上，这里跑在docker-slave2上"></a>1.查看kubernetes-dashboard 容器跑在哪台node节点上，这里跑在docker-slave2上</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@docker-master1 pki]# kubectl get pod -n kube-system -o wide</span><br><span class="line">NAME                                     READY   STATUS    RESTARTS   AGE     IP               NODE             NOMINATED NODE</span><br><span class="line">coredns-576cbf47c7-l5wlh                 1/1     Running   1          9d      10.244.0.5       docker-master1   &lt;none&gt;</span><br><span class="line">coredns-576cbf47c7-zrl66                 1/1     Running   1          9d      10.244.0.4       docker-master1   &lt;none&gt;</span><br><span class="line">etcd-docker-master1                      1/1     Running   1          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-apiserver-docker-master1            1/1     Running   2          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-controller-manager-docker-master1   1/1     Running   2          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-flannel-ds-amd64-c7wz6              1/1     Running   0          9d      192.168.20.213   docker-slave1    &lt;none&gt;</span><br><span class="line">kube-flannel-ds-amd64-hqvz9              1/1     Running   0          9d      192.168.20.214   docker-slave2    &lt;none&gt;</span><br><span class="line">kube-flannel-ds-amd64-w7n4s              1/1     Running   2          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-proxy-8gj2w                         1/1     Running   1          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-proxy-mt6dk                         1/1     Running   0          9d      192.168.20.213   docker-slave1    &lt;none&gt;</span><br><span class="line">kube-proxy-qtxz7                         1/1     Running   0          9d      192.168.20.214   docker-slave2    &lt;none&gt;</span><br><span class="line">kube-scheduler-docker-master1            1/1     Running   2          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kubernetes-dashboard-5f864b6c5f-5s2rw    1/1     Running   0          5d21h   10.244.3.9       docker-slave2    &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="2-在docker-slave2节点上查看kubernetes-dashboard容器ID"><a href="#2-在docker-slave2节点上查看kubernetes-dashboard容器ID" class="headerlink" title="2. 在docker-slave2节点上查看kubernetes-dashboard容器ID"></a>2. 在docker-slave2节点上查看kubernetes-dashboard容器ID</h2><p>root@docker-slave2 ~]# docker ps | grep dashboard<br>384d9dc0170b        registry.cn-hangzhou.aliyuncs.com/kube_containers/kubernetes-dashboard-amd64   “/dashboard –insecu…”   5 days ago          Up 44 hours                             k8s_kubernetes-dashboard_kubernetes-dashboard-5f864b6c5f-5s2rw_kube-system_94c8c50b-f484-11e8-80e8-000c29c3dca5_0</p>
+<h2 id="3-查看kubernetes-dashboard容器certs所挂载的宿主主机目录"><a href="#3-查看kubernetes-dashboard容器certs所挂载的宿主主机目录" class="headerlink" title="3.查看kubernetes-dashboard容器certs所挂载的宿主主机目录"></a>3.查看kubernetes-dashboard容器certs所挂载的宿主主机目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[root@docker-slave2 ~]# docker inspect -f &#123;&#123;.Mounts&#125;&#125; 384d9dc0170b</span><br><span class="line">&quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/volumes/kubernetes.io~empty-dir/tmp-volume&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/tmp&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/volumes/kubernetes.io~secret/kubernetes-dashboard-token-tbctd&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/var/run/secrets/kubernetes.io/serviceaccount&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;ro&quot;,</span><br><span class="line">                &quot;RW&quot;: false,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/etc-hosts&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/etc/hosts&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/containers/kubernetes-dashboard/0e84c511&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/dev/termination-log&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/volumes/kubernetes.io~secret/kubernetes-dashboard-certs&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/certs&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;ro&quot;,</span><br><span class="line">                &quot;RW&quot;: false,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br></pre></td></tr></table></figure>
+<h2 id="4-这里以私有证书配置，生成dashboard证书"><a href="#4-这里以私有证书配置，生成dashboard证书" class="headerlink" title="4. 这里以私有证书配置，生成dashboard证书"></a>4. 这里以私有证书配置，生成dashboard证书</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -des3 -passout pass:x -out dashboard.pass.key 2048</span><br><span class="line">openssl rsa -passin pass:x -in dashboard.pass.key -out dashboard.key</span><br><span class="line">openssl req -new -key dashboard.key -out dashboard.csr</span><br><span class="line">openssl x509 -req -sha256 -days 365 -in dashboard.csr -signkey dashboard.key -out dashboard.crt</span><br></pre></td></tr></table></figure>
+<h2 id="5-将生成的dashboard-crt-dashboard-key放到certs对应的宿主主机souce目录"><a href="#5-将生成的dashboard-crt-dashboard-key放到certs对应的宿主主机souce目录" class="headerlink" title="5.将生成的dashboard.crt  dashboard.key放到certs对应的宿主主机souce目录"></a>5.将生成的dashboard.crt  dashboard.key放到certs对应的宿主主机souce目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp dashboard.crt dashboard.key 192.168.20.214:/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/volumes/kubernetes.io~secret/kubernetes-dashboard-certs</span><br></pre></td></tr></table></figure>
+<h2 id="6-重启kubernetes-dashboard容器"><a href="#6-重启kubernetes-dashboard容器" class="headerlink" title="6.重启kubernetes-dashboard容器"></a>6.重启kubernetes-dashboard容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart 384d9dc0170b</span><br></pre></td></tr></table></figure>
+<p>完成以上步骤即可访问kubernetes-dashboard web了，由于使用的是私有证书，所以还是会弹出不安全的连接，需要添加例外。</p>
+<h2 id="7-登录"><a href="#7-登录" class="headerlink" title="7. 登录"></a>7. 登录</h2><p>页面上有两种登录方式，这时我们使用token的方式登录。token的获取方式如下。</p>
+<p>在master节点执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$kubectl -n kube-system get secret | grep kubernetes-dashboard-admin|awk &apos;&#123;print &quot;secret/&quot;$1&#125;&apos;|xargs kubectl describe -n kube-system|grep token:|awk -F : &apos;&#123;print $2&#125;&apos;|xargs echo</span><br><span class="line"></span><br><span class="line">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbi10b2tlbi1qYm0ycCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6Ijg5ZmFiOGFmLTNjYzEtMTFlOC1iODQ4LTAwMGMyOTQwYWRiYSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTprdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbiJ9.YS-ZklZ8fbkDp3tuOxFHyhiflXtCGDY0C5C3PYU1ot7YFCGA67_vDKY55OiE36sZNGNhWEmK52Yak7SrFZ75KwyMbM7TK69SGLftFiMedsUCfuUpBPB-Fc4beaxMuWWqVcHOs892VfE6I85xhhYLv_xD6t8x2DcJ1Cl6c5UVg_GBw13cSVaSA7asMpVuSj8MdOQcBNIUaRaxY04PDvZDWIN8Cqud9yDNkueFeuqP3DN_rN0FzLGg0Lqv3Q-fm4hKcIiiVi6E9J-i_T8QCsoKE36wEWg3hJdUTmzBufew2YrbPH4f0Aezq-OeKT8-x89vQwkbj1vttiVVtluTTX53T</span><br></pre></td></tr></table></figure>
+<p>上面获取到的就是token了，复制到登录页就可以登录了。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

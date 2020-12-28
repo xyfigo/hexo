@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>标签: Ceph - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5>#Ceph</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/04/29/CentOS-7-部署Ceph集群/" itemprop="url">CentOS 7 部署Ceph集群</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-04-29T01:38:00.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 803 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>#三、部署集群</p>
+<h4 id="1-安装准备，创建文件夹"><a href="#1-安装准备，创建文件夹" class="headerlink" title="1. 安装准备，创建文件夹"></a>1. 安装准备，创建文件夹</h4><p>在管理节点上创建一个目录，用于保存 ceph-deploy 生成的配置文件和密钥对。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~</span><br><span class="line">$ mkdir my-cluster</span><br><span class="line">$ cd my-cluster</span><br></pre></td></tr></table></figure>
+<p><strong>注：若安装ceph后遇到麻烦可以使用以下命令进行清除包和配置：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 删除安装包</span><br><span class="line">$ ceph-deploy purge admin-node node1 node2 node3</span><br><span class="line"></span><br><span class="line">// 清除配置</span><br><span class="line">$ ceph-deploy purgedata admin-node node1 node2 node3</span><br><span class="line">$ ceph-deploy forgetkeys</span><br></pre></td></tr></table></figure>
+<h4 id="2-创建集群和监控节点"><a href="#2-创建集群和监控节点" class="headerlink" title="2. 创建集群和监控节点"></a>2. 创建集群和监控节点</h4><p>创建集群并初始化<strong>监控节点</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy new &#123;initial-monitor-node(s)&#125;</span><br></pre></td></tr></table></figure>
+<p>这里node1是monitor节点，所以执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy new ceph_node1</span><br></pre></td></tr></table></figure>
+<p>完成后，my-clster 下多了3个文件：<code>ceph.conf</code>、<code>ceph-deploy-ceph.log</code> 和 <code>ceph.mon.keyring</code>。</p>
+<blockquote>
+<ul>
+<li>问题：如果出现 “[ceph_deploy][ERROR ] RuntimeError: remote connection got closed, ensure <code>requiretty</code> is disabled for node1”，执行 sudo visudo 将 Defaults requiretty 注释掉。</li>
+</ul>
+</blockquote>
+<h4 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3. 修改配置文件"></a>3. 修改配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat ceph.conf</span><br></pre></td></tr></table></figure>
+<p>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">fsid = 2539e16a-2b19-476d-8005-3d749e288583</span><br><span class="line">mon_initial_members = ceph_node1</span><br><span class="line">mon_host = 10.10.20.61</span><br><span class="line">auth_cluster_required = cephx</span><br><span class="line">auth_service_required = cephx</span><br><span class="line">auth_client_required = cephx</span><br><span class="line">osd pool default size = 2</span><br><span class="line">rbd_default_features = 1</span><br></pre></td></tr></table></figure>
+<p>把 Ceph 配置文件里的默认副本数从 3 改成 2 ，这样只有两个 OSD 也可以达到 active + clean 状态。把 osd pool default size = 2 加入 [global] 段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i &apos;$a\osd pool default size = 2&apos; ceph.conf</span><br></pre></td></tr></table></figure>
+<p>如果有多个网卡，<br>可以把 public network 写入 Ceph 配置文件的 [global] 段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public network = &#123;ip-address&#125;/&#123;netmask&#125;</span><br></pre></td></tr></table></figure>
+<p>如果Ceph存储需要提供kubernetes使用的OSD，注意要设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rbd_default_features = 1</span><br></pre></td></tr></table></figure>
+<h4 id="4-安装Ceph"><a href="#4-安装Ceph" class="headerlink" title="4. 安装Ceph"></a>4. 安装Ceph</h4><p>在所有节点上安装ceph：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy install ceph_admin_node ceph_node1 ceph_node2 ceph_node3 ceph_node4</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>问题：[ceph_deploy][ERROR ] RuntimeError: Failed to execute command: yum -y install epel-release</li>
+</ul>
+<p>解决方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; sudo yum -y remove epel-release</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="5-配置初始-monitor-s-、并收集所有密钥"><a href="#5-配置初始-monitor-s-、并收集所有密钥" class="headerlink" title="5. 配置初始 monitor(s)、并收集所有密钥"></a>5. 配置初始 monitor(s)、并收集所有密钥</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy mon create-initial</span><br></pre></td></tr></table></figure>
+<p>完成上述操作后，当前目录里应该会出现这些密钥环：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;cluster-name&#125;.client.admin.keyring</span><br><span class="line">&#123;cluster-name&#125;.bootstrap-osd.keyring</span><br><span class="line">&#123;cluster-name&#125;.bootstrap-mds.keyring</span><br><span class="line">&#123;cluster-name&#125;.bootstrap-rgw.keyring</span><br></pre></td></tr></table></figure>
+<h4 id="6-添加OSD"><a href="#6-添加OSD" class="headerlink" title="6. 添加OSD"></a>6. 添加OSD</h4><p>1) 登录到 Ceph 节点、并给 OSD 守护进程创建一个目录，并添加权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ssh node1</span><br><span class="line">$ sudo mkdir /var/local/osd1</span><br><span class="line">$ sudo chmod 777 /var/local/osd1/</span><br><span class="line">$ exit</span><br><span class="line"></span><br><span class="line">$ ssh node2</span><br><span class="line">$ sudo mkdir /var/local/osd2</span><br><span class="line">$ sudo chmod 777 /var/local/osd2/</span><br><span class="line">$ exit</span><br></pre></td></tr></table></figure>
+<p>注意，从最好将osd单独做一个分区，log单独做一个分区。其中osd分区使用xfs格式，这是ceph最佳推荐设置。</p>
+<p>我是用了linux lvm，LV名称为/dev/data/osd</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ceph]# mkfs.xfs -f /dev/data/osd</span><br><span class="line">meta-data=/dev/data/osd          isize=256    agcount=4, agsize=32761600 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=0        finobt=0</span><br><span class="line">data     =                       bsize=4096   blocks=131046400, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=0</span><br><span class="line">log      =internal log           bsize=4096   blocks=63987, version=2</span><br><span class="line">         =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">[root@localhost ceph]# mount -t xfs /dev/data/osd /var/local/osd4</span><br><span class="line">[root@localhost ceph]# df -Th</span><br><span class="line">文件系统                类型      容量  已用  可用 已用% 挂载点</span><br><span class="line">/dev/mapper/centos-root xfs        50G  1.7G   49G    4% /</span><br><span class="line">devtmpfs                devtmpfs  7.8G     0  7.8G    0% /dev</span><br><span class="line">tmpfs                   tmpfs     7.8G     0  7.8G    0% /dev/shm</span><br><span class="line">tmpfs                   tmpfs     7.8G  8.6M  7.8G    1% /run</span><br><span class="line">tmpfs                   tmpfs     7.8G     0  7.8G    0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-home xfs        42G   33M   42G    1% /home</span><br><span class="line">/dev/sda1               xfs       497M  124M  373M   25% /boot</span><br><span class="line">tmpfs                   tmpfs     1.6G     0  1.6G    0% /run/user/0</span><br><span class="line">/dev/mapper/data-osd    xfs       500G   33M  500G    1% /var/local/osd4</span><br></pre></td></tr></table></figure>
+<p>2) 然后，从管理节点执行 ceph-deploy 来准备 OSD 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy osd prepare node2:/var/local/osd0 node3:/var/local/osd1</span><br></pre></td></tr></table></figure>
+<p>3) 最后，激活 OSD 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy osd activate node2:/var/local/osd0 node3:/var/local/osd1</span><br></pre></td></tr></table></figure>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

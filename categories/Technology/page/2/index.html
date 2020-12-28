@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>分类: Technology - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5><i class="far fa-folder"></i>Technology</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/06/11/TensorFlow实战（一）：简单示例/" itemprop="url">TensorFlow实战（一）：简单示例</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-06-11T07:28:30.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 362 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>本文是TensorFlow实战的开篇，请确认好您已经安装好Python3开发环境，并安装设置好NumPy、matplotlib、TensorFlow和Jupyter Notebook。</p>
+<h1 id="软件介绍"><a href="#软件介绍" class="headerlink" title="软件介绍"></a>软件介绍</h1><h2 id="Jupyter-Notebook"><a href="#Jupyter-Notebook" class="headerlink" title="Jupyter Notebook"></a>Jupyter Notebook</h2><h2 id="matplotlib"><a href="#matplotlib" class="headerlink" title="matplotlib"></a>matplotlib</h2><p>matplotlib是一个绘图库，它允许用户使用Python创绩动态的、自定义的可视化结果。它与Numpy无缝集成，其绘图结果可直接显示在Jupyter Notebook中。matplotlib也可将数值以图像的形式可视化，这个功能可用于验证图像识别任务的输出，并将神经网络的内部单元可视化。构建在matplotlib之上的其它层，如Seaborn，可用于增强其功能。</p>
+<h2 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h2><h1 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h1><p>以下代码可以运行在Jupyter Notebook中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">a= tf.random_normal([<span class="number">2</span>,<span class="number">20</span>])</span><br><span class="line">sess=tf.Session()</span><br><span class="line">out=sess.run(a)</span><br><span class="line">x,y=out</span><br><span class="line">plt.scatter(x,y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>成功运行如下图：</p>
+<img src="/2019/06/11/TensorFlow实战（一）：简单示例/python.png" title="运行示例">
+<p>我们逐条讲解代码：</p>
+<ol>
+<li>用TensorFlow定义一个由随机数组成的2*20矩阵，比将其赋给变量a。</li>
+<li>启动tensorFlow Session，并将其赋给一个sess对象。</li>
+<li>用sess.run()方法执行对象a，并将输出（NumPy数组）赋给out。</li>
+<li>将这个2<em>20的矩阵划分成为两个1 </em>10的向量x和y。</li>
+<li>利用pyplot模块绘制散点图，x对应横轴，y对应纵轴。</li>
+</ol>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/04/29/CentOS-7-部署Ceph集群/" itemprop="url">CentOS 7 部署Ceph集群</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-04-29T01:38:00.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 803 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>#三、部署集群</p>
+<h4 id="1-安装准备，创建文件夹"><a href="#1-安装准备，创建文件夹" class="headerlink" title="1. 安装准备，创建文件夹"></a>1. 安装准备，创建文件夹</h4><p>在管理节点上创建一个目录，用于保存 ceph-deploy 生成的配置文件和密钥对。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~</span><br><span class="line">$ mkdir my-cluster</span><br><span class="line">$ cd my-cluster</span><br></pre></td></tr></table></figure>
+<p><strong>注：若安装ceph后遇到麻烦可以使用以下命令进行清除包和配置：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 删除安装包</span><br><span class="line">$ ceph-deploy purge admin-node node1 node2 node3</span><br><span class="line"></span><br><span class="line">// 清除配置</span><br><span class="line">$ ceph-deploy purgedata admin-node node1 node2 node3</span><br><span class="line">$ ceph-deploy forgetkeys</span><br></pre></td></tr></table></figure>
+<h4 id="2-创建集群和监控节点"><a href="#2-创建集群和监控节点" class="headerlink" title="2. 创建集群和监控节点"></a>2. 创建集群和监控节点</h4><p>创建集群并初始化<strong>监控节点</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy new &#123;initial-monitor-node(s)&#125;</span><br></pre></td></tr></table></figure>
+<p>这里node1是monitor节点，所以执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy new ceph_node1</span><br></pre></td></tr></table></figure>
+<p>完成后，my-clster 下多了3个文件：<code>ceph.conf</code>、<code>ceph-deploy-ceph.log</code> 和 <code>ceph.mon.keyring</code>。</p>
+<blockquote>
+<ul>
+<li>问题：如果出现 “[ceph_deploy][ERROR ] RuntimeError: remote connection got closed, ensure <code>requiretty</code> is disabled for node1”，执行 sudo visudo 将 Defaults requiretty 注释掉。</li>
+</ul>
+</blockquote>
+<h4 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3. 修改配置文件"></a>3. 修改配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat ceph.conf</span><br></pre></td></tr></table></figure>
+<p>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">fsid = 2539e16a-2b19-476d-8005-3d749e288583</span><br><span class="line">mon_initial_members = ceph_node1</span><br><span class="line">mon_host = 10.10.20.61</span><br><span class="line">auth_cluster_required = cephx</span><br><span class="line">auth_service_required = cephx</span><br><span class="line">auth_client_required = cephx</span><br><span class="line">osd pool default size = 2</span><br><span class="line">rbd_default_features = 1</span><br></pre></td></tr></table></figure>
+<p>把 Ceph 配置文件里的默认副本数从 3 改成 2 ，这样只有两个 OSD 也可以达到 active + clean 状态。把 osd pool default size = 2 加入 [global] 段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i &apos;$a\osd pool default size = 2&apos; ceph.conf</span><br></pre></td></tr></table></figure>
+<p>如果有多个网卡，<br>可以把 public network 写入 Ceph 配置文件的 [global] 段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public network = &#123;ip-address&#125;/&#123;netmask&#125;</span><br></pre></td></tr></table></figure>
+<p>如果Ceph存储需要提供kubernetes使用的OSD，注意要设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rbd_default_features = 1</span><br></pre></td></tr></table></figure>
+<h4 id="4-安装Ceph"><a href="#4-安装Ceph" class="headerlink" title="4. 安装Ceph"></a>4. 安装Ceph</h4><p>在所有节点上安装ceph：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy install ceph_admin_node ceph_node1 ceph_node2 ceph_node3 ceph_node4</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>问题：[ceph_deploy][ERROR ] RuntimeError: Failed to execute command: yum -y install epel-release</li>
+</ul>
+<p>解决方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; sudo yum -y remove epel-release</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="5-配置初始-monitor-s-、并收集所有密钥"><a href="#5-配置初始-monitor-s-、并收集所有密钥" class="headerlink" title="5. 配置初始 monitor(s)、并收集所有密钥"></a>5. 配置初始 monitor(s)、并收集所有密钥</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy mon create-initial</span><br></pre></td></tr></table></figure>
+<p>完成上述操作后，当前目录里应该会出现这些密钥环：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;cluster-name&#125;.client.admin.keyring</span><br><span class="line">&#123;cluster-name&#125;.bootstrap-osd.keyring</span><br><span class="line">&#123;cluster-name&#125;.bootstrap-mds.keyring</span><br><span class="line">&#123;cluster-name&#125;.bootstrap-rgw.keyring</span><br></pre></td></tr></table></figure>
+<h4 id="6-添加OSD"><a href="#6-添加OSD" class="headerlink" title="6. 添加OSD"></a>6. 添加OSD</h4><p>1) 登录到 Ceph 节点、并给 OSD 守护进程创建一个目录，并添加权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ssh node1</span><br><span class="line">$ sudo mkdir /var/local/osd1</span><br><span class="line">$ sudo chmod 777 /var/local/osd1/</span><br><span class="line">$ exit</span><br><span class="line"></span><br><span class="line">$ ssh node2</span><br><span class="line">$ sudo mkdir /var/local/osd2</span><br><span class="line">$ sudo chmod 777 /var/local/osd2/</span><br><span class="line">$ exit</span><br></pre></td></tr></table></figure>
+<p>注意，从最好将osd单独做一个分区，log单独做一个分区。其中osd分区使用xfs格式，这是ceph最佳推荐设置。</p>
+<p>我是用了linux lvm，LV名称为/dev/data/osd</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ceph]# mkfs.xfs -f /dev/data/osd</span><br><span class="line">meta-data=/dev/data/osd          isize=256    agcount=4, agsize=32761600 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=0        finobt=0</span><br><span class="line">data     =                       bsize=4096   blocks=131046400, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=0</span><br><span class="line">log      =internal log           bsize=4096   blocks=63987, version=2</span><br><span class="line">         =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">[root@localhost ceph]# mount -t xfs /dev/data/osd /var/local/osd4</span><br><span class="line">[root@localhost ceph]# df -Th</span><br><span class="line">文件系统                类型      容量  已用  可用 已用% 挂载点</span><br><span class="line">/dev/mapper/centos-root xfs        50G  1.7G   49G    4% /</span><br><span class="line">devtmpfs                devtmpfs  7.8G     0  7.8G    0% /dev</span><br><span class="line">tmpfs                   tmpfs     7.8G     0  7.8G    0% /dev/shm</span><br><span class="line">tmpfs                   tmpfs     7.8G  8.6M  7.8G    1% /run</span><br><span class="line">tmpfs                   tmpfs     7.8G     0  7.8G    0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-home xfs        42G   33M   42G    1% /home</span><br><span class="line">/dev/sda1               xfs       497M  124M  373M   25% /boot</span><br><span class="line">tmpfs                   tmpfs     1.6G     0  1.6G    0% /run/user/0</span><br><span class="line">/dev/mapper/data-osd    xfs       500G   33M  500G    1% /var/local/osd4</span><br></pre></td></tr></table></figure>
+<p>2) 然后，从管理节点执行 ceph-deploy 来准备 OSD 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy osd prepare node2:/var/local/osd0 node3:/var/local/osd1</span><br></pre></td></tr></table></figure>
+<p>3) 最后，激活 OSD 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-deploy osd activate node2:/var/local/osd0 node3:/var/local/osd1</span><br></pre></td></tr></table></figure>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/04/24/ORA-00257-归档程序错误。在释放之前仅限于内部连接/" itemprop="url">ORA-00257: 归档程序错误。在释放之前仅限于内部连接</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-04-24T12:41:58.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 605 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>由于近期全国测绘统计年报进入集中上报阶段，造成数据库压力过大，且频繁的数据读写造成数据库归档日志增长非常快，月初才清理的归档日志空间已满，造成数据库报错。</p>
+<p>错误提示：<code>ORA-00257: 归档程序错误。在释放之前仅限于内部连接</code></p>
+<p>Oracle数据库版本：<code>Oracle 11g R2</code></p>
+<p>这是Oracle数据库较为常见的一类错误，错误原因是数据库归档日志已满，造成数据库无法提供服务。处理方案就是扩大归档日志空间并且使用RMAN清理已有的归档日志。</p>
+<p>操作步骤：</p>
+<ol>
+<li><p>从服务器本地登录数据库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Microsoft Windows [版本 6.1.7601]</span><br><span class="line">版权所有 (c) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line">SQL*Plus: Release 11.2.0.1.0 Production on 星期三 4月 24 20:10:13 2019</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2010, Oracle.  All rights reserved.</span><br><span class="line"></span><br><span class="line">连接到:</span><br><span class="line">Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - Production</span><br><span class="line">With the Partitioning, OLAP, Data Mining and Real Application Testing options</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询归档日志使用情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; select * from v$recovery_file_dest;</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">SPACE_LIMIT SPACE_USED SPACE_RECLAIMABLE NUMBER_OF_FILES</span><br><span class="line">----------- ---------- ----------------- ---------------</span><br><span class="line">D:\app\Administrator\flash_recovery_area</span><br><span class="line"> 1.0737E+10 1.0729E+10                 0             281</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from v$flash_recovery_area_usage;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询归档日志设置大小</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; show parameter db_recovery_file_dest_size</span><br><span class="line"></span><br><span class="line">NAME                                 TYPE        VALUE</span><br><span class="line">------------------------------------ ----------- ------------------------------</span><br><span class="line">db_recovery_file_dest_size           big integer 10G</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>扩大归档日志空间设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; alter system set db_recovery_file_dest_size=20G scope=both;</span><br><span class="line"></span><br><span class="line">系统已更改。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>确认设置情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; show parameter db_recovery_file_dest_size</span><br><span class="line"></span><br><span class="line">NAME                                 TYPE        VALUE</span><br><span class="line">------------------------------------ ----------- ------------------------------</span><br><span class="line">db_recovery_file_dest_size           big integer 20G</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; select * from v$recovery_file_dest;</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">SPACE_LIMIT SPACE_USED SPACE_RECLAIMABLE NUMBER_OF_FILES</span><br><span class="line">----------- ---------- ----------------- ---------------</span><br><span class="line">D:\app\Administrator\flash_recovery_area</span><br><span class="line"> 2.1475E+10 6496842240                 0             167</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入RMAN</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Microsoft Windows [版本 6.1.7601]</span><br><span class="line">版权所有 (c) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;rman target /</span><br><span class="line"></span><br><span class="line">恢复管理器: Release 11.2.0.1.0 - Production on 星期三 4月 24 20:49:42 2019</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.</span><br><span class="line"></span><br><span class="line">连接到目标数据库: ORL (DBID=1362993468)</span><br><span class="line"></span><br><span class="line">RMAN&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找出状态为expired的归档日志 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt;crosscheck   archivelog all;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除3天前的归档日志，腾出有效空间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; DELETE ARCHIVELOG ALL COMPLETED BEFORE &apos;SYSDATE-3&apos;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在plsql界面关闭数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; shutdown abort;</span><br><span class="line">ORACLE 例程已经关闭。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动并装载数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; startup mount;</span><br><span class="line">ORACLE 例程已经启动。</span><br><span class="line"></span><br><span class="line">Total System Global Area 1732554752 bytes</span><br><span class="line">Fixed Size                  1378008 bytes</span><br><span class="line">Variable Size            1065355560 bytes</span><br><span class="line">Database Buffers          654311424 bytes</span><br><span class="line">Redo Buffers               11509760 bytes</span><br><span class="line">数据库装载完毕。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开数据库服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; alter database open;</span><br><span class="line"></span><br><span class="line">数据库已更改。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/04/16/关闭mysql的表名库名大小写敏感开关/" itemprop="url">关闭mysql的表名库名大小写敏感开关</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-04-16T06:51:23.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 分钟 读完 (约 173 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>原来Linux下的MySQL默认是区分表名大小写的，通过如下设置，可以让MySQL不区分表名大小写：<br>1、用root登录，修改 /etc/my.cnf；<br>2、在[mysqld]节点下，加入一行： lower_case_table_names=1<br>3、重启MySQL即可；<br>其中 lower_case_table_names=1 参数缺省地在 Windows 中这个选项为 1 ，在 Unix 中为 0，因此在window中不会遇到的问题，一旦一直到linux就会出问题的原因（尤其在mysql对表起名时是无法用大写字母的，而查询用了大写字母却会出查不到的错误，真是弄的莫名其妙）</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/04/10/开发常用中间件、数据库的docker快速启动/" itemprop="url">开发常用中间件、数据库的docker快速启动</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-04-10T13:18:55.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            几秒 读完 (约 71 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>[TOC]</p>
+<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name=orders-mysqldb -d -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=orders -e MYSQL_PASSWORD=orders -e MYSQL_DATABASE=orders mysql/mysql-server:5.7.24</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Redis</span><br><span class="line"></span><br><span class="line">无密码：</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">docker run --name some-redis -p 6379:6379 -d redis redis-server --appendonly yes</span><br></pre></td></tr></table></figure>
+<p>带密码：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-redis -p 6379:6379 -d redis redis-server --appendonly yes --requirepass "mypassword"</span><br></pre></td></tr></table></figure></p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/04/10/Spring-Security架构/" itemprop="url">Spring Security架构</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-04-10T02:03:59.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            31 分钟 读完 (约 4712 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="身份验证和访问控制"><a href="#身份验证和访问控制" class="headerlink" title="身份验证和访问控制"></a>身份验证和访问控制</h1><p>应用程序安全性可归结为两个或多或少独立的问题：身份验证（您是谁？）和授权（您可以做什么？）。有时人们会说“访问控制”而不是“授权”，这可能会让人感到困惑，但以这种方式来思考是有帮助的，因为“授权”会在其他地方超载。Spring Security的架构旨在将身份验证与授权分开，并为两者提供策略和扩展点。</p>
+<h2 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h2><p>身份验证的主要策略接口<code>AuthenticationManager</code>只有一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AuthenticationManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">Authentication <span class="title">authenticate</span><span class="params">(Authentication authentication)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> AuthenticationException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AuthenticationManager方法可以做如下三个事情：</p>
+<ol>
+<li>如果它可以验证输入是否代表有效的主体，则返回<code>Authentication</code>（通常带有<code>authenticated=true</code>）。</li>
+<li><code>AuthenticationException</code>如果它认为输入代表无效的主体，则抛出一个。</li>
+<li><code>null</code>如果它不能决定返回。</li>
+</ol>
+<p><code>AuthenticationException</code>是运行时异常。它通常由应用程序以通用方式处理，具体取决于应用程序的样式或用途。换句话说，通常不希望用户代码捕获并处理它。例如，Web UI将呈现一个页面，表明身份验证失败，后端HTTP服务将发送401响应，有或没有<code>WWW-Authenticate</code>标头，具体取决于上下文。</p>
+<p>最常用的实现<code>AuthenticationManager</code>是<code>ProviderManager</code>，它委托给一组<code>AuthenticationProvider</code>实例。<code>AuthenticationProvider</code>有点像<code>AuthenticationManager</code>，但它有一个额外的方法允许调用者查询它是否支持给定的<code>Authentication</code>类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AuthenticationProvider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function">Authentication <span class="title">authenticate</span><span class="params">(Authentication authentication)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> AuthenticationException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Class&lt;?&gt; authentication)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>supports()</code>方法中的参数<code>Class&lt;?&gt;</code>类型是<code>Class&lt;? extends Authentication&gt;</code>（只会询问它是否支持将传递给<code>authenticate()</code>方法的内容）。A <code>ProviderManager</code>可以通过委托给一个链来支持同一个应用程序中的多个不同的身份验证机制<code>AuthenticationProviders</code>。如果一个 <code>ProviderManager</code>无法识别特定的<code>Authentication</code>实例类型，则会跳过它。</p>
+<p>A <code>ProviderManager</code>有一个可选的父级，如果所有提供者都返回，它可以查询<code>null</code>。如果父母不可用，那么在<code>AuthenticationException</code>中返回<code>null</code> <code>Authentication</code>的结果。</p>
+<p>有时，应用程序具有受保护资源的逻辑组（例如，与路径模式匹配的所有Web资源<code>/api/**</code>），并且每个组都可以拥有自己的专用<code>AuthenticationManager</code>。通常，每个组都有一个 <code>ProviderManager</code>，他们共享父母。然后，父母就是一种“全局”资源，充当所有提供者的后备资源。</p>
+<p><img src="https://github.com/spring-guides/top-spring-security-architecture/raw/master/images/authentication.png" alt="具有共同父母的ProviderManagers"></p>
+<p>图1. <code>AuthenticationManager</code>使用的 层次结构 <code>ProviderManager</code>  </p>
+<h2 id="自定义AuthenticationManager"><a href="#自定义AuthenticationManager" class="headerlink" title="自定义AuthenticationManager"></a>自定义<code>AuthenticationManager</code></h2><p>Spring Security提供了一些配置帮助程序，可以快速获取应用程序中设置的常见身份验证管理器功能。最常用的帮助程序<code>AuthenticationManagerBuilder</code>非常适合设置内存、JDBC或LDAP用户详细信息，或用于添加自定义<code>UserDetailsService</code>。以下是配置全局（父）的应用程序示例<code>AuthenticationManager</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationSecurity</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   ... <span class="comment">// web stuff here</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">initialize</span><span class="params">(AuthenticationManagerBuilder builder, DataSource dataSource)</span> </span>&#123;</span><br><span class="line">    builder.jdbcAuthentication().dataSource(dataSource).withUser(<span class="string">"dave"</span>)</span><br><span class="line">      .password(<span class="string">"secret"</span>).roles(<span class="string">"USER"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 此示例涉及Web应用程序，但其使用范围<code>AuthenticationManagerBuilder</code>更广泛（有关如何实现Web应用程序安全性的更多详细信息，请参阅下文）。请注意，<code>AuthenticationManagerBuilder</code>是<code>@Autowired</code>进一个方法<code>@Bean</code>- 这是使它构建全局（父）<code>AuthenticationManager</code>的方法。相反，如果我们这样做：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationSecurity</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  DataSource dataSource;</span><br><span class="line"></span><br><span class="line">   ... <span class="comment">// web stuff here</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder builder)</span> </span>&#123;</span><br><span class="line">    builder.jdbcAuthentication().dataSource(dataSource).withUser(<span class="string">"dave"</span>)</span><br><span class="line">      .password(<span class="string">"secret"</span>).roles(<span class="string">"USER"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（在配置器中使用<code>@Override</code>的方法）然后<code>AuthenticationManagerBuilder</code>仅用于构建“本地” <code>AuthenticationManager</code>，它是全局的子节点。在Spring Boot应用程序中，您可以<code>@Autowired</code>将全局应用程序注入另一个bean，但除非您自己明确地公开它，否则不能使用本地bean。</p>
+<p>Spring Boot提供了一个默认的全局<code>AuthenticationManager</code>（只有一个用户），除非你通过提供自己的<code>AuthenticationManager</code>类型的bean来抢占它。除非您主动需要自定义全局<code>AuthenticationManager</code>，否则默认设置足够安全，您不必担心它。如果您执行任何构建<code>AuthenticationManager</code>的配置，您通常可以在本地执行您正在保护的资源，而不必担心全局默认值。</p>
+<h2 id="授权或访问控制"><a href="#授权或访问控制" class="headerlink" title="授权或访问控制"></a>授权或访问控制</h2><p>  一旦身份验证成功，我们就可以继续授权，这里的核心策略是<code>AccessDecisionManager</code>。框架提供了三个实现，并且所有三个委托给一个<code>AccessDecisionVoter</code>链，有点像<code>ProviderManager</code>委托<code>AuthenticationProviders</code>。</p>
+<p>一个<code>AccessDecisionVoter</code>考虑一个<code>Authentication</code>（表示主体）和一个被<code>ConfigAttributes</code>装饰的安全的<code>Object</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(ConfigAttribute attribute)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Class&lt;?&gt; clazz)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vote</span><span class="params">(Authentication authentication, S object,</span></span></span><br><span class="line"><span class="function"><span class="params">        Collection&lt;ConfigAttribute&gt; attributes)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>该<code>Object</code>在<code>AccessDecisionManager</code>和<code>AccessDecisionVoter</code>的签名是完全通用的-它代表用户可能要访问的任何东西（网络资源或Java类中的方法是两种最常见的情况）。该<code>ConfigAttributes</code>也相当通用的，它代表安全装饰的<code>Object</code>，它拥有决定访问它所需的权限级别的元数据。<code>ConfigAttribute</code>是一个接口，但它只有一个非常通用的方法并返回一个<code>String</code>，所以这些字符串以某种方式编码资源所有者的意图，表达允许谁访问它的规则。典型的<code>ConfigAttribute</code>是用户角色的名称（如<code>ROLE_ADMIN</code>或<code>ROLE_AUDIT</code>），它们通常具有特殊格式（如<code>ROLE_</code> 前缀）或表示需要评估的表达式。</p>
+<p> 大多数人只使用默认<code>AccessDecisionManager</code>——<code>AffirmativeBased</code>（如果没有voters拒绝，则获得准入）。定制都倾向于在voters中发生，要么添加新的定制，要么修改现有定制的方式。</p>
+<p>在<code>ConfigAttributes</code>使用Spring表达式语言（SpEL）是很常见的，例如<code>isFullyAuthenticated() &amp;&amp; hasRole(&#39;FOO&#39;)</code>。这是由一个<code>AccessDecisionVoter</code>可以处理表达式并为它们创建上下文的支持。要扩展可以处理的表达式范围，需要自定义实现<code>SecurityExpressionRoot</code>或者<code>SecurityExpressionHandler</code>。</p>
+<h2 id="Web安全"><a href="#Web安全" class="headerlink" title="Web安全"></a>Web安全</h2><p>Web层中的Spring Security（用于UI和HTTP后端）基于Servlet <code>Filters</code>，因此通常首先查看<code>Filters</code>的角色是有帮助的。下图显示了单个HTTP请求的处理程序的典型分层。</p>
+<p><img src="https://github.com/spring-guides/top-spring-security-architecture/raw/master/images/filters.png" alt="过滤链委托给Servlet"></p>
+<p>客户端向应用程序发送请求，容器根据请求URI的路径决定哪些过滤器和哪个servlet应用于它。最多只有一个servlet可以处理单个请求，但是过滤器形成一个链，因此它们是有序的，实际上，如果过滤器想要处理请求本身，它可以否决链的其余部分。过滤器还可以修改下游过滤器和servlet中使用的请求和/或响应。过滤器链的顺序非常重要，Spring Boot通过两种机制管理它：一种是<code>Filter</code>类型里的<code>@Beans</code>可以有一个<code>@Order</code>或一个<code>Ordered</code>实现，另一种是它们可以是一个<code>FilterRegistrationBean</code>，它本身有一个Order作为其API的一部分。一些现成的过滤器定义自己的常量来帮助指示他们彼此相对的顺序（例如Spring Session中的<code>SessionRepositoryFilter</code>有一个值为<code>Integer.MIN_VALUE + 50</code>的<code>DEFAULT_ORDER</code>，它告诉我们它在链条前段，但它不排除它前面的其他过滤器。</p>
+<p>Spring Security作为单个<code>Filter</code>被安装到链中，其具体类型是<code>FilterChainProxy</code>，由于很快就会显现的原因。在Spring Boot应用程序中，安全过滤器是一个位于<code>ApplicationContext</code>中的<code>@Bean</code>，并且默认安装，以便它应用于每个请求。它被安装的位置被定义为<code>SecurityProperties.DEFAULT_FILTER_ORDER</code>，该位置接着被<code>FilterRegistrationBean.REQUEST_WRAPPER_FILTER_MAX_ORDER</code>确定（Spring Boot应用程序期望过滤器在包装请求时修改其行为的最大顺序）。除此之外还有更多：从容器的角度来看，Spring Security是一个单独的过滤器，但在其中有一些额外的过滤器，每个过滤器都扮演着特殊的角色。这是一张图片：</p>
+<p><img src="https://github.com/spring-guides/top-spring-security-architecture/raw/master/images/security-filters.png" alt="Spring安全过滤器"></p>
+<p>图2. Spring Security是一个物理实体， <code>Filter</code>但将处理委托给一系列内部过滤器</p>
+<p>事实上，安全过滤器中甚至还有一层间接：它通常作为一个安装在容器中<code>DelegatingFilterProxy</code>，而不必是Spring <code>@Bean</code>。代理委托给一个<code>FilterChainProxy</code>，它是一个<code>@Bean</code>，通常具有固定名称<code>springSecurityFilterChain</code>。<code>FilterChainProxy</code>包含内部排列为过滤器链（或链）的所有安全逻辑。所有过滤器都具有相同的API（它们都实现了<code>Filter</code>Servlet规范中的接口），并且它们都有机会否决链的其余部分。  </p>
+<p>可以有多个过滤器链，所有过滤器链都由Spring Security在同一顶层<code>FilterChainProxy</code>管理，并且容器都是未知的。Spring Security过滤器包含过滤器链列表，并将请求分派给与其匹配的第一个链。下图显示了基于匹配请求路径（<code>/foo/**</code>之前匹配<code>/**</code>）发生的调度。这是非常常见的，但不是匹配请求的唯一方法。此调度过程的最重要特征是只有一个链处理请求。</p>
+<p><img src="https://github.com/spring-guides/top-spring-security-architecture/raw/master/images/security-filters-dispatch.png" alt="安全过滤器调度"></p>
+<p>图3. Spring Security <code>FilterChainProxy</code>将请求分派给匹配的第一个链。  </p>
+<p>没有自定义安全配置的Spring Boot应用程序有若干个（称为N）过滤器链，通常n = 6。前（N-1）链那里只是忽略静态资源模式，如<code>/css/**</code>和<code>/images/**</code>以及误差视图<code>/error</code>（路径可以由用户用来控制<code>security.ignored</code>从<code>SecurityProperties</code>配置Bean）。最后一个链匹配所有路径即 <code>/**</code>并且更活跃，包含用于身份验证，授权，异常处理，会话处理，标题写入等的逻辑。默认情况下，此链中总共有11个过滤器，但通常没有必要让用户关注使用哪些过滤器以及何时使用过滤器。</p>
+<p>Spring Security内部的所有过滤器都不为容器所知，这一点很重要，尤其是在Spring Boot应用程序中，默认情况下，所有<code>@Beans</code>类型<code>Filter</code>的容器都会自动注册到容器中。因此，如果要将自定义过滤器添加到安全链，则需要将其设置为<code>@Bean</code>或将其包装在<code>FilterRegistrationBean</code>，它明确禁用容器注册的过程。</p>
+<h2 id="创建和自定义筛选链"><a href="#创建和自定义筛选链" class="headerlink" title="创建和自定义筛选链"></a>创建和自定义筛选链</h2><p>Spring Boot应用程序（带有<code>/**</code>请求匹配器的应用程序）中的默认回调过滤器链具有<code>SecurityProperties.BASIC_AUTH_ORDER</code>中预定义的顺序。您可以通过<code>security.basic.enabled=false</code>设置完全关闭它，或者您可以将其用作后备，只需使用较低的顺序定义其他规则。要做到这一点，只需添加一个<code>WebSecurityConfigurerAdapter</code>（或<code>WebSecurityConfigurer</code>）类型的<code>@Bean</code>并用<code>@Order</code>来装饰类。例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Order</span>(SecurityProperties.BASIC_AUTH_ORDER - <span class="number">10</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationConfigurerAdapter</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    http.antMatcher(<span class="string">"/foo/**"</span>)</span><br><span class="line">     ...;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此bean将导致Spring Security添加新的过滤器链并排序在回调之前。</p>
+<p>与另一组资源相比，许多应用程序对一组资源具有完全不同的访问规则。例如，承载UI和支持API的应用程序可能支持基于cookie的身份验证，其中重定向到UI部件的登录页面，而基于令牌的身份验证具有401响应未经身份验证的API部件请求。每组资源都有自己<code>WebSecurityConfigurerAdapter</code>的独特顺序和自己的请求匹配器。如果匹配规则重叠，则最早的有序过滤器链将获胜。</p>
+<h2 id="请求匹配调度和授权"><a href="#请求匹配调度和授权" class="headerlink" title="请求匹配调度和授权"></a>请求匹配调度和授权</h2><p>安全过滤器链（或等效的 <code>WebSecurityConfigurerAdapter</code>）具有请求匹配器，用于决定是否将其应用于HTTP请求。一旦决定应用特定过滤器链，则不应用其他过滤器链。但是在过滤器链中，您可以通过在<code>HttpSecurity</code>配置器中设置其他匹配器来对授权进行更精细的控制。例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Order</span>(SecurityProperties.BASIC_AUTH_ORDER - <span class="number">10</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationConfigurerAdapter</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    http.antMatcher(<span class="string">"/foo/**"</span>)</span><br><span class="line">      .authorizeRequests()</span><br><span class="line">        .antMatchers(<span class="string">"/foo/bar"</span>).hasRole(<span class="string">"BAR"</span>)</span><br><span class="line">        .antMatchers(<span class="string">"/foo/spam"</span>).hasRole(<span class="string">"SPAM"</span>)</span><br><span class="line">        .anyRequest().isAuthenticated();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置Spring Security最容易犯的错误之一就是忘记这些匹配器适用于不同的进程，一个是整个过滤器链的请求匹配器，另一个是选择要应用的访问规则。</p>
+<h2 id="将应用程序安全规则应用于Actuator-Rules"><a href="#将应用程序安全规则应用于Actuator-Rules" class="headerlink" title="将应用程序安全规则应用于Actuator Rules"></a>将应用程序安全规则应用于Actuator Rules</h2><p>如果您将Spring Boot Actuator用于管理端点，您可能希望它们是安全的，并且默认情况下它们将是安全的。实际上，只要将Actuator添加到安全应用程序中，您就会获得仅适用于执行器端点的附加过滤器链。它由一个仅匹配执行器端点的请求匹配器定义，并且其顺序<code>ManagementServerProperties.BASIC_AUTH_ORDER</code>比默认的<code>SecurityProperties</code>回调过滤器少5，因此在回退之前会查询它。</p>
+<p>如果您希望将应用程序安全规则应用于actuator 端点，则可以添加比actuator 端点更早排序的过滤器链以及包含所有actuator 端点的请求匹配器。如果您更喜欢执行器端点的默认安全设置，那么最简单的方法是在actuator 端点之后添加自己的过滤器，但比回退更早（例如<code>ManagementServerProperties.BASIC_AUTH_ORDER + 1</code>）。例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Order</span>(ManagementServerProperties.BASIC_AUTH_ORDER + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationConfigurerAdapter</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    http.antMatcher(<span class="string">"/foo/**"</span>)</span><br><span class="line">     ...;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Web层中的Spring Security目前与Servlet API相关联，因此它仅在嵌入式或其他方式在servlet容器中运行应用程序时才真正适用。但是，它不依赖于Spring MVC或Spring Web堆栈的其余部分，因此可以在任何servlet应用程序中使用，例如使用JAX-RS的应用程序。</p>
+<h2 id="方法安全"><a href="#方法安全" class="headerlink" title="方法安全"></a>方法安全</h2><p>除了支持保护Web应用程序外，Spring Security还支持将访问规则应用于Java方法执行。对于Spring Security，这只是一种不同类型的“受保护资源”。对于用户来说，这意味着使用相同格式的<code>ConfigAttribute</code>字符串（例如角色或表达式）声明访问规则，但是在代码中的不同位置。第一步是启用方法安全性，例如在我们的应用程序的顶级配置中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableGlobalMethodSecurity</span>(securedEnabled = <span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SampleSecureApplication</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们可以直接装饰方法资源，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Secured</span>(<span class="string">"ROLE_USER"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">secure</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello Security"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此示例是具有安全方法的服务。如果Spring创建了<code>@Bean</code>这种类型，那么它将被代理，并且调用者必须在实际执行该方法之前通过安全拦截器。如果访问被拒绝，则调用者将获得<code>AccessDeniedException</code>而不是实际的方法结果。  </p>
+<p>其他注解可以在方法中使用以执行安全性约束，特别是<code>@PreAuthorize</code>和<code>@PostAuthorize</code>，它分别允许你写含有参数引用的表达式和返回值的方法。</p>
+<p>将Web安全性和方法安全性结合起来并不罕见。过滤器链提供用户体验功能，如身份验证和重定向到登录页面等，方法安全性可在更细粒度的级别提供保护。</p>
+<h1 id="使用线程"><a href="#使用线程" class="headerlink" title="使用线程"></a>使用线程</h1><p>Spring Security基本上是线程绑定的，因为它需要使当前经过身份验证的主体可供各种下游消费者使用。基本构建块<code>SecurityContext</code>可能包含一个<code>Authentication</code>（当用户登录时，它将<code>Authentication</code>是明确的<code>authenticated</code>）。您始终可以访问和操作<code>SecurityContext</code>通过静态的方法，在<code>SecurityContextHolder</code>这些方法中依次操作 <code>TheadLocal</code>，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SecurityContext context = SecurityContextHolder.getContext();</span><br><span class="line">Authentication authentication = context.getAuthentication();</span><br><span class="line"><span class="keyword">assert</span>(authentication.isAuthenticated);</span><br></pre></td></tr></table></figure>
+<p>用户应用程序代码并不经常做这个操作，但它可以是有用的，比如，如果需要编写一个自定义的验证过滤器（虽然即使这样，也有Spring Security的基类，可用于需要避免使用<code>SecurityContextHolder</code>的）。</p>
+<p>如果需要访问Web端点中当前经过身份验证的用户，则可以在<code>@RequestMapping</code>标记的方法中使用参数。例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/foo"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">foo</span><span class="params">(@AuthenticationPrincipal User user)</span> </span>&#123;</span><br><span class="line">  ... <span class="comment">// do stuff with user</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此注解将<code>Authentication</code>拉出<code>SecurityContext</code>并调用其<code>getPrincipal()</code>上的方法以生成方法参数。<code>Principal</code>in中的类型<code>Authentication</code>取决于<code>AuthenticationManager</code>用于验证身份验证的内容，因此这对于获取对用户数据的类型安全引用来说是一个有用的小技巧。</p>
+<p>如果spring security是使用<code>Principal</code>从<code>HttpServletRequest</code>将型的<code>Authentication</code>，所以你也可以直接使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/foo"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">foo</span><span class="params">(Principal principal)</span> </span>&#123;</span><br><span class="line">  Authentication authentication = (Authentication) principal;</span><br><span class="line">  User = (User) authentication.getPrincipal();</span><br><span class="line">  ... <span class="comment">// do stuff with user</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果您需要编写在不使用Spring Security时有效的代码（在加载<code>Authentication</code>类时需要更加防御），这有时会很有用。</p>
+<h2 id="异步处理安全方法"><a href="#异步处理安全方法" class="headerlink" title="异步处理安全方法"></a>异步处理安全方法</h2><p>由于<code>SecurityContext</code>是线程绑定的，如果要进行任何调用安全方法的后台处理，例如使用<code>@Async</code>，则需要确保传播上下文。这归结为包裹<code>SecurityContext</code>与任务（最多<code>Runnable</code>，<code>Callable</code>即在后台执行等）。Spring Security提供了一些帮助，使这更容易，例如包装<code>Runnable</code>和<code>Callable</code>。要传播需要提供的<code>SecurityContext</code>to <code>@Async</code>方法，<code>AsyncConfigurer</code>并确保其<code>Executor</code>类型正确：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationConfiguration</span> <span class="keyword">extends</span> <span class="title">AsyncConfigurerSupport</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Executor <span class="title">getAsyncExecutor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DelegatingSecurityContextExecutorService(Executors.newFixedThreadPool(<span class="number">5</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/04/04/IDEA-快捷键/" itemprop="url">IDEA 快捷键</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-04-04T07:47:46.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            几秒 读完 (约 55 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <ol>
+<li>Navigation</li>
+</ol>
+<p>搜索类：Ctrl+N</p>
+<p>搜索文件：Ctrl+Shift+N</p>
+<p>搜索符号：Crtl+Shift+Alt+N</p>
+<p>全部搜索：Shift+Shift</p>
+<p>回退/前进到上/下一个窗口：Ctrl+Alt+左/右</p>
+<ol start="2">
+<li>视图</li>
+</ol>
+<p>全屏：Shift+Ctrl+F12</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/03/22/Cloud-Native-Geospatial之二云优化的GeoTIFF/" itemprop="url">Cloud Native Geospatial之二云优化的GeoTIFF</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-03-22T07:57:19.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1353 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>这篇文章是Cloud Native GeoSpatial系列文章的第二篇。本系列文章主要探寻如何使用原生云环境构建地理空间系统和工作流程。本文将深入研究地理空间云原生领域最重要的技术：云优化的GeoTIFF。</p>
+<p>云优化的GeoTIFF（Cloud Optimized GeoTIFF，简称COG）是一种特殊格式化的GeoTiFF文件，它借助HTTP的新特性<a href="https://en.wikipedia.org/wiki/Byte_serving" target="_blank" rel="noopener">Byte Serving</a>实现。<a href="http://cogeo.org/" target="_blank" rel="noopener">cogeo.org</a>提供了更多详细信息。Byte Serving是一种提供在线视频或音频流文件的技术，能够跳过文件前面或者后面的某些内容。你可以告知服务器从某个特定的位置开始获取文件，而并不需要下载全部的多媒体文件。COG格式以同样的方式工作，允许用户访问一个栅格文件中他们所需要的那一部分。</p>
+<p>任意跳转到一个栅格文件中任何所需的部分，这能够创造很多新的工作流程，因为数据能够像视频一样成为数据流，而不需要全部通过网络传输。在地理空间领域，用户可以在线访问Web瓦片，但是做实际的分析仍然需要原始删个文件。这意味着要获取一个几百兆或者更大的文件需要较长的下载时间。这因为原始的删个文件在云中分布式部署，但是他们不能够表现为流格式。所以用户在处理和可视化云中文件的时候，必须全部下载文件。</p>
+<p>COG格式始于Amazon、Planet Labs、MapBox、ESRI和USGS之间的合作，为了以可访问的形式把Landsat档案放到AWS中。GeoTIFF是一种广泛应用的影像文件格式，但同时在Landsat-pds的邮件列表中对如何以最佳格式使用流式格式传输数据有着广泛的讨论。好的存储格式能使合作伙伴在他们现有的工作流程中利用Amazon Web Services中的归档数据，而不需要进行复制和重复处理这些数据。一旦这种云原生的模式建立，采用这种架构的软件将会用同样的方式使用数据，这将显著的提高数据利用。</p>
+<p>有文献给出了针对云工作流程优化GeoTIFF的最佳实践，GDAL的实现包括了明确的文档和发布在GDALWiKi的性能测试结果。Planet Labs通过处理管道将所有数据的生产逐渐转向了云优化的GeoTIFF，并借此和它的合作伙伴FarmShots和Santiago&amp;Cintra一起重新构建起特定领域的应用。</p>
+<img src="/2019/03/22/Cloud-Native-Geospatial之二云优化的GeoTIFF/Farmshots.png" title="Farmshots applying an NDVI to Cloud Optimized GeoTIFF’s pulled in dynamically from Planet">
+<p>在产业界方面，领先的开源项目如DGAL、QGIS和GeoServer已经可以读取这种格式（通过QGIS和GeoServer的高级配置）。DigitalGlobe目前正在将他们的IDAHO系统迁移到使用COG格式，同时利用它处理大量的数据。OpenAerialMap的架构就是将用户上传的数据转换为Web可读的GeoTIFF格式并且直接从这些数据中流式传输他们的图层。GeoTrellis项目在短期开发计划中将对COG进行支持，另外一些项目包括相似的空间集群计算处理系统也有意支持它。</p>
+<img src="/2019/03/22/Cloud-Native-Geospatial之二云优化的GeoTIFF/OpenAerialMap.png" title="A COG of drone imagery from St. Maarten served up as tiles on OpenAerialMap.org">
+<img src="/2019/03/22/Cloud-Native-Geospatial之二云优化的GeoTIFF/COG.png" title="The same COG streamed directly from OpenAerialMap’s S3 bucket into QGIS, saving substantial download time.">
+<p>这些新的线上处理系统强调利用云原生地理空间架构。这种系统能同时地在上百个甚至几千个计算机中处理影像，在几秒内就能返回原来需要几天甚至数周的分析结果。尽管有这些现代化的有点，因为核心的标准是GeoTIFF，任何软件都可以读取数据，甚至是旧的桌面应用程序。</p>
+<p>尽管核心概念十分简单——将图像移至线上并通过流式传输，这却是构建云原生空间系统的基础。数据在云中，许多软件系统更接近数据端运行，已达到获取数据价值的目的，不需要额外的下载和存储成本。对此生态系统更全面的研究将在后续中介绍，但是核心的COG格式和原理是根本，用户可以将他们的精力花在接近实时的工作来探寻数据价值，而不用依靠少数具备空间分析专业能力的专家。</p>
+<p>尽管云优化的GeoTIFF是一种相对新的格式，但是向后兼容性和相对容易的实现使得这种格式引人注意，这些组织的目的是鼓励更多的软件和数据提供商接收它。如果你感兴趣想了解更多的东西，请访问cogeo.org。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/" itemprop="url">Cloud Native Geospatial之一: 基本假设和工作过程</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-03-08T06:18:42.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1403 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>假设所有数据和计算都在云中，从开发人员的角度探讨其对工作流的影响是有意义的。结论意义重大，并且引发了一系列创新，例如容器编配和微服务架构不仅是纯技术性的工作，更是过程和方法论。</p>
+<p>以上4原则的含义外延十分广阔，引领我们创新出难以想象的工作流程。但是在Cloud Native Geospatial不长的历史过程中，已经开始出现了进展：</p>
+<h2 id="不需要复制数据"><a href="#不需要复制数据" class="headerlink" title="不需要复制数据"></a>不需要复制数据</h2><p>当数据所处的云环境中，各种各样的软件能够直接工作，所以不需要维护任何数据的拷贝。数据提供商为数据存储付费，并且按数据访问进行收费。数据用户根据需要访问数据，进行可视化或生产数据产品等处理。</p>
+<h2 id="发送算法到数据"><a href="#发送算法到数据" class="headerlink" title="发送算法到数据"></a>发送算法到数据</h2><p>数据存储在云中的某个位置，导致了一种发送算法到数据的范式，而不是其他的方式。如果所有的数据都在云中的某处，并且数据太大不能够在本地下载和处理，所以用户必须打包他们的算法，在云中运行。这会形成一个容器，像完整的Docker处理实例一样。但是更高级的云GIS系统，例如RasterFoundry 和Google Earth Engine，用户只是发送一个脚本和操作描述来运行。</p>
+<img src="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/send_algorithm_to_data.png" title="RasterFoundry algorithms live on the cloud and can be customized by anyone.">
+<h2 id="算法缓冲"><a href="#算法缓冲" class="headerlink" title="算法缓冲"></a>算法缓冲</h2><p>随着数据在一处访问和云提供一系列可用的算法，与桌面范式相比，处理工具变得的越来越可共享。事实上提高协作性可能是Web和云带来的最重要的意义。未来大多数用户只需要从最流行的算法中进行挑选，而不需要自己做大气辐射转换、去云、大气校正、表面反射率计算等专业性的算法区实现一个常态化差值植生指标(Normalized Difference Vegetation Index)的计算。只需要进行预处理，并选择一个最流行的NDVI算法。Web分层映射将帮助这种分析协作变为可能，因为处理的每个步骤都可以随时进行可视化和验证。</p>
+<h2 id="实时GIS"><a href="#实时GIS" class="headerlink" title="实时GIS"></a>实时GIS</h2><p>新IoT传感器、手机和卫星影像实时产生更多的数据流，并持续更新数据库。计算机视觉和深度学习的结合的最新算法（目标识别、变化检测等）会被添加到地理信息工具箱，用户必须访问持续更新的一系列地图。局限在于数据收集频率。</p>
+<p>随着在云中处理这些更新数据，这开启了一个新的过程，产生更高级的分析产品，例如在机场中发现新的飞机、发现农田健康的显著变化，以及发现新的油井。</p>
+<img src="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/Planet.png" title="New Oil Well Pads are identified weekly in an app built by Planet">
+<h2 id="地图核实"><a href="#地图核实" class="headerlink" title="地图核实"></a>地图核实</h2><p>当前GIS和遥感工作的成果一般以地图的形式输出，并经常被嵌入在PPT中。但是地图中的点会带来信息和知识，例如在这个机场上出现10架新飞机。关心这类信息的用户希望直接订阅这个信息，他们希望在所关心的信息到达阀值的时候得到提醒，而不需要查看检查每个图像。这类地理信息智能处理过程中的任何步骤都应该进行可视化，但是大多数用户应该在得到信息结果后使用地图进行核实，而不是以地图作为主要的信息界面。</p>
+<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1><p>本文介绍了可访问性、集中数据和工作流程的显著不同，Cloud Native Geospatial能够为新的非专业用户提供地理信息的强大能力，这种能力被GIS从业者使用了几十年。当前空间智能的受益人是那些构建GIS生态系统的参与者，他们依靠数据进行工作，手工生成信息，借助Web地图印制地图、报告。当这些生态系统本身真正实现云原生，开发信息价值的工作不再只由从业者承担。地理信息专家能够协作创造分析和成果，但是任何非专业的用户也能够选择和应用这些技术在他们关心的地理领域。</p>
+<p>有了正确的云架构，随着越来越多的新的、有创造性的用户从地理空间数据中创造价值，我们有潜力发现GIS技术的新应用。</p>
+<p>目前实现Cloud Native Geospatial仍有很多工作，但是各类组织和个人正在一起进行着努力。请继续关注本系列文章，我们将深入研究Cloud Native Geospatial如何工作，并探索当前运行的一些先进的Cloud Native Geospatial架构。</p>
+<p>下面，我们将研究Cloud Optimized GeoTIFFs——一个基于Cloud Native Geospatial之上构建的地理数据格式。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/03/07/vim输入补全/" itemprop="url">vim输入补全</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-03-07T02:40:38.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 664 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>当关键字自动补全功能被激活后，VIM会试图猜测我们正在输入的单词，从而省去了手动输入完整单词的麻烦。在插入模式下的ctrl-p和ctrl-n组合键，不仅可以在插入模式下触发VIM的自动补全，而且还可以用它们在补全列表中反向或者正向选择。这两个组合键均会调用关键字自动补全，还有其他几种自动补全功能。</p>
+<p>CTRL+n 普通关键字<br>CTRL+n CTRL+x  当前缓冲区关键字<br>CTRL+x CTRL+i  文件关键字<br>CTRL+x CTRL+] 标签文件关键字<br>CTRL+x CTRL+k字典查找<br>CTRL+x CTRL+f 文件名补全<br>CTRL+x CTRL+o全能（Omni）补全</p>
+<p>上面两个在一行的都是表示一条命令。当挑出自动补全的菜单之后，如果想关掉，如果发现手动输入会更快，CTRL+e可以终止本次操作。</p>
+<ol>
+<li>英文单词补全<br>有时候可能想通过自动补全功能输入某个单词，但是它没有在任何打开的缓冲区，包含文件或者标签文件出现过，。在这种情况下输入上面提到的CTRL+x CTRL+k可用于触发这功能。为了激活这个功能需要为VIM提供一份合适的单词列表，最简单的办法就是运行set spell来激活这个功能，这个功能对于自己要输入一个非常长的单词，很有帮助，只要先输入前几个字母，再利用自动补全功能就OK！</li>
+<li>代码的关键字补全<br>程序代码里面的关键字因为VIM本身就已经支持多种编程语言，所以会自己识别的。</li>
+<li>自动补全整行文本<br>VIM可以为整行的文本实现自动补全，ctrl+x ctrl+l,这个作用最妙的就是，我们不用知道要复制的行的具体位置，只需要知道有这么一行文本即可，输入几个字符后，输入上面的命令，一行文字出来了。</li>
+<li>自动补全文件名字<br>Vim总是维护着一个当前的工作目录。Vim的文件名自动补全功能，只相对于工作目录的路径进行扩展，而不是相对于当前编辑文件的路径。自己感觉用不着很理解，例子关于网络web应用。</li>
+</ol>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+        
+<nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
+    <div class="pagination-previous">
+        <a href="/categories/Technology/">上一页</a>
+    </div>
+    <div class="pagination-next">
+        <a href="/categories/Technology/page/3/">下一页</a>
+    </div>
+    <ul class="pagination-list is-hidden-mobile">
+        
+        <li><a class="pagination-link" href="/categories/Technology/">1</a></li>
+        
+        <li><a class="pagination-link is-current" href="/categories/Technology/page/2/">2</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/3/">3</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/4/">4</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/5/">5</a></li>
+        
+    </ul>
+</nav>
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

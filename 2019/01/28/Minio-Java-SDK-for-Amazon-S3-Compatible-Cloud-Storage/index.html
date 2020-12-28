@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>Minio Java SDK for Amazon S3 Compatible Cloud Storage - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Minio Java SDK for Amazon S3 Compatible Cloud Storage
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-28T01:34:15.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分钟 读完 (约 962 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Minio Java客户端SDK提供了访问任何Amazon S3兼容对象存储服务的简单API接口。</p>
+<h1 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h1><p>Java1.8以上版本</p>
+<h2 id="Maven配置"><a href="#Maven配置" class="headerlink" title="Maven配置"></a>Maven配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.minio<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>minio<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="gradle配置"><a href="#gradle配置" class="headerlink" title="gradle配置"></a>gradle配置</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'io.minio:minio:6.0.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="API接口使用例子"><a href="#API接口使用例子" class="headerlink" title="API接口使用例子"></a>API接口使用例子</h1><h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>这个例子连接到对象存储服务，在服务器上创建一个bucket，并且上传一个文件到bucket。</p>
+<p>连接服务器需要3个参数：</p>
+<table>
+<thead>
+<tr>
+<th>Params</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Endpoint</td>
+<td>URL to object storage service.</td>
+</tr>
+<tr>
+<td>Access Key</td>
+<td>Access key is like user ID that uniquely identifies your account.</td>
+</tr>
+<tr>
+<td>Secret Key</td>
+<td>Secret key is the password to your account.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="FileUploader-java"><a href="#FileUploader-java" class="headerlink" title="FileUploader.java"></a>FileUploader.java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> java.security.InvalidKeyException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.xmlpull.v1.XmlPullParserException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.minio.MinioClient;</span><br><span class="line"><span class="keyword">import</span> io.minio.errors.MinioException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploader</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchAlgorithmException, IOException, InvalidKeyException, XmlPullParserException </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// Create a minioClient with the Minio Server name, Port, Access key and Secret key.</span></span><br><span class="line">      MinioClient minioClient = <span class="keyword">new</span> MinioClient(<span class="string">"https://play.minio.io:9000"</span>, <span class="string">"Q3AM3UQ867SPQQA43P2F"</span>, <span class="string">"zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Check if the bucket already exists.</span></span><br><span class="line">      <span class="keyword">boolean</span> isExist = minioClient.bucketExists(<span class="string">"asiatrip"</span>);</span><br><span class="line">      <span class="keyword">if</span>(isExist) &#123;</span><br><span class="line">        System.out.println(<span class="string">"Bucket already exists."</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Make a new bucket called asiatrip to hold a zip file of photos.</span></span><br><span class="line">        minioClient.makeBucket(<span class="string">"asiatrip"</span>);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Upload the zip file to the bucket with putObject</span></span><br><span class="line">      minioClient.putObject(<span class="string">"asiatrip"</span>,<span class="string">"asiaphotos.zip"</span>, <span class="string">"/home/user/Photos/asiaphotos.zip"</span>);</span><br><span class="line">      System.out.println(<span class="string">"/home/user/Photos/asiaphotos.zip is successfully uploaded as asiaphotos.zip to `asiatrip` bucket."</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span>(MinioException e) &#123;</span><br><span class="line">      System.out.println(<span class="string">"Error occurred: "</span> + e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="编译FileUploader"><a href="#编译FileUploader" class="headerlink" title="编译FileUploader"></a>编译FileUploader</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac -cp "minio-6.0.0-all.jar"  FileUploader.java</span><br></pre></td></tr></table></figure>
+<h2 id="运行FileUploader"><a href="#运行FileUploader" class="headerlink" title="运行FileUploader"></a>运行FileUploader</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java -cp "minio-6.0.0-all.jar:." FileUploader</span><br><span class="line">/home/user/Photos/asiaphotos.zip is successfully uploaded as asiaphotos.zip to `asiatrip` bucket.</span><br><span class="line"></span><br><span class="line">mc ls play/asiatrip/</span><br><span class="line">[2016-06-02 18:10:29 PDT]  82KiB asiaphotos.zip</span><br></pre></td></tr></table></figure>
+<h1 id="API参考"><a href="#API参考" class="headerlink" title="API参考"></a>API参考</h1><p>The full API Reference is available here.</p>
+<ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference" target="_blank" rel="noopener">Complete API Reference</a></li>
+</ul>
+<h3 id="API-Reference-Bucket-Operations"><a href="#API-Reference-Bucket-Operations" class="headerlink" title="API Reference: Bucket Operations"></a>API Reference: Bucket Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#makeBucket" target="_blank" rel="noopener"><code>makeBucket</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listBuckets" target="_blank" rel="noopener"><code>listBuckets</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#bucketExists" target="_blank" rel="noopener"><code>bucketExists</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeBucket" target="_blank" rel="noopener"><code>removeBucket</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listObjects" target="_blank" rel="noopener"><code>listObjects</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listIncompleteUploads" target="_blank" rel="noopener"><code>listIncompleteUploads</code></a></li>
+</ul>
+<h3 id="API-Reference-Object-Operations"><a href="#API-Reference-Object-Operations" class="headerlink" title="API Reference: Object Operations"></a>API Reference: Object Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#getObject" target="_blank" rel="noopener"><code>getObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#putObject" target="_blank" rel="noopener"><code>putObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#copyObject" target="_blank" rel="noopener"><code>copyObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#statObject" target="_blank" rel="noopener"><code>statObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeObject" target="_blank" rel="noopener"><code>removeObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeIncompleteUpload" target="_blank" rel="noopener"><code>removeIncompleteUpload</code></a></li>
+</ul>
+<h3 id="API-Reference-Presigned-Operations"><a href="#API-Reference-Presigned-Operations" class="headerlink" title="API Reference: Presigned Operations"></a>API Reference: Presigned Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedGetObject" target="_blank" rel="noopener"><code>presignedGetObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedPutObject" target="_blank" rel="noopener"><code>presignedPutObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedPostPolicy" target="_blank" rel="noopener"><code>presignedPostPolicy</code></a></li>
+</ul>
+<h3 id="API-Reference-Bucket-Policy-Operations"><a href="#API-Reference-Bucket-Policy-Operations" class="headerlink" title="API Reference: Bucket Policy Operations"></a>API Reference: Bucket Policy Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#getBucketPolicy" target="_blank" rel="noopener"><code>getBucketPolicy</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#setBucketPolicy" target="_blank" rel="noopener"><code>setBucketPolicy</code></a></li>
+</ul>
+<h2 id="Full-Examples"><a href="#Full-Examples" class="headerlink" title="Full Examples"></a>Full Examples</h2><h4 id="Full-Examples-Bucket-Operations"><a href="#Full-Examples-Bucket-Operations" class="headerlink" title="Full Examples: Bucket Operations"></a>Full Examples: Bucket Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListBuckets.java" target="_blank" rel="noopener">ListBuckets.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListObjects.java" target="_blank" rel="noopener">ListObjects.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/BucketExists.java" target="_blank" rel="noopener">BucketExists.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/MakeBucket.java" target="_blank" rel="noopener">MakeBucket.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveBucket.java" target="_blank" rel="noopener">RemoveBucket.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListIncompleteUploads.java" target="_blank" rel="noopener">ListIncompleteUploads.java</a></li>
+</ul>
+<h4 id="Full-Examples-Object-Operations"><a href="#Full-Examples-Object-Operations" class="headerlink" title="Full Examples: Object Operations"></a>Full Examples: Object Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObject.java" target="_blank" rel="noopener">PutObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncrypted.java" target="_blank" rel="noopener">PutObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetObject.java" target="_blank" rel="noopener">GetObject.Java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetObjectEncrypted.java" target="_blank" rel="noopener">GetObjectEncrypted.Java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetPartialObject.java" target="_blank" rel="noopener">GetPartialObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveObject.java" target="_blank" rel="noopener">RemoveObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveObjects.java" target="_blank" rel="noopener">RemoveObjects.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/StatObject.java" target="_blank" rel="noopener">StatObject.java</a></li>
+</ul>
+<h4 id="Full-Examples-Presigned-Operations"><a href="#Full-Examples-Presigned-Operations" class="headerlink" title="Full Examples: Presigned Operations"></a>Full Examples: Presigned Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedGetObject.java" target="_blank" rel="noopener">PresignedGetObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedPutObject.java" target="_blank" rel="noopener">PresignedPutObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedPostPolicy.java" target="_blank" rel="noopener">PresignedPostPolicy.java</a></li>
+</ul>
+<h4 id="Full-Examples-Bucket-Policy-Operations"><a href="#Full-Examples-Bucket-Policy-Operations" class="headerlink" title="Full Examples: Bucket Policy Operations"></a>Full Examples: Bucket Policy Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/SetBucketPolicy.java" target="_blank" rel="noopener">SetBucketPolicy.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetBucketPolicy.java" target="_blank" rel="noopener">GetBucketPolicy.Java</a></li>
+</ul>
+<h4 id="Full-Examples-Server-Side-Encryption"><a href="#Full-Examples-Server-Side-Encryption" class="headerlink" title="Full Examples: Server Side Encryption"></a>Full Examples: Server Side Encryption</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncrypted.java" target="_blank" rel="noopener">CopyObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncryptedKms.java" target="_blank" rel="noopener">CopyObjectEncryptedKms.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncryptedS3.java" target="_blank" rel="noopener">CopyObjectEncryptedS3.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutGetObjectEncrypted.java" target="_blank" rel="noopener">PutGetObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncryptedKms.java" target="_blank" rel="noopener">PutObjectEncryptedKms.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncryptedS3.java" target="_blank" rel="noopener">PutObjectEncryptedS3.java</a></li>
+</ul>
+<h2 id="Explore-Further"><a href="#Explore-Further" class="headerlink" title="Explore Further"></a>Explore Further</h2><ul>
+<li><a href="https://docs.minio.io/" target="_blank" rel="noopener">Complete Documentation</a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference" target="_blank" rel="noopener">Minio Java Client SDK API Reference</a></li>
+<li><a href="https://docs.minio.io/docs/java-photo-api-service" target="_blank" rel="noopener">Build your own Photo API Service - Full Application Example</a></li>
+</ul>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Minio/">#Minio</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2019/01/29/漫谈数据库二：文件中记录的组织/">漫谈数据库二：文件中记录的组织</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2019/01/28/挂载NFS时提示：mount-文件系统类型错误、选项错误、10-10-18-20-data-上有坏超级块/">挂载NFS时提示：mount: 文件系统类型错误、选项错误、10.10.18.20:/data 上有坏超级块</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bca03367b9b8c57"></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'dFKWAKQMOWFegpmxBmcPAKYs-gzGzoHsz',
+        app_key: '8GcXGC2fPHu8puRWbgX1zSS4',
+        placeholder: ''
+    });
+</script>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

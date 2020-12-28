@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>Cloud Native Geospatial之一: 基本假设和工作过程 - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Cloud Native Geospatial之一: 基本假设和工作过程
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-03-08T06:18:42.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1403 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>假设所有数据和计算都在云中，从开发人员的角度探讨其对工作流的影响是有意义的。结论意义重大，并且引发了一系列创新，例如容器编配和微服务架构不仅是纯技术性的工作，更是过程和方法论。</p>
+<p>以上4原则的含义外延十分广阔，引领我们创新出难以想象的工作流程。但是在Cloud Native Geospatial不长的历史过程中，已经开始出现了进展：</p>
+<h2 id="不需要复制数据"><a href="#不需要复制数据" class="headerlink" title="不需要复制数据"></a>不需要复制数据</h2><p>当数据所处的云环境中，各种各样的软件能够直接工作，所以不需要维护任何数据的拷贝。数据提供商为数据存储付费，并且按数据访问进行收费。数据用户根据需要访问数据，进行可视化或生产数据产品等处理。</p>
+<h2 id="发送算法到数据"><a href="#发送算法到数据" class="headerlink" title="发送算法到数据"></a>发送算法到数据</h2><p>数据存储在云中的某个位置，导致了一种发送算法到数据的范式，而不是其他的方式。如果所有的数据都在云中的某处，并且数据太大不能够在本地下载和处理，所以用户必须打包他们的算法，在云中运行。这会形成一个容器，像完整的Docker处理实例一样。但是更高级的云GIS系统，例如RasterFoundry 和Google Earth Engine，用户只是发送一个脚本和操作描述来运行。</p>
+<img src="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/send_algorithm_to_data.png" title="RasterFoundry algorithms live on the cloud and can be customized by anyone.">
+<h2 id="算法缓冲"><a href="#算法缓冲" class="headerlink" title="算法缓冲"></a>算法缓冲</h2><p>随着数据在一处访问和云提供一系列可用的算法，与桌面范式相比，处理工具变得的越来越可共享。事实上提高协作性可能是Web和云带来的最重要的意义。未来大多数用户只需要从最流行的算法中进行挑选，而不需要自己做大气辐射转换、去云、大气校正、表面反射率计算等专业性的算法区实现一个常态化差值植生指标(Normalized Difference Vegetation Index)的计算。只需要进行预处理，并选择一个最流行的NDVI算法。Web分层映射将帮助这种分析协作变为可能，因为处理的每个步骤都可以随时进行可视化和验证。</p>
+<h2 id="实时GIS"><a href="#实时GIS" class="headerlink" title="实时GIS"></a>实时GIS</h2><p>新IoT传感器、手机和卫星影像实时产生更多的数据流，并持续更新数据库。计算机视觉和深度学习的结合的最新算法（目标识别、变化检测等）会被添加到地理信息工具箱，用户必须访问持续更新的一系列地图。局限在于数据收集频率。</p>
+<p>随着在云中处理这些更新数据，这开启了一个新的过程，产生更高级的分析产品，例如在机场中发现新的飞机、发现农田健康的显著变化，以及发现新的油井。</p>
+<img src="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/Planet.png" title="New Oil Well Pads are identified weekly in an app built by Planet">
+<h2 id="地图核实"><a href="#地图核实" class="headerlink" title="地图核实"></a>地图核实</h2><p>当前GIS和遥感工作的成果一般以地图的形式输出，并经常被嵌入在PPT中。但是地图中的点会带来信息和知识，例如在这个机场上出现10架新飞机。关心这类信息的用户希望直接订阅这个信息，他们希望在所关心的信息到达阀值的时候得到提醒，而不需要查看检查每个图像。这类地理信息智能处理过程中的任何步骤都应该进行可视化，但是大多数用户应该在得到信息结果后使用地图进行核实，而不是以地图作为主要的信息界面。</p>
+<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1><p>本文介绍了可访问性、集中数据和工作流程的显著不同，Cloud Native Geospatial能够为新的非专业用户提供地理信息的强大能力，这种能力被GIS从业者使用了几十年。当前空间智能的受益人是那些构建GIS生态系统的参与者，他们依靠数据进行工作，手工生成信息，借助Web地图印制地图、报告。当这些生态系统本身真正实现云原生，开发信息价值的工作不再只由从业者承担。地理信息专家能够协作创造分析和成果，但是任何非专业的用户也能够选择和应用这些技术在他们关心的地理领域。</p>
+<p>有了正确的云架构，随着越来越多的新的、有创造性的用户从地理空间数据中创造价值，我们有潜力发现GIS技术的新应用。</p>
+<p>目前实现Cloud Native Geospatial仍有很多工作，但是各类组织和个人正在一起进行着努力。请继续关注本系列文章，我们将深入研究Cloud Native Geospatial如何工作，并探索当前运行的一些先进的Cloud Native Geospatial架构。</p>
+<p>下面，我们将研究Cloud Optimized GeoTIFFs——一个基于Cloud Native Geospatial之上构建的地理数据格式。</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Cloud-Native-GIS/">#Cloud Native GIS</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2019/03/22/Cloud-Native-Geospatial之二云优化的GeoTIFF/">Cloud Native Geospatial之二云优化的GeoTIFF</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2019/03/07/vim输入补全/">vim输入补全</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bca03367b9b8c57"></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'dFKWAKQMOWFegpmxBmcPAKYs-gzGzoHsz',
+        app_key: '8GcXGC2fPHu8puRWbgX1zSS4',
+        placeholder: ''
+    });
+</script>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

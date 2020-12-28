@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>分类: Technology - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5><i class="far fa-folder"></i>Technology</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/02/20/Service-mesh概述/" itemprop="url">Service mesh概述</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-02-20T06:04:47.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            3 分钟 读完 (约 478 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Linkerd处理请求的流程：</p>
+<ol>
+<li>Linkerd应用动态路由规则决定哪一个服务是请求者将要请求的服务。请求被路由到一个生产服务还是一个staging服务？在本数据中心的服务还是云上的服务？正在测试的最新版本服务还是审查过的生产服务？所有这些路由规则是动态配置的，并且能够应用于全部或者部分分片的流量。</li>
+<li>找到正确的目标后，Linkerd从相关服务发现端点中获取相应的实例池，实例池可能存在多个。如果此信息与Linkerd实际发现的冲突，则Linkerd决定相信哪一个信息源。</li>
+<li>Linkerd选择最有可能快速响应的实例，这取决于多个因素，包括最近请求的延迟时间等。</li>
+<li>Linkerd尝试发送请求到这个实例，并记录结果的响应类型和延迟时间。</li>
+<li>如果实例宕机、无响应、或者发生处理错误，Linkerd在另一个实例上重试请求（只有它知道请求是幂等的情况下）。</li>
+<li>如果实例始终返回错误，Linkerd将其剔除出负载均衡池，并周期性地进行重试（实例可能会顺势失效）。</li>
+<li>如果请求超时过后，Linkerd主动地返回失败相应，而不是增加重试的流量。</li>
+<li>Linkerd通过测量和分布式跟踪捕获上述行为全部方面，并记录到集中式的度量系统。</li>
+</ol>
+<p>以上只是最简单的版本。Linkerd也能够使用TLS通信，执行协议升级、动态转移流量、数据中心间失效切换。</p>
+
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/01/29/漫谈数据库三：索引基本概念/" itemprop="url">漫谈数据库三：索引基本概念</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-29T02:57:58.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1600 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>许多查询只涉及文件中少量的记录。理想情况下，系统应该能够直接定位这些记录。为了允许这种访问方式，需要设计与文件相关联的附加的结构——索引。</p>
+<p>在大型数据库中，维护排序的索引列表将有几个挑战：一是索引本身会非常大；二是虽然通过排序的索引减少了搜索时间，但是查找仍是非常耗时的。所以需要使用更复杂的索引技术。一般有两种基本索引类型：</p>
+<ul>
+<li>顺序索引：基于值的顺序排序。</li>
+<li>散列索引：基于将值平均分布到若干散列桶中。一支值所属的散列桶是由一个函数决定的，该函数成为散列函数（hash function）</li>
+</ul>
+<p>对于索引的评价因素有：</p>
+<ul>
+<li>访问类型（access type）：能有效支持的访问类型。访问类型包括随机访问、范围查询等。</li>
+<li>访问时间（access time）：查询中使用该技术找到一个特定数据项或数据项集所需的时间。</li>
+<li>插入时间（insertion time）：插入一个新数据项所需的时间。该值包括插入这个新数据项的正确位置所需的实际，以及更新索引结果所需的时间。</li>
+<li>删除时间（deletion time）：删除一个数据项所需的时间。该值包括找到待删除项所需的时间，以及更新索引结构所需的时间。</li>
+<li>空间开销（space overhead）：索引结果所占用的额外存储空间。倘若存储索引结构的额外空间大小十渡，通常牺牲一定的空间代价来换取性能的提高是值得的。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>许多查询只涉及文件中很少的一部分记录。为了减少查找这些记录的开销，我们可以为存储数据库的文件创建索引。</li>
+<li><strong>索引</strong>顺序文件是数据库系统中最古老的索引模式之一。为了允许按搜索码顺序快速检索记录，记录按顺序存储，而无序记录链接在一起。为了允许快速的随机访问，使用了索引结构。</li>
+<li>可以使用的索引类型有两种：<strong>稠密索引和稀疏索引</strong>。稠密索引对每个搜索码值都有索引项，而稀疏索引只对某些搜索码值包含索引项。</li>
+<li>如果搜索码的排序顺序和关系的排序序列相匹配，则该搜索码上的索引称为<strong>聚簇索引</strong>，其他索引称为<strong>非聚簇索引</strong>或<strong>辅助索引</strong>。辅助索引可以提高不以聚簇索引的搜索码的查询的性能。但是辅助索引增加了修改数据库的开销。</li>
+<li>如索引顺序文件组织的主要缺陷是随着文件的增大，性能会下降。为了克服这个缺陷，可以使用<strong>B+树索引</strong>。</li>
+<li><strong>B+树</strong>索引采用<strong>平衡树</strong>的形式，即从跟到树叶的所有路径长度相等。B+树的高度与以关系中的记录N为底的对数成正比，其中每个非叶节点存储N个指针，N值通常约为50~100。因此，B+树比其他的平衡二叉树（如AVL树）要矮很多，故定位记录所需的磁盘访问次数也较少。</li>
+<li>B+树上的查询是直接而且高效的。然而，插入和删除要更复杂一些，但是仍然很有效。在B+树中，查询、插入、删除所需操作数与以关系中记录数N为底的对数成正比，其中每个非叶节点存储N个指针。</li>
+<li>可以用B+树去索引包含记录的文件，也可以用它组织文件中的记录。</li>
+<li>B树索引和B+树索引类似。B树索引的优点在于它去除了搜索码值存储中的冗余。主要缺点在于整体的复杂性以及结点大小给定时减小了扇出。在实际应用中，系统设计者几乎无一例外地倾向于使用B+树索引。</li>
+<li>顺序文件组织需要一个索引结构来定位数据。相比之下，基于散列文件组织允许我们通过计算所需记录搜素码上的一个函数直接找出一个数据项的地址。由于设计时我们不能精确知道哪些搜索码值将存储在文件中，因此一个好的散列函数应该能均匀且随机地把搜索码值分散到各个桶中。</li>
+<li>静态散列所用散列函数的桶地址集合是固定的。这样的散列函数不容易适应数据库随时间的显著增长。有几种允许修改散列函数的动态散列技术。可扩充散列是其中之一，他可以在数据库增长或缩减时通过分裂和合并桶来应付数据库大小的变化。</li>
+<li>也可以用散列技术创建辅助索引：这样的索引称为散列索引。为使记法简便，假定散列文件组织中用于散列的搜索码上有一个隐式的散列索引。</li>
+<li>像B+树和散列索引这样的有序索引可以用作涉及单个属性且基于相等条件的选择操作。当一个选择条件中涉及多个属性时，可以取多个索引中检索到的记录标识符的交。</li>
+<li>对于索引属性只有少数几个不同值的情况，位图索引提供了一种非常紧凑的表达方式。位图索引的交操作相当得快，使得他成为一种支持多属性上的查询的理想方式。</li>
+</ol>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/01/29/漫谈数据库二：文件中记录的组织/" itemprop="url">漫谈数据库二：文件中记录的组织</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-29T01:42:19.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 369 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>众所周知关系是记录的集合，本文着重讨论在给定一个记录的集合后，如何在文件系统中组织他们。</p>
+<p>主要的方法有以下三种：</p>
+<ul>
+<li>堆文件（heap file）：先来看看heap file的定义：<code>A heap file is an unordered set of records. The following operationsare supported: Heap files can be created and destroyed. Existingheapfiles can be opened and closed. Records can be inserted anddeleted. Records are uniquely identified by a record id (rid).</code>  一条记录可以放在文件的任何地方，只要那个地方有空间存放这条记录。记录是没有顺序的。通常每个关系使用一个单独的文件。</li>
+<li>顺序文件（sequential file）：记录根据“搜索码”的值顺序存储。</li>
+<li>散列文件（hashing file）：每条记录的某些属性上计算一个散列函数。散列函数的结果确定了记录应当放到文件的哪个块中。</li>
+</ul>
+<p>通常每个关系的记录用一个单独的文件存储。但是在多表聚簇文件组织中，几个不同关系的记录存储在同一个文件中。而且不同关系的相关记录存储在相同的块中，于是一个IO操作可以从所有关系中取到相关的记录。例如，两个关系做连接运算时相匹配的记录被认为是相关的。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/01/28/Minio-Java-SDK-for-Amazon-S3-Compatible-Cloud-Storage/" itemprop="url">Minio Java SDK for Amazon S3 Compatible Cloud Storage</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-28T01:34:15.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分钟 读完 (约 962 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Minio Java客户端SDK提供了访问任何Amazon S3兼容对象存储服务的简单API接口。</p>
+<h1 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h1><p>Java1.8以上版本</p>
+<h2 id="Maven配置"><a href="#Maven配置" class="headerlink" title="Maven配置"></a>Maven配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.minio<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>minio<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="gradle配置"><a href="#gradle配置" class="headerlink" title="gradle配置"></a>gradle配置</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'io.minio:minio:6.0.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="API接口使用例子"><a href="#API接口使用例子" class="headerlink" title="API接口使用例子"></a>API接口使用例子</h1><h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>这个例子连接到对象存储服务，在服务器上创建一个bucket，并且上传一个文件到bucket。</p>
+<p>连接服务器需要3个参数：</p>
+<table>
+<thead>
+<tr>
+<th>Params</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Endpoint</td>
+<td>URL to object storage service.</td>
+</tr>
+<tr>
+<td>Access Key</td>
+<td>Access key is like user ID that uniquely identifies your account.</td>
+</tr>
+<tr>
+<td>Secret Key</td>
+<td>Secret key is the password to your account.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="FileUploader-java"><a href="#FileUploader-java" class="headerlink" title="FileUploader.java"></a>FileUploader.java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> java.security.InvalidKeyException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.xmlpull.v1.XmlPullParserException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.minio.MinioClient;</span><br><span class="line"><span class="keyword">import</span> io.minio.errors.MinioException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploader</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchAlgorithmException, IOException, InvalidKeyException, XmlPullParserException </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// Create a minioClient with the Minio Server name, Port, Access key and Secret key.</span></span><br><span class="line">      MinioClient minioClient = <span class="keyword">new</span> MinioClient(<span class="string">"https://play.minio.io:9000"</span>, <span class="string">"Q3AM3UQ867SPQQA43P2F"</span>, <span class="string">"zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Check if the bucket already exists.</span></span><br><span class="line">      <span class="keyword">boolean</span> isExist = minioClient.bucketExists(<span class="string">"asiatrip"</span>);</span><br><span class="line">      <span class="keyword">if</span>(isExist) &#123;</span><br><span class="line">        System.out.println(<span class="string">"Bucket already exists."</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Make a new bucket called asiatrip to hold a zip file of photos.</span></span><br><span class="line">        minioClient.makeBucket(<span class="string">"asiatrip"</span>);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Upload the zip file to the bucket with putObject</span></span><br><span class="line">      minioClient.putObject(<span class="string">"asiatrip"</span>,<span class="string">"asiaphotos.zip"</span>, <span class="string">"/home/user/Photos/asiaphotos.zip"</span>);</span><br><span class="line">      System.out.println(<span class="string">"/home/user/Photos/asiaphotos.zip is successfully uploaded as asiaphotos.zip to `asiatrip` bucket."</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span>(MinioException e) &#123;</span><br><span class="line">      System.out.println(<span class="string">"Error occurred: "</span> + e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="编译FileUploader"><a href="#编译FileUploader" class="headerlink" title="编译FileUploader"></a>编译FileUploader</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac -cp "minio-6.0.0-all.jar"  FileUploader.java</span><br></pre></td></tr></table></figure>
+<h2 id="运行FileUploader"><a href="#运行FileUploader" class="headerlink" title="运行FileUploader"></a>运行FileUploader</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java -cp "minio-6.0.0-all.jar:." FileUploader</span><br><span class="line">/home/user/Photos/asiaphotos.zip is successfully uploaded as asiaphotos.zip to `asiatrip` bucket.</span><br><span class="line"></span><br><span class="line">mc ls play/asiatrip/</span><br><span class="line">[2016-06-02 18:10:29 PDT]  82KiB asiaphotos.zip</span><br></pre></td></tr></table></figure>
+<h1 id="API参考"><a href="#API参考" class="headerlink" title="API参考"></a>API参考</h1><p>The full API Reference is available here.</p>
+<ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference" target="_blank" rel="noopener">Complete API Reference</a></li>
+</ul>
+<h3 id="API-Reference-Bucket-Operations"><a href="#API-Reference-Bucket-Operations" class="headerlink" title="API Reference: Bucket Operations"></a>API Reference: Bucket Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#makeBucket" target="_blank" rel="noopener"><code>makeBucket</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listBuckets" target="_blank" rel="noopener"><code>listBuckets</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#bucketExists" target="_blank" rel="noopener"><code>bucketExists</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeBucket" target="_blank" rel="noopener"><code>removeBucket</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listObjects" target="_blank" rel="noopener"><code>listObjects</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listIncompleteUploads" target="_blank" rel="noopener"><code>listIncompleteUploads</code></a></li>
+</ul>
+<h3 id="API-Reference-Object-Operations"><a href="#API-Reference-Object-Operations" class="headerlink" title="API Reference: Object Operations"></a>API Reference: Object Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#getObject" target="_blank" rel="noopener"><code>getObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#putObject" target="_blank" rel="noopener"><code>putObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#copyObject" target="_blank" rel="noopener"><code>copyObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#statObject" target="_blank" rel="noopener"><code>statObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeObject" target="_blank" rel="noopener"><code>removeObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeIncompleteUpload" target="_blank" rel="noopener"><code>removeIncompleteUpload</code></a></li>
+</ul>
+<h3 id="API-Reference-Presigned-Operations"><a href="#API-Reference-Presigned-Operations" class="headerlink" title="API Reference: Presigned Operations"></a>API Reference: Presigned Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedGetObject" target="_blank" rel="noopener"><code>presignedGetObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedPutObject" target="_blank" rel="noopener"><code>presignedPutObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedPostPolicy" target="_blank" rel="noopener"><code>presignedPostPolicy</code></a></li>
+</ul>
+<h3 id="API-Reference-Bucket-Policy-Operations"><a href="#API-Reference-Bucket-Policy-Operations" class="headerlink" title="API Reference: Bucket Policy Operations"></a>API Reference: Bucket Policy Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#getBucketPolicy" target="_blank" rel="noopener"><code>getBucketPolicy</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#setBucketPolicy" target="_blank" rel="noopener"><code>setBucketPolicy</code></a></li>
+</ul>
+<h2 id="Full-Examples"><a href="#Full-Examples" class="headerlink" title="Full Examples"></a>Full Examples</h2><h4 id="Full-Examples-Bucket-Operations"><a href="#Full-Examples-Bucket-Operations" class="headerlink" title="Full Examples: Bucket Operations"></a>Full Examples: Bucket Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListBuckets.java" target="_blank" rel="noopener">ListBuckets.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListObjects.java" target="_blank" rel="noopener">ListObjects.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/BucketExists.java" target="_blank" rel="noopener">BucketExists.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/MakeBucket.java" target="_blank" rel="noopener">MakeBucket.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveBucket.java" target="_blank" rel="noopener">RemoveBucket.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListIncompleteUploads.java" target="_blank" rel="noopener">ListIncompleteUploads.java</a></li>
+</ul>
+<h4 id="Full-Examples-Object-Operations"><a href="#Full-Examples-Object-Operations" class="headerlink" title="Full Examples: Object Operations"></a>Full Examples: Object Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObject.java" target="_blank" rel="noopener">PutObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncrypted.java" target="_blank" rel="noopener">PutObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetObject.java" target="_blank" rel="noopener">GetObject.Java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetObjectEncrypted.java" target="_blank" rel="noopener">GetObjectEncrypted.Java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetPartialObject.java" target="_blank" rel="noopener">GetPartialObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveObject.java" target="_blank" rel="noopener">RemoveObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveObjects.java" target="_blank" rel="noopener">RemoveObjects.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/StatObject.java" target="_blank" rel="noopener">StatObject.java</a></li>
+</ul>
+<h4 id="Full-Examples-Presigned-Operations"><a href="#Full-Examples-Presigned-Operations" class="headerlink" title="Full Examples: Presigned Operations"></a>Full Examples: Presigned Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedGetObject.java" target="_blank" rel="noopener">PresignedGetObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedPutObject.java" target="_blank" rel="noopener">PresignedPutObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedPostPolicy.java" target="_blank" rel="noopener">PresignedPostPolicy.java</a></li>
+</ul>
+<h4 id="Full-Examples-Bucket-Policy-Operations"><a href="#Full-Examples-Bucket-Policy-Operations" class="headerlink" title="Full Examples: Bucket Policy Operations"></a>Full Examples: Bucket Policy Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/SetBucketPolicy.java" target="_blank" rel="noopener">SetBucketPolicy.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetBucketPolicy.java" target="_blank" rel="noopener">GetBucketPolicy.Java</a></li>
+</ul>
+<h4 id="Full-Examples-Server-Side-Encryption"><a href="#Full-Examples-Server-Side-Encryption" class="headerlink" title="Full Examples: Server Side Encryption"></a>Full Examples: Server Side Encryption</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncrypted.java" target="_blank" rel="noopener">CopyObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncryptedKms.java" target="_blank" rel="noopener">CopyObjectEncryptedKms.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncryptedS3.java" target="_blank" rel="noopener">CopyObjectEncryptedS3.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutGetObjectEncrypted.java" target="_blank" rel="noopener">PutGetObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncryptedKms.java" target="_blank" rel="noopener">PutObjectEncryptedKms.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncryptedS3.java" target="_blank" rel="noopener">PutObjectEncryptedS3.java</a></li>
+</ul>
+<h2 id="Explore-Further"><a href="#Explore-Further" class="headerlink" title="Explore Further"></a>Explore Further</h2><ul>
+<li><a href="https://docs.minio.io/" target="_blank" rel="noopener">Complete Documentation</a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference" target="_blank" rel="noopener">Minio Java Client SDK API Reference</a></li>
+<li><a href="https://docs.minio.io/docs/java-photo-api-service" target="_blank" rel="noopener">Build your own Photo API Service - Full Application Example</a></li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/01/28/挂载NFS时提示：mount-文件系统类型错误、选项错误、10-10-18-20-data-上有坏超级块/" itemprop="url">挂载NFS时提示：mount: 文件系统类型错误、选项错误、10.10.18.20:/data 上有坏超级块</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-28T01:27:12.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 分钟 读完 (约 212 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>最近购买力华为OceanStor系列存储，获得了存储级NAS能力。可以由存储直接提供NFS服务。</p>
+<p>在将NFS挂载到Linux时，提示了如下错误：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">  mount -t nfs 10.10.18.20:/data /mnt/nfs</span></span><br><span class="line">mount: 文件系统类型错误、选项错误、10.10.18.20:/data 上有坏超级块、</span><br><span class="line">       缺少代码页或助手程序，或其他错误</span><br><span class="line">       (对某些文件系统(如 nfs、cifs) 您可能需要</span><br><span class="line">       一款 /sbin/mount.&lt;类型&gt; 助手程序)</span><br><span class="line"></span><br><span class="line">       有些情况下在 syslog 中可以找到一些有用信息- 请尝试</span><br><span class="line">       dmesg | tail  这样的命令看看。</span><br></pre></td></tr></table></figure>
+<p>主要原因是由于没有安装nfs的客户端，所以需要使用yum进行安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum -y install nfs-utils</span><br><span class="line">systemctl start nfs-utils</span><br><span class="line">systemctl enable nfs-utils</span><br><span class="line">rpcinfo -p</span><br><span class="line">mount -t nfs 10.10.18.20:/data /home/ddsc/data/</span><br></pre></td></tr></table></figure>
+<p>挂载成功。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/01/17/Flink适用场景/" itemprop="url">Flink适用场景</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-17T02:19:51.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            15 分钟 读完 (约 2189 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>本文翻译自Flink Documents：<a href="https://flink.apache.org/usecases.html" target="_blank" rel="noopener">https://flink.apache.org/usecases.html</a></p>
+<h1 id="事件驱动型应用"><a href="#事件驱动型应用" class="headerlink" title="事件驱动型应用"></a>事件驱动型应用</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>事件驱动型应用是一个有状态的应用，应用从一个或多个事件流中获取事件，并且通过触发计算、更新状态或其他外部行为的方式对获取的事件做出响应。</p>
+<p>事件驱动型应用是采用分离计算和数据存储层的设计方式对传统应用的一种改进。在传统应用架构中，应用从远程事务性数据库中读取和持久化数据。</p>
+<p>与此相反，事件驱动型应用基于状态流处理应用。在它的设计中，数据和计算位于一处（co-located），以实现本地化数据访问（内存或硬盘）。通过在远程持久化存储中周期性地写入检查点来实现容错性。下图描述了传统应用和事件驱动型应用的不同。</p>
+<img src="/2019/01/17/Flink适用场景/usecases-eventdrivenapps.png" title="Differences">
+<h2 id="事件驱动型应用的优势"><a href="#事件驱动型应用的优势" class="headerlink" title="事件驱动型应用的优势"></a>事件驱动型应用的优势</h2><p>相比于从远程数据库中查询数据，事件驱动型应用从本地访问数据，得以在吞吐量和延迟时间上取得更好地性能。检查点是以异步和增量的方式在远程持久化存储中周期性的写入。通常在分层架构中，应用的多个层次都共享同一个数据库。因此，数据库的任何改动，例如因为应用更新或服务扩展需要改变数据展现，都需要协调应用的方方面面。因为时间驱动型应用只对自己的数据负责，所以改变数据展现或者扩展应用需要更少的协调工作。</p>
+<h2 id="Flink是如何支持事件驱动型应用的"><a href="#Flink是如何支持事件驱动型应用的" class="headerlink" title="Flink是如何支持事件驱动型应用的"></a>Flink是如何支持事件驱动型应用的</h2><p>Flink的许多优秀的特性都围绕这些概念。Flink提供丰富的状态单元集合，它能够管理大数据容量（上至太字节）的一致性保证。此外，Flink提供ProcessFunction以支持事件时间、可定制的窗口逻辑和细粒度的时间控制，以此实现高级的业务逻辑。而且Flink提供了复杂事件处理（CEP）程序库来发现数据流中的模式。</p>
+<p>另外，Flink还为事件驱动型应用提供了另一个优秀的特性：保存点（savepoint）。保存点是一个持久化的状态，可以被用来作为兼容应用的一个始点。给应用一个保存点，应用就此开始更新和调整，或者使用多个应用版本开始进行A/B测试。</p>
+<h2 id="典型的事件驱动型应用"><a href="#典型的事件驱动型应用" class="headerlink" title="典型的事件驱动型应用"></a>典型的事件驱动型应用</h2><ul>
+<li><a href="https://sf-2017.flink-forward.org/kb_sessions/streaming-models-how-ing-adds-models-at-runtime-to-catch-fraudsters/" target="_blank" rel="noopener">欺诈监测</a></li>
+<li><a href="https://sf-2017.flink-forward.org/kb_sessions/building-a-real-time-anomaly-detection-system-with-flink-mux/" target="_blank" rel="noopener">异常检测</a></li>
+<li><a href="https://sf-2017.flink-forward.org/kb_sessions/dynamically-configured-stream-processing-using-flink-kafka/" target="_blank" rel="noopener">基于规则的预警</a></li>
+<li><a href="https://jobs.zalando.com/tech/blog/complex-event-generation-for-business-process-monitoring-using-apache-flink/" target="_blank" rel="noopener">业务流程监控</a></li>
+<li><a href="https://berlin-2017.flink-forward.org/kb_sessions/drivetribes-kappa-architecture-with-apache-flink/" target="_blank" rel="noopener">Web应用程序（社交网络）</a></li>
+</ul>
+<h1 id="数据分析应用"><a href="#数据分析应用" class="headerlink" title="数据分析应用"></a>数据分析应用</h1><p>分析型任务从原始数据中提取信息并获得知识。典型的分析一般表现为批处理查询或者有限的事件记录数据集。为了在分析结果中合并最新的数据，必须在分析中增加被分析的数据集，并且重新运行查询或分析应用，将结果写入存储系统或者给出分析报告。</p>
+<p>如果拥有一个精良的流处理引擎，分析可以实时的进行。流查询应用不再是读取有限的数据集合，而是获取实时事件流并持续地生产和更新分析结果，与此同时事件被消费。结果写入外部数据库或者维护一个内部的状态。数据可视化应用从外部数据库读取最新的结果或者直接查询应用内部的状态。</p>
+<p>如下图所示，Apache Flink同时支持流处理和批处理型分析应用。</p>
+<img src="/2019/01/17/Flink适用场景/usecases-analytics.png" title="analytics">
+<h1 id="流分析应用的优势"><a href="#流分析应用的优势" class="headerlink" title="流分析应用的优势"></a>流分析应用的优势</h1><p>与批处理应用相比，持续流分析应用由于消除周期性的数据导入和执行查询，不仅仅可以更快的从事件中获得知识。与批处理查询相比，流查询不需要处理由于周期性导入和输入数据等导致的人为造成的数据边界。</p>
+<p>另一个方面是更简单的应用架构。批处理分析管道包括了几个独立组件周期性调度数据输入和执行查询。管道是一种可靠性的操作，这非常重要，因为一个组件的错误会影响管道后续的过程。与此相反，运行在Flink精密的流处理器之上的流处理分析应用包括了从数据输入到持续结果计算所有的过程。因此，它能够依靠引擎的错误恢复机制。</p>
+<h2 id="Flink如何支持数据分析应用"><a href="#Flink如何支持数据分析应用" class="headerlink" title="Flink如何支持数据分析应用"></a>Flink如何支持数据分析应用</h2><p>Flink对流分析和批处理分析都有很好的支持。具体的说，它提供了一个对批处理和流处理标准一致的，并且与ANSI兼容的SQL接口。SQL查询计算对记录的静态数据集或实时事件流都可以得到相同的计算结果。对用户定义函数（UDF）丰富的支持，确保用户代码能够在SQL查询中执行。如果需要更多的客户逻辑，Flink的DataStream API或DataSetAPI提供更多的底层控制。此外，Flink的Gelly库面向批处理数据集提供大规模和高性能图分析的算法和基础功能。</p>
+<h2 id="典型的数据分析应用"><a href="#典型的数据分析应用" class="headerlink" title="典型的数据分析应用"></a>典型的数据分析应用</h2><ul>
+<li><a href="http://2016.flink-forward.org/kb_sessions/a-brief-history-of-time-with-apache-flink-real-time-monitoring-and-analysis-with-flink-kafka-hb/" target="_blank" rel="noopener">电信网络的质量监控</a></li>
+<li><a href="https://techblog.king.com/rbea-scalable-real-time-analytics-king/" target="_blank" rel="noopener">在移动应用中分析产品更新和实验评估</a></li>
+<li><a href="https://eng.uber.com/athenax/" target="_blank" rel="noopener">消费分析中的专用实时数据分析</a></li>
+<li>大规模图分析</li>
+</ul>
+<h1 id="数据管道应用"><a href="#数据管道应用" class="headerlink" title="数据管道应用"></a>数据管道应用</h1><p>ETL是一种在不同存储系统之间转换和移动数据的普通方式。需要经常周期性的触发ETL任务，从事务数据库系统到分析数据库或数据仓库拷贝数据。</p>
+<p>数据管道应用于ETL任务的目的相似。它能够在一个存储系统到另一个存储系统之间转换和扩充数据。但是，它以连续的流模式运行而不是周期性的调用。因此，它能够从持续产生数据的数据源读取记录，并以较低的延迟将之移动到目的地。例如，数据管道可以监控文件系统目录的新文件，并将新文件数据记录到时间日志中。另一个应用能够将事件记录到数据库中，或者递增地构建和优化查询索引。</p>
+<p>下图描述了周期性ETL任务和持续数据管道之间的区别。</p>
+<img src="/2019/01/17/Flink适用场景/usecases-datapipelines.png" title="datapipelines">
+<h2 id="数据管道的优势"><a href="#数据管道的优势" class="headerlink" title="数据管道的优势"></a>数据管道的优势</h2><p>连续数据管道比周期性ETL任务的明显优势在于移动数据的低延迟。而且，因为数据管道可以连续地消费和发出数据，它具有更多使用场景下的通用性。</p>
+<h2 id="Flink对数据管道的支持"><a href="#Flink对数据管道的支持" class="headerlink" title="Flink对数据管道的支持"></a>Flink对数据管道的支持</h2><p>Flink的SQL接口（或表API）和对UDF的支持可以解决大量的普通数据转换和扩充任务。更通用的DataStream API可以实现数据管道更高级的需求。Flink提供丰富的与其他存储系统的连接器，例如Kafka、Kinesis、Elasticsearch、JDBC数据库。它也为文件系统提供连续数据源，用来以时间段的形式监控数据目录。</p>
+<h2 id="典型的数据管道应用"><a href="#典型的数据管道应用" class="headerlink" title="典型的数据管道应用"></a>典型的数据管道应用</h2><ul>
+<li><a href="https://data-artisans.com/blog/blink-flink-alibaba-search" target="_blank" rel="noopener">电子商务中实时查询索引的构建</a></li>
+<li><a href="https://jobs.zalando.com/tech/blog/apache-showdown-flink-vs.-spark/" target="_blank" rel="noopener">电子商务中连续的ETL</a></li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/12/28/为Linux逻辑卷增加物理磁盘空间/" itemprop="url">为Linux逻辑卷增加物理磁盘空间</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-28T01:08:15.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 302 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>测绘资质管理系统的文件附件系统后端使用的是基于Linux逻辑卷群作为文件系统的SMB服务，由于附件容量非常庞大，在虚拟化平台上每个虚拟磁盘最大只能分派2T的容量，所以必须由多个虚拟磁盘共同组成一个大的逻辑卷空间进行使用，目前已分派的8T空间已满，需要继续增加空间以维持文件附件数据的存储。</p>
+<p>未来希望将此套NAS服务替换为<a href="https://docs.minio.io/docs/minio-gateway-for-nas.html" target="_blank" rel="noopener">Minio NAS Gateway</a>，后端使用华为5500系列存储直接提供的NAS服务。</p>
+<ol>
+<li><p>查看逻辑卷组成</p>
+<p>pvdisplay</p>
+</li>
+<li><p>停止SMB服务：</p>
+<p>service smb stop</p>
+</li>
+<li><p>扩展卷空间</p>
+<p>（假如新增加的物理磁盘为/dev/sdd，空间为2T）</p>
+<p>vgextend data /dev/sdd              </p>
+<p>lvextend -L +2T /dev/data/file      </p>
+</li>
+<li><p>卸载逻辑卷，检查空间并重新扫描空间</p>
+<p>umount /data/file/                  </p>
+<p>e2fsck -f /dev/data/file            非常慢</p>
+<p>resize2fs /dev/data/file  </p>
+</li>
+<li><p>查看完成情况</p>
+<p>df -h                               </p>
+<p>lvdisplay                           </p>
+</li>
+<li><p>重新挂载逻辑卷，并重启SMB服务</p>
+<p>mount /dev/data/file /data/file     </p>
+<p>df -h                               </p>
+<p>service smb start             </p>
+</li>
+</ol>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/12/26/Minio现代数据湖：第一部分/" itemprop="url">Minio现代数据湖：第一部分</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-26T02:40:48.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            14 分钟 读完 (约 2062 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>现代数据湖构筑于云存储之上，帮助用户取得扩展性和对象存储经济性的平衡，并简化全部的数据存储和分析流程。</p>
+<p>在此系列的第一部分，我们将探讨对象存储与其他存储方式的不同，以及为何对象存储对于数据湖的构建意义重大。</p>
+<h1 id="什么是对象存储"><a href="#什么是对象存储" class="headerlink" title="什么是对象存储"></a>什么是对象存储</h1><p>对象存储泛指一种平台组织存储单元的方式，这种组织方式成为对象。每个对象通常包括以下三部分：</p>
+<ul>
+<li>数据本身。数据可以是任何想要存储的东西，从一张家庭照片到有40万页的火箭建造指南。</li>
+<li>数量可扩展的元数据。元数据被创建对象存储的人所定义，它包括描述数据内容的上下文信息、数据的用途、机密性、以及与数据使用方式相关的任何其他内容。</li>
+<li>全局唯一的标识符。标识符是一个赋予对象的地址，可以通过标识符在分布式系统中找到该对象。用这种方式，能够在不知道其物理地址的情况下找到数据。它可能位于一个数据中心的不同主机上甚至是不同的数据中心中。</li>
+</ul>
+<h1 id="块存储和对象存储"><a href="#块存储和对象存储" class="headerlink" title="块存储和对象存储"></a>块存储和对象存储</h1><img src="/2018/12/26/Minio现代数据湖：第一部分/OS_VS_BS.png" title="Block storage vs object storage">
+<p>对象存储不像块存储，它不将文件切分为原始数据块。相反，数据被作为一个包括真实文件数据、元数据和唯一标识符的对象进行存储。注意元数据可以包括与对象有关的任何文本。</p>
+<p>现代企业数据中心越来越像私有云，使用对象存储作为事实上的存储标准。对象存储可以以高可用、高容错的方式提供更好的扩展经济性，确保数据可以全球可用。</p>
+<p>以下是块存储和对象存储的详细对比：</p>
+<img src="/2018/12/26/Minio现代数据湖：第一部分/The_detailed_comparison.png" title="The detailed comparison">
+<h1 id="为何对象存储如此重要"><a href="#为何对象存储如此重要" class="headerlink" title="为何对象存储如此重要"></a>为何对象存储如此重要</h1><p>Hadoop一度成为数据湖选型的主宰。但是现在技术发展迅速，已经出现了更加先进的解决方案。现代数据湖基于对象存储，使用包括Apache Spark、Presto、TensorFlow等工具进行高级分析和机器学习。</p>
+<p>让我们回顾过去，看看事情是如何改变的。Hadoop出现在21世纪前十年，并且在过去5年内非常流行。事实上，因为许多公司都得益于开源，5、6年前的许多大数据项目都基于Hadoop。</p>
+<p>简单的说，Hadoop有两个主要的功能：</p>
+<ul>
+<li>分布式文件系统（HDFS）用来存储数据</li>
+<li>处理框架（MapReduce）可以并行地处理这些数据</li>
+</ul>
+<p>越来越多的组织开始希望处理和分析他们拥有的全部数据，而不只是一部分。所以，Hadoop逐渐流行因为它可以存储和处理新的数据源，包括系统日志、点击流、传感器和机器生成的数据。</p>
+<p>在2008-2009年左右，游戏改变了。当时，Hadoop的主要设计目标是利用通用商业硬件构建一个本地集群，从而以较低的成本存储和处理这些新数据。Hadoop非常适合这个目标。这在当时是正确的，但在今天却不是。</p>
+<h1 id="Spark的出现"><a href="#Spark的出现" class="headerlink" title="Spark的出现"></a>Spark的出现</h1><p>开源世界最美妙的是新事物不断涌现，最坏的事情也是如此。</p>
+<p>我的意思是，随着最新的、最大的、最好的新项目陆续推出，你不得不追随潮流。让我们看看现在发生了什么。</p>
+<p>近年来，比MapReduce更新的扩建不断涌现：Apache Spark。从概念是看，它与MapReduce相似。但是一个重要的不同是，它优化了Hadoop原本基于硬盘的计算方式，改为基于内存的数据计算。这导致了运行在Spark上的算法运行速度显著加快。</p>
+<p>事实上，今天要开始建设一个大数据项目，如果没有强制要求与历史遗留的Hadoop或MapReduce应用协同的话，Spark是最佳的方案。你仍然需要持久化数据，因为Spark已经捆绑了许多Hadoop发行版，大多数本地集群使用HDFS。但是，随着云计算的兴起，出现了持久化数据更好的方式：对象存储。</p>
+<p>对象存储不同于文件存储和块存储。因为它将数据存储为一个对象，而不是一个构成文件的数据块。元数据与该文件绑定，就不需要在文件存储中的使用的层级结构，并且没有限制元数据的大小。任何内容都可以存储在易于扩展的扁平的地址空间。</p>
+<h1 id="对象存储的诸多优势"><a href="#对象存储的诸多优势" class="headerlink" title="对象存储的诸多优势"></a>对象存储的诸多优势</h1><p>根本上来讲，对象存储在大文件和高流量吞吐方面性能优越。它可以运行数据跨区域存储，容量可以无限扩展至P字节甚至更大，它提供可以帮助取回文件的自定义的元数据。</p>
+<p>许多公司，特别是运营私有云环境的公司，将对象存储视作达到合规要求的一种面向非结构化大数据的长期存储库。但是合规性并不是唯一的原因。公司可以使用对象存储在Facebook上保存照片，在Spotify上保存歌曲，在Dropbox上保存文件。</p>
+<p>事实上对象存储让人们更为青睐的原因是成本优势。使用对象存储的成本较使用HDFS的块存储成本低许多。你可以看看大部分的云计算提供商，对象存储的成本只是块存储的1/3到1/5。这意味着在HDFS存储相同容量的数据要比使用对象存储贵3-5倍。</p>
+<p>综上所述，Spark是一个比MapReduce更快的框架，对象存储是比使用块存储的HDFS更便宜。下面我们把这两部分放在一起，形成一个新的架构。</p>
+<h1 id="对象存储-Spark的优势"><a href="#对象存储-Spark的优势" class="headerlink" title="对象存储+Spark的优势"></a>对象存储+Spark的优势</h1><p>我们特别推荐的是在云环境中基于对象存储和Spark构建数据湖。对象存储和Spark的解决方案比基于Hadoop的数据湖解决方案更具扩展性、成本更低。</p>
+<p>在云环境中将对象存储与Spark结合，比经典的Hadoop/MapReduce配置更有弹性。如果你曾经在Hadoop集群中增加或移除节点，你肯定理解我的意思。即使配置也并不容易，但是在云环境下这个工作并不重要。</p>
+<p>灵活性的另一个方面。如果要使用Hadoop增加更多的存储容量，你需要增加更多的（计算）节点。不论你是否需要计算能力，你都在需要存储能力的时候，无形中增加了计算容量。</p>
+<p>对象存储架构则完全不同。如果需要更多的计算能力，只需要扩充Spark集群，而使存储集群保持不变。如果需要存储新的数据，只需要扩充对象存储即可。在云环境下，计算和存储不只是弹性的，并且是独立弹性的。这样非常不错，因为我们需要计算和存储具备独立的弹性。</p>
+<h1 id="对象存储-Spark"><a href="#对象存储-Spark" class="headerlink" title="对象存储+Spark"></a>对象存储+Spark</h1><h2 id="业务敏捷"><a href="#业务敏捷" class="headerlink" title="业务敏捷"></a>业务敏捷</h2><p>要获得性能提升有许多方式。</p>
+<h2 id="稳定性、可靠性"><a href="#稳定性、可靠性" class="headerlink" title="稳定性、可靠性"></a>稳定性、可靠性</h2><h2 id="更低的TCO"><a href="#更低的TCO" class="headerlink" title="更低的TCO"></a>更低的TCO</h2>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/12/17/裸机Kubernetes集群上运行Nginx-Ingress的若干考虑/" itemprop="url">裸机Kubernetes集群上运行Nginx Ingress的若干考虑</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-17T07:04:55.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1306 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>在传统的云环境下，网络负载均衡是按需调用的，一个Kubernetes manifest可以提供一个单独的通信端点用于NGINX Ingress控制器与外部客户端通信。这样间接地可以与集群中的任何应用进行通信。裸机Kubernetes集群环境确实这一服务组件，所以需要进行一些不同的设置才能为外部用户提供类似的访问。</p>
+<p>本文描述了在裸机Kubernetes环境上部署NGINX Ingress控制器的推荐的配置。</p>
+<h1 id="MetalLB：一种纯软件的解决方案"><a href="#MetalLB：一种纯软件的解决方案" class="headerlink" title="MetalLB：一种纯软件的解决方案"></a>MetalLB：一种纯软件的解决方案</h1><h1 id="NodePort-服务方式"><a href="#NodePort-服务方式" class="headerlink" title="NodePort 服务方式"></a>NodePort 服务方式</h1><p>由于这种方式简单，所以这也是《安装指南》中用户默认部署的方式。</p>
+<p>在这个配置下，NGINX容器保持与主机网络的隔离。因此它可以安全的绑定至任何的端口，包括标准的HTTP80端口和443端口。但是由于容器名称空间的隔离，集群网络外的客户端（例如公网用户）无法直接访问Ingress主机的80和443端口。所以外部客户端必须在HTTP请求后面加上分配给ingre-nginx服务的NodePort端口号。</p>
+<img src="/2018/12/17/裸机Kubernetes集群上运行Nginx-Ingress的若干考虑/nodeport.jpg" title="NodePort">
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设NodePort30100分配给ingress-nginx服务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n ingress-nginx get svc</span><br><span class="line">NAME                   TYPE        CLUSTER-IP     PORT(S)</span><br><span class="line">default-http-backend   ClusterIP   10.0.64.249    80/TCP</span><br><span class="line">ingress-nginx          NodePort    10.0.220.217   80:30100/TCP,443:30101/TCP</span><br></pre></td></tr></table></figure>
+<p>Kubernetes节点的公共IP地址是203.0.113.2（下面的external IP只做个示例，在大多数裸机环境中这个值一般为<node>）</node></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
+<p>客户端可以通过myapp.example.com主机的30100端口来访问Ingress，在这里myapp.example.com域名会解析为203.0.113.2。</p>
+<h3 id="对主机系统的影响"><a href="#对主机系统的影响" class="headerlink" title="对主机系统的影响"></a>对主机系统的影响</h3><p>虽然使用–service-node-port-range API服务标志重新配置NodePort范围，并且可以包括非特权端口（例如80和443）端口，这样听起来很有吸引力。但是这样做会导致非预料的情况和问题，包括并不限于使用了其他系统守护进程占用的端口，或授予kube-proxy某些它并不必须的特权。</p>
+<p>因此并不推荐使用这一功能，请使用本文介绍的其他替代的做法。</p>
+<p>NodePort方式有其他几个需要注意的限制：</p>
+<ul>
+<li><h2 id="Source-IP-address"><a href="#Source-IP-address" class="headerlink" title="Source IP address"></a>Source IP address</h2><p>NodePort类型的服务默认执行原地址转换。这意味着HTTP请求的源IP总是接受NGINX请求的kubernetes节点的IP地址。</p>
+<p>在NodePort设置中避免源IP的推荐方式是在ingress-nginx服务spec中设置externalTrafficPolicy的属性值为Local</p>
+<h3 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a>Warning</h3><p>这个设置有效地识别和扔掉发送到没有运行NGINX Ingress控制器实例的Kubernetes节点。为了控制NGINX ingress控制器能够在哪些节点上进行调度，应当考虑分配NGINX Pods到特定节点。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>在Kubernetes集群中包括3个节点（external IP作为示例显示，大部分裸机环境中这个字段指一般为<none>）</none></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
+<p>ngingx-ingress-controller部署包括2个复制集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n ingress-nginx get pod -o wide</span><br><span class="line">NAME                                       READY   STATUS    IP           NODE</span><br><span class="line">default-http-backend-7c5bc89cc9-p86md      1/1     Running   172.17.1.1   host-2</span><br><span class="line">nginx-ingress-controller-cf9ff8c96-8vvf8   1/1     Running   172.17.0.3   host-3</span><br><span class="line">nginx-ingress-controller-cf9ff8c96-pxsds   1/1     Running   172.17.1.4   host-2</span><br></pre></td></tr></table></figure>
+<p>发送到host-2和host-3的请求能够被转发到NGINX并且源客户端IP能够被保留下来，发送到host-1的请求将被丢弃，因为在这个节点上没有NGINX复制集。</p>
+</li>
+<li><h2 id="Ingress-状态"><a href="#Ingress-状态" class="headerlink" title="Ingress 状态"></a>Ingress 状态</h2><p>因为NodePort服务不能获得定义中分配的LoadBalancerIP，NGINX Ingress控制器不能更新它管理的Ingress对象的状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get ingress</span><br><span class="line">NAME           HOSTS               ADDRESS   PORTS</span><br><span class="line">test-ingress   myapp.example.com             80</span><br></pre></td></tr></table></figure>
+<p>尽管事实上没有为NGINX ingress提供公共IP地址的负载均衡器，仍然能够强制更新所有被管理的Ingress对象，方法是设置ingress-nginx服务中的externalIPs字段。</p>
+<h3 id="Warning-1"><a href="#Warning-1" class="headerlink" title="Warning"></a>Warning</h3><p>设置externalIPs并不仅仅使NGINX ingress控制器更新ingress对象的状态。请在官方Kubernetes文档的Service页面阅读这个选项，以及关于ExternalIPs的章节获取更多信息。</p>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>在Kubernetes集群中包括3个节点（external IP作为示例显示，大部分裸机环境中这个字段指一般为&lt; Node &gt;）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
+<p>可以编辑ingress-nginx服务并添加一下的字段至spec对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spec:</span><br><span class="line">  externalIPs:</span><br><span class="line">  - 203.0.113.1</span><br><span class="line">  - 203.0.113.2</span><br><span class="line">  - 203.0.113.3</span><br></pre></td></tr></table></figure>
+<p>设置完毕后Ingress对象可以显示出以下属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get ingress -o wide</span><br><span class="line">NAME           HOSTS               ADDRESS                               PORTS</span><br><span class="line">test-ingress   myapp.example.com   203.0.113.1,203.0.113.2,203.0.113.3   80</span><br></pre></td></tr></table></figure>
+</li>
+<li><h2 id="Redirects"><a href="#Redirects" class="headerlink" title="Redirects"></a>Redirects</h2><p>因为NGINX不知道NodePort Service执行的端口转发，后端应用程序应当负责生成重定向URLs，并将外部客户端使用的URL和端口考虑进去。</p>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><p>在不使用NodePort的情况下，通过NGINX生成重定向，例如HTTP到HTTPS的重定向或者domain到<a href="http://www.domain" target="_blank" rel="noopener">www.domain</a> 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -D- http://myapp.example.com:30100`</span><br><span class="line">HTTP/1.1 308 Permanent Redirect</span><br><span class="line">Server: nginx/1.15.2</span><br><span class="line">Location: https://myapp.example.com/  #-&gt; missing NodePort in HTTPS redirect</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/12/17/Kubectl-常用命令/" itemprop="url">Kubectl 常用命令</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-17T05:26:24.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            几秒 读完 (约 51 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="1-进入某个pod"><a href="#1-进入某个pod" class="headerlink" title="1.进入某个pod"></a>1.进入某个pod</h1><p>如何进入kubernetes的一个pod呢，其实和进入docker的一个容器相似：</p>
+<p>进入docker容器 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -ti  &lt;your-container-name&gt;   /bin/sh</span><br></pre></td></tr></table></figure>
+<p>进入pod：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl exec -ti &lt;your-pod-name&gt;  -n &lt;your-namespace&gt;  -- /bin/sh</span><br></pre></td></tr></table></figure>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+        
+<nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
+    <div class="pagination-previous">
+        <a href="/categories/Technology/page/2/">上一页</a>
+    </div>
+    <div class="pagination-next">
+        <a href="/categories/Technology/page/4/">下一页</a>
+    </div>
+    <ul class="pagination-list is-hidden-mobile">
+        
+        <li><a class="pagination-link" href="/categories/Technology/">1</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/2/">2</a></li>
+        
+        <li><a class="pagination-link is-current" href="/categories/Technology/page/3/">3</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/4/">4</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/5/">5</a></li>
+        
+    </ul>
+</nav>
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title> ORA-00604: 递归 SQL 级别 1 出现错误 ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展 - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+             ORA-00604: 递归 SQL 级别 1 出现错误 ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-25T08:35:58.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 721 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>今日遇到OA数据库报错，报错内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ORA-00604: 递归 SQL 级别 1 出现错误</span><br><span class="line">ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展</span><br><span class="line">ORA-02002: 写入审计线索时出错</span><br><span class="line">ORA-00604: 递归 SQL 级别 1 出现错误</span><br></pre></td></tr></table></figure>
+<p>这种情况是遇到了表空间已满的情况，由于Windows版32位的Oracle限制每个表空间存储文件最大32G，所以必须手动增加表空间存储文件进行扩容。步骤如下：</p>
+<ol>
+<li><p>本地模式登录数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line">SQL*Plus: Release 11.2.0.1.0 Production on Thu Oct 25 16:16:49 2018</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2010, Oracle.  All rights reserved.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connected to:</span><br><span class="line">Oracle Database 11g Enterprise Edition <span class="keyword">Release</span> <span class="number">11.2</span><span class="number">.0</span><span class="number">.1</span><span class="number">.0</span> - Production</span><br><span class="line"><span class="keyword">With</span> the Partitioning, OLAP, <span class="keyword">Data</span> <span class="keyword">Mining</span> <span class="keyword">and</span> <span class="built_in">Real</span> Application Testing options</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li><p>查看表空间情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)</span><br><span class="line">&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTT</span><br><span class="line">E_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BY</span><br><span class="line">TES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(S</span><br><span class="line">UM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024), 2)</span><br><span class="line">MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLES</span><br><span class="line">PACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_D</span><br><span class="line">ATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPA</span><br><span class="line">CE_NAME ORDER BY 4 DESC;</span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">SYSTEM                                 65482      65409.19   99.89       72.81</span><br><span class="line">        47</span><br><span class="line"></span><br><span class="line">OA                                      1248       1184.94   94.95       63.06</span><br><span class="line">        63</span><br><span class="line"></span><br><span class="line">SYSAUX                                   920        852.06   92.62       67.94</span><br><span class="line">        59</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">UNDOTBS1                                1000         420.5   42.05       579.5</span><br><span class="line">       353</span><br><span class="line"></span><br><span class="line">USERS                                      5          1.31   26.20        3.69</span><br><span class="line">      3.69</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>查看表空间文件名和是否自动增长</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT FILE_NAME,TABLESPACE_NAME,AUTOEXTENSIBLE FROM dba_data_files;</span><br><span class="line"></span><br><span class="line">FILE_NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TABLESPACE_NAME                AUT</span><br><span class="line">------------------------------ ---</span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\USERS01.DBF</span><br><span class="line">USERS                          YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\UNDOTBS01.DBF</span><br><span class="line">UNDOTBS1                       YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSAUX01.DBF</span><br><span class="line">SYSAUX                         YES</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FILE_NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TABLESPACE_NAME                AUT</span><br><span class="line">------------------------------ ---</span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSTEM01.DBF</span><br><span class="line">SYSTEM                         YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\OA.DBF</span><br><span class="line">OA                             YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSTEM02.DBF</span><br><span class="line">SYSTEM                         NO</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">6 rows selected.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>增加表空间的存储文件，system03.dbf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; ALTER TABLESPACE SYSTEM ADD DATAFILE &apos;D:\app\Administrator\oradata\orcl\SYS</span><br><span class="line">TEM03.DBF&apos; SIZE 32752M;</span><br><span class="line"></span><br><span class="line">Tablespace altered.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="5">
+<li><p>执行完成后查看表空间的使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)</span><br><span class="line">&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTT</span><br><span class="line">E_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BY</span><br><span class="line">TES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(S</span><br><span class="line">UM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024), 2)</span><br><span class="line">MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLES</span><br><span class="line">PACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_D</span><br><span class="line">ATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPA</span><br><span class="line">CE_NAME ORDER BY 4 DESC;</span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">OA                                      1248       1184.94   94.95       63.06</span><br><span class="line">        63</span><br><span class="line"></span><br><span class="line">SYSAUX                                   920        852.06   92.62       67.94</span><br><span class="line">        59</span><br><span class="line"></span><br><span class="line">SYSTEM                                 98234      65474.19   66.65    32759.81</span><br><span class="line">      3968</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">UNDOTBS1                                1000         460.5   46.05       539.5</span><br><span class="line">       353</span><br><span class="line"></span><br><span class="line">USERS                                      5          1.31   26.20        3.69</span><br><span class="line">      3.69</span><br></pre></td></tr></table></figure>
+<p>可见SYSTEM表空间已经扩大了，任务完成。</p>
+</li>
+</ol>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Oracle-运维/">#Oracle 运维</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2018/10/26/使用Guava处理文件改名并拷贝的例子，超简单！/">使用Guava处理文件改名并拷贝的例子，超简单！</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2018/10/22/LVM简单介绍/">LVM简单介绍</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bca03367b9b8c57"></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'dFKWAKQMOWFegpmxBmcPAKYs-gzGzoHsz',
+        app_key: '8GcXGC2fPHu8puRWbgX1zSS4',
+        placeholder: ''
+    });
+</script>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

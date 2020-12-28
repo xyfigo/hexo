@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>精通Pandas探索性分析 - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            精通Pandas探索性分析
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-12-28T15:19:36.000Z" itemprop="datePublished">44 分钟前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 小时 读完 (约 10577 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h2 id="从-CSV-文件读取数据时使用高级选项"><a href="#从-CSV-文件读取数据时使用高级选项" class="headerlink" title="从 CSV 文件读取数据时使用高级选项"></a>从 CSV 文件读取数据时使用高级选项</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding=<span class="string">"UTF-8"</span>,</span><br><span class="line">                 header=<span class="number">2</span>,<span class="comment">#指定行为列名</span></span><br><span class="line">                 index_col=<span class="string">"Title"</span>,<span class="comment">#指定列为索引</span></span><br><span class="line">                 usecols=[<span class="string">'Title'</span>,<span class="string">'Genre1'</span>],<span class="comment">#选择要读取的列的子集</span></span><br><span class="line">                 na_values[<span class="string">''</span>],<span class="comment">#将视为NaN的值列表传递给读取函数</span></span><br><span class="line">                 skip_blank_lines=<span class="literal">False</span>,<span class="comment">#默认情况下，read_csv会忽略空白行，但是我们可以通过将skip_blank_lines设置为False来关闭此行</span></span><br><span class="line">                 skiprows=[<span class="number">1</span>,<span class="number">3</span>,<span class="number">7</span>],<span class="comment">#选择跳过哪些行</span></span><br><span class="line">                 skipfooter=<span class="number">2</span>,<span class="comment">#从页脚或文件末尾跳过行</span></span><br><span class="line">                 nrows=<span class="number">100</span>,<span class="comment">#仅读取数据集中的前一百行</span></span><br><span class="line">                )</span><br></pre></td></tr></table></figure>
+<h3 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df.head()</span><br><span class="line">df.tail()</span><br><span class="line">df.shape</span><br></pre></td></tr></table></figure>
+<h2 id="从-Excel-文件读取数据"><a href="#从-Excel-文件读取数据" class="headerlink" title="从 Excel 文件读取数据"></a>从 Excel 文件读取数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname=<span class="number">0</span>)</span><br><span class="line">xls_file = pd.ExcelFile(<span class="string">'IMDB.xlsx'</span>)</span><br><span class="line">xls_file.sheet_names</span><br><span class="line"><span class="comment">#读取多个工作表</span></span><br><span class="line">df1 = xls_file.parse(<span class="string">'movies'</span>)</span><br><span class="line">df2 = xls_file.parse(<span class="string">'by genre'</span>)</span><br><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, </span><br><span class="line">                   sheetname=<span class="number">1</span>, <span class="comment">#读取第2个表格</span></span><br><span class="line">                   header=<span class="number">3</span>,<span class="comment">#第4行为标题</span></span><br><span class="line">                   header=<span class="literal">None</span>,<span class="comment">#没有标题</span></span><br><span class="line">                   skiprows=<span class="number">7</span>,<span class="comment">#跳过开头的行</span></span><br><span class="line">                   ski_footer=<span class="number">10</span>,<span class="comment">#跳过末尾的行</span></span><br><span class="line">                   parse_cols=<span class="number">2</span>,<span class="comment">#读取前三列</span></span><br><span class="line">                   names=[<span class="string">'X'</span>,<span class="string">'Title'</span>,<span class="string">'Rating'</span>],<span class="comment">#设置列名</span></span><br><span class="line">                   index_col=<span class="string">'Title'</span>,<span class="comment">#设置索引列</span></span><br><span class="line">                   na_values=[<span class="string">' '</span>],<span class="comment">#将列表中的数据视为丢失数据</span></span><br><span class="line">                  )</span><br></pre></td></tr></table></figure>
+<h2 id="将-JSON-数据读入-Pandas"><a href="#将-JSON-数据读入-Pandas" class="headerlink" title="将 JSON 数据读入 Pandas"></a>将 JSON 数据读入 Pandas</h2><p>为了读取 JSON 数据，pandas 提供了一种名为<code>read_json</code>的方法，其中我们传递了要读取的 JSON 数据文件的文件名和位置。 文件位置可以是本地文件，甚至可以是具有有效 URL 方案的互联网。 我们将结果数据帧分配给变量<code>DF</code>。</p>
+<p><code>read_json</code>方法读取 JSON 数据并将其转换为 Pandas 数据帧对象，即表格数据格式，如以下代码所示。 JSON 数据现在可以以数据帧格式轻松访问，可以更轻松地进行操作和浏览：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movies_json = pd.read_json(<span class="string">'IMDB.json'</span>)</span><br><span class="line">movies_json.head()</span><br></pre></td></tr></table></figure>
+<h2 id="读取-HTML-数据"><a href="#读取-HTML-数据" class="headerlink" title="读取 HTML 数据"></a>读取 HTML 数据</h2><p>pandas 内部使用<code>lxml</code> Python 模块读取 HTML 数据。 您可以通过执行<code>conda install lxml</code>，从命令行程序安装它，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7b60aa19-d51d-43a7-bd80-bd26473a7a62.png" alt="img"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.read_html(<span class="string">'IMDB.html'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="读取-PICKLE-文件"><a href="#读取-PICKLE-文件" class="headerlink" title="读取 PICKLE 文件"></a>读取 PICKLE 文件</h2><p>PICKLE 是将任何类型的 Python 对象（包括列表，字典等）转换为字符串的一种方式。 这个想法是，该字符串包含在另一个 Python 脚本中重构对象所需的所有信息。</p>
+<p>我们使用<code>read_pickle</code>方法读取我们的 PICKLE 文件，如以下代码所示。 与其他数据格式一样，Pandas 根据读取的数据创建数据帧：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_pickle(<span class="string">'IMDB.p'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<h2 id="ApacheCN-数据科学和机器学习译文集"><a href="#ApacheCN-数据科学和机器学习译文集" class="headerlink" title="ApacheCN 数据科学和机器学习译文集"></a><a href="https://ds.apachecn.org/" target="_blank" rel="noopener">ApacheCN 数据科学和机器学习译文集</a></h2><ul>
+<li><a href="https://ds.apachecn.org/#/docs/tutorialspoint-numpy" target="_blank" rel="noopener">TutorialsPoint NumPy 教程</a></li>
+<li>NumPy 秘籍中文第二版<ul>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch00" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch01" target="_blank" rel="noopener">一、使用 IPython</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch02" target="_blank" rel="noopener">二、高级索引和数组概念</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch03" target="_blank" rel="noopener">三、掌握常用函数</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch04" target="_blank" rel="noopener">四、将 NumPy 与世界的其他地方连接</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch05" target="_blank" rel="noopener">五、音频和图像处理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch06" target="_blank" rel="noopener">六、特殊数组和通用函数</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch07" target="_blank" rel="noopener">七、性能分析和调试</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch08" target="_blank" rel="noopener">八、质量保证</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch09" target="_blank" rel="noopener">九、使用 Cython 加速代码</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch10" target="_blank" rel="noopener">十、Scikits 的乐趣</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch11" target="_blank" rel="noopener">十一、最新最强的 NumPy</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-cookbook-2e/ch12" target="_blank" rel="noopener">十二、使用 NumPy 进行探索性和预测性数据分析</a></li>
+</ul>
+</li>
+<li>NumPy 初学者指南中文第三版<ul>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch00" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch01" target="_blank" rel="noopener">一、NumPy 快速入门</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch02" target="_blank" rel="noopener">二、从 NumPy 基本原理开始</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch03" target="_blank" rel="noopener">三、熟悉常用函数</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch04" target="_blank" rel="noopener">四、为您带来便利的便利函数</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch05" target="_blank" rel="noopener">五、使用矩阵和 ufunc</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch06" target="_blank" rel="noopener">六、深入探索 NumPy 模块</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch07" target="_blank" rel="noopener">七、了解特殊例程</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch08" target="_blank" rel="noopener">八、通过测试确保质量</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch09" target="_blank" rel="noopener">九、matplotlib 绘图</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch10" target="_blank" rel="noopener">十、当 NumPy 不够用时 - SciPy 及更多</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch11" target="_blank" rel="noopener">十一、玩转 Pygame</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch12" target="_blank" rel="noopener">附录 A：小测验答案</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch13" target="_blank" rel="noopener">附录 B：其他在线资源</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-beginners-guide-3e/ch14" target="_blank" rel="noopener">附录 C：NumPy 函数的参考</a></li>
+</ul>
+</li>
+<li>NumPy 基础知识<ul>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/1" target="_blank" rel="noopener">一、NumPy 简介</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/2" target="_blank" rel="noopener">二、NumPy <code>ndarray</code>对象</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/3" target="_blank" rel="noopener">三、使用 NumPy 数组</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/4" target="_blank" rel="noopener">四、NumPy 核心和子模块</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/5" target="_blank" rel="noopener">五、NumPy 中的线性代数</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/6" target="_blank" rel="noopener">六、NumPy 中的傅立叶分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/7" target="_blank" rel="noopener">七、构建和分发 NumPy 代码</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/8" target="_blank" rel="noopener">八、使用 Cython 加速 NumPy</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/9" target="_blank" rel="noopener">九、NumPy C-API 简介</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/numpy-essentials/10" target="_blank" rel="noopener">十、扩展阅读</a></li>
+</ul>
+</li>
+<li>精通 NumPy 数值分析<ul>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/1" target="_blank" rel="noopener">一、使用 NumPy 数组</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/2" target="_blank" rel="noopener">二、NumPy 线性代数</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/3" target="_blank" rel="noopener">三、使用 NumPy 统计函数对波士顿住房数据进行探索性数据分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/4" target="_blank" rel="noopener">四、使用线性回归预测房价</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/5" target="_blank" rel="noopener">五、使用 NumPy 对批发分销商的客户进行聚类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/6" target="_blank" rel="noopener">六、NumPy，SciPy，Pandas 和 Scikit-Learn</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/7" target="_blank" rel="noopener">七、高级 NumPy</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/8" target="_blank" rel="noopener">八、高性能数值计算库概述</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-num-comp-numpy/9" target="_blank" rel="noopener">九、性能基准</a></li>
+</ul>
+</li>
+<li>NumPy 数组学习手册<ul>
+<li><a href="https://ds.apachecn.org/#/docs/learn-numpy-array/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learn-numpy-array/1" target="_blank" rel="noopener">一、NumPy 入门</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learn-numpy-array/2" target="_blank" rel="noopener">二、NumPy 基础</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learn-numpy-array/3" target="_blank" rel="noopener">三、使用 NumPy 的基本数据分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learn-numpy-array/4" target="_blank" rel="noopener">四、使用 NumPy 的简单预测性分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learn-numpy-array/5" target="_blank" rel="noopener">五、信号处理技术</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learn-numpy-array/6" target="_blank" rel="noopener">六、性能分析，调试和测试</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learn-numpy-array/7" target="_blank" rel="noopener">七、Python 科学生态系统</a></li>
+</ul>
+</li>
+<li>精通 SciPy<ul>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/1" target="_blank" rel="noopener">一、数值线性代数</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/2" target="_blank" rel="noopener">二、插值和近似</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/3" target="_blank" rel="noopener">三、微分与积分</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/4" target="_blank" rel="noopener">四、非线性方程式和最优化</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/5" target="_blank" rel="noopener">五、常微分方程的初值问题</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/6" target="_blank" rel="noopener">六、计算几何</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/7" target="_blank" rel="noopener">七、描述性统计</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/8" target="_blank" rel="noopener">八、推断和数据分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-scipy/9" target="_blank" rel="noopener">九、数字图像处理</a></li>
+</ul>
+</li>
+<li>Pandas 秘籍<ul>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch00" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch01" target="_blank" rel="noopener">一、Pandas 基础</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch02" target="_blank" rel="noopener">二、数据帧基本操作</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch03" target="_blank" rel="noopener">三、开始数据分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch04" target="_blank" rel="noopener">四、选择数据子集</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch05" target="_blank" rel="noopener">五、布尔索引</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch06" target="_blank" rel="noopener">六、索引对齐</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch07" target="_blank" rel="noopener">七、分组以进行汇总，过滤和转换</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch08" target="_blank" rel="noopener">八、将数据重组为整齐的表格</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch09" target="_blank" rel="noopener">九、组合 Pandas 对象</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch10" target="_blank" rel="noopener">十、时间序列分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/pandas-cookbook/ch11" target="_blank" rel="noopener">十一、Pandas，Matplotlib 和 Seaborn 的可视化</a></li>
+</ul>
+</li>
+<li>Pandas 学习手册中文第二版<ul>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/1" target="_blank" rel="noopener">一、Pandas 与数据分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/2" target="_blank" rel="noopener">二、启动和运行 Pandas</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/3" target="_blank" rel="noopener">三、用序列表示单变量数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/4" target="_blank" rel="noopener">四、用数据帧表示表格和多元数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/5" target="_blank" rel="noopener">五、数据帧的结构操作</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/6" target="_blank" rel="noopener">六、索引数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/7" target="_blank" rel="noopener">七、类别数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/8" target="_blank" rel="noopener">八、数值统计方法</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/9" target="_blank" rel="noopener">九、存取数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/10" target="_blank" rel="noopener">十、整理数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/11" target="_blank" rel="noopener">十一、合并，连接和重塑数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/12" target="_blank" rel="noopener">十二、数据聚合</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/13" target="_blank" rel="noopener">十三、时间序列建模</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/14" target="_blank" rel="noopener">十四、可视化</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-pandas-2e/15" target="_blank" rel="noopener">十五、历史股价分析</a></li>
+</ul>
+</li>
+<li>精通 Pandas<ul>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/1" target="_blank" rel="noopener">一、Pandas 和数据分析简介</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/2" target="_blank" rel="noopener">二、Pandas 安装和支持软件</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/3" target="_blank" rel="noopener">三、Pandas 数据结构</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/4" target="_blank" rel="noopener">四、Pandas 的操作，第一部分 – 索引和选择</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/5" target="_blank" rel="noopener">五、Pandas 的操作，第二部分 – 数据的分组，合并和重塑</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/6" target="_blank" rel="noopener">六、处理缺失数据，时间序列和 Matplotlib 绘图</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/7" target="_blank" rel="noopener">七、统计之旅 – 经典方法</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/8" target="_blank" rel="noopener">八、贝叶斯统计简介</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/9" target="_blank" rel="noopener">九、Pandas 库体系结构</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/10" target="_blank" rel="noopener">十、R 与 Pandas 的比较</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-pandas/11" target="_blank" rel="noopener">十一、机器学习简介</a></li>
+</ul>
+</li>
+<li>NumPy 和 Pandas 数据分析实用指南<ul>
+<li><a href="https://ds.apachecn.org/#/docs/handson-data-analysis-numpy-pandas/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/handson-data-analysis-numpy-pandas/1" target="_blank" rel="noopener">一、配置 Python 数据分析环境</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/handson-data-analysis-numpy-pandas/2" target="_blank" rel="noopener">二、探索 NumPy</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/handson-data-analysis-numpy-pandas/3" target="_blank" rel="noopener">三、NumPy 数组上的运算</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/handson-data-analysis-numpy-pandas/4" target="_blank" rel="noopener">四、Pandas 很有趣！ 什么是 Pandas？</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/handson-data-analysis-numpy-pandas/5" target="_blank" rel="noopener">五、Pandas 的算术，函数应用以及映射</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/handson-data-analysis-numpy-pandas/6" target="_blank" rel="noopener">六、排序，索引和绘图</a></li>
+</ul>
+</li>
+<li>精通 Pandas 探索性分析<ul>
+<li><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1" target="_blank" rel="noopener">一、处理不同种类的数据集</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/2" target="_blank" rel="noopener">二、数据选择</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/3" target="_blank" rel="noopener">三、处理，转换和重塑数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4" target="_blank" rel="noopener">四、像专业人士一样可视化数据</a></li>
+</ul>
+</li>
+<li>Matplotlib 3.0 秘籍<ul>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/0" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/1" target="_blank" rel="noopener">一、Matplotlib 的剖析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/2" target="_blank" rel="noopener">二、基本绘图入门</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/3" target="_blank" rel="noopener">三、绘制多个图表和子图</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/4" target="_blank" rel="noopener">四、开发可视化来提高发布质量</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/5" target="_blank" rel="noopener">五、使用高级功能的绘图</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/6" target="_blank" rel="noopener">六、嵌入文本和表达式</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/7" target="_blank" rel="noopener">七、以不同格式保存图形</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/8" target="_blank" rel="noopener">八、开发交互式绘图</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/9" target="_blank" rel="noopener">九、在图形用户界面中嵌入绘图</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/10" target="_blank" rel="noopener">十、使用<code>mplot3d</code>工具包绘制 3D 图形</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/11" target="_blank" rel="noopener">十一、使用<code>axisartist</code>工具包</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/12" target="_blank" rel="noopener">十二、使用<code>axes_grid1</code>工具包</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/13" target="_blank" rel="noopener">十三、使用 Cartopy 工具包绘制地理地图</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-30-cookbook/14" target="_blank" rel="noopener">十四、使用 Seaborn 工具包的探索性数据分析</a></li>
+</ul>
+</li>
+<li>Matplotlib 绘图秘籍<ul>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch00" target="_blank" rel="noopener">零、前言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch01" target="_blank" rel="noopener">一、第一步</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch02" target="_blank" rel="noopener">二、自定义颜色和样式</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch03" target="_blank" rel="noopener">三、处理标注</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch04" target="_blank" rel="noopener">四、处理图形</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch05" target="_blank" rel="noopener">五、文件输出</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch06" target="_blank" rel="noopener">六、处理地图</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch07" target="_blank" rel="noopener">七、处理 3D 图形</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/matplotlib-plot-cookbook/ch08" target="_blank" rel="noopener">八、用户界面</a></li>
+</ul>
+</li>
+<li>Sklearn 秘籍<ul>
+<li><a href="https://ds.apachecn.org/#/docs/sklearn-cookbook/1" target="_blank" rel="noopener">第一章 模型预处理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/sklearn-cookbook/2" target="_blank" rel="noopener">第二章 处理线性模型</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/sklearn-cookbook/3" target="_blank" rel="noopener">第三章 使用距离向量构建模型</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/sklearn-cookbook/4" target="_blank" rel="noopener">第四章 使用 scikit-learn 对数据分类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/sklearn-cookbook/5" target="_blank" rel="noopener">第五章 模型后处理</a></li>
+</ul>
+</li>
+<li>Sklearn 学习手册<ul>
+<li><a href="https://ds.apachecn.org/#/docs/learning-sklearn/ch01" target="_blank" rel="noopener">一、机器学习 - 温和的介绍</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-sklearn/ch02" target="_blank" rel="noopener">二、监督学习</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-sklearn/ch03" target="_blank" rel="noopener">三、无监督学习</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/learning-sklearn/ch04" target="_blank" rel="noopener">四、高级功能</a></li>
+</ul>
+</li>
+<li>UCSD COGS108 数据科学实战中文笔记<ul>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/00-Introduction" target="_blank" rel="noopener">零、数据科学实战</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/01-JupyterNotebooks" target="_blank" rel="noopener">一、Jupyter 笔记本</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/02-DataAnalysis" target="_blank" rel="noopener">二、数据分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/03-Python" target="_blank" rel="noopener">三、Python</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/04-DataSciencePython" target="_blank" rel="noopener">四、Python 中的数据科学</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/05-DataGathering" target="_blank" rel="noopener">五、数据收集</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/06-DataWrangling" target="_blank" rel="noopener">六、数据整理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/07-DataCleaning" target="_blank" rel="noopener">七、数据清理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/08-DataPrivacy&amp;Anonymization" target="_blank" rel="noopener">八、数据隐私和匿名化</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/09-DataVisualization" target="_blank" rel="noopener">九、使用 Python 进行数据可视化</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/10-Distributions" target="_blank" rel="noopener">十、分布</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/11-TestingDistributions" target="_blank" rel="noopener">十一、检验分布</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/13-OrdinaryLeastSquares" target="_blank" rel="noopener">十三、普通最小二乘</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/14-LinearModels" target="_blank" rel="noopener">十四、线性模型</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/15-Clustering" target="_blank" rel="noopener">十五、聚类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/16-DimensionalityReduction" target="_blank" rel="noopener">十六、降维</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/17-Classification" target="_blank" rel="noopener">十七、分类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/18-NaturalLanguageProcessing" target="_blank" rel="noopener">十八、自然语言处理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/A1-PythonPackages" target="_blank" rel="noopener">附录一、有用的 Python 数据科学包</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ucsd-cogs108-notes/A2-Git" target="_blank" rel="noopener">附录二、git/Github 版本控制工具</a></li>
+</ul>
+</li>
+<li>USF MSDS501 计算数据科学中文讲义<ul>
+<li>一、起步<ul>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/1.1_sound" target="_blank" rel="noopener">1.1 一些动机（音频处理）</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/1.2_hello" target="_blank" rel="noopener">1.2 Python 工具的初次尝试</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/1.3_sound" target="_blank" rel="noopener">1.3 播放声音</a></li>
+</ul>
+</li>
+<li>二、设计和构建程序<ul>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/2.1_programming" target="_blank" rel="noopener">2.1 编程导论</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/2.2_data-in-memory" target="_blank" rel="noopener">2.2 在内存中表示数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/2.3_computation" target="_blank" rel="noopener">2.3 计算模型</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/2.4_python-patterns" target="_blank" rel="noopener">2.4 Python 中的编程模式</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/2.5_aliasing" target="_blank" rel="noopener">2.5 数据别名</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/2.6_functions" target="_blank" rel="noopener">2.6 使用函数组织你的代码</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/2.7_reading-code" target="_blank" rel="noopener">2.7 如何阅读代码</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/2.8_OO" target="_blank" rel="noopener">2.8 面向对象编程</a></li>
+</ul>
+</li>
+<li>三、关键编程模式<ul>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/3.1_files" target="_blank" rel="noopener">3.1 加载文件</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/3.2_dataframes" target="_blank" rel="noopener">3.2 数据帧</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/3.3_data" target="_blank" rel="noopener">3.3 操纵和可视化数据</a></li>
+</ul>
+</li>
+<li>四、用于计算和优化的迭代式方法<ul>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/4.1_random-uniform" target="_blank" rel="noopener">4.1 生成均匀的随机数</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/4.2_sqrt" target="_blank" rel="noopener">4.2 近似平方根</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/4.3_gradient-descent" target="_blank" rel="noopener">4.3 单变量梯度下降</a></li>
+</ul>
+</li>
+<li>五、常见编程工具<ul>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/5.1_bash-intro" target="_blank" rel="noopener">5.1 使用 bash 走向胜利</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/5.2_git" target="_blank" rel="noopener">5.2 使用 git 版本控制工具</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/5.3_aws" target="_blank" rel="noopener">5.3 在 Amazon Web Services 上启动虚拟机</a></li>
+</ul>
+</li>
+<li>六、可选<ul>
+<li><a href="https://ds.apachecn.org/#/docs/usf-msds501-notes/6.1_linked-list" target="_blank" rel="noopener">6.1 链表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>fast.ai 数值线性代数讲义中文版 v2<ul>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/1" target="_blank" rel="noopener">一、我们为什么在这里</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/2" target="_blank" rel="noopener">二、SVD 背景消除</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/3" target="_blank" rel="noopener">三、使用 NMF 和 SVD 的主题建模</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/4" target="_blank" rel="noopener">四、随机化 SVD</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/5" target="_blank" rel="noopener">五、LU 分解</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/6" target="_blank" rel="noopener">六、使用鲁棒回归的 CT 扫描的压缩感知</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/7" target="_blank" rel="noopener">七、线性回归和健康结果</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/8" target="_blank" rel="noopener">八、如何实现线性回归</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/9" target="_blank" rel="noopener">九、PageRank 和特征值分解</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/fastai-num-linalg-v2/10" target="_blank" rel="noopener">十、实现 QR 分解</a></li>
+</ul>
+</li>
+<li>SciPyCon 2018 sklearn 教程<ul>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/1" target="_blank" rel="noopener">一、Python 机器学习简介</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/2" target="_blank" rel="noopener">二、Python 中的科学计算工具</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/3" target="_blank" rel="noopener">三、数据表示和可视化</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/4" target="_blank" rel="noopener">四、训练和测试数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/5" target="_blank" rel="noopener">五、监督学习第一部分：分类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/6" target="_blank" rel="noopener">六、监督学习第二部分：回归分析</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/7" target="_blank" rel="noopener">七、无监督学习第一部分：变换</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/8" target="_blank" rel="noopener">八、无监督学习第二部分：聚类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/9" target="_blank" rel="noopener">九、sklearn 估计器接口回顾</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/10" target="_blank" rel="noopener">十、案例学习：泰坦尼克幸存者</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/11" target="_blank" rel="noopener">十一、文本特征提取</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/12" target="_blank" rel="noopener">十二、案例学习：用于 SMS 垃圾检测的文本分类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/13" target="_blank" rel="noopener">十三、交叉验证和得分方法</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/14" target="_blank" rel="noopener">十四、参数选择、验证和测试</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/15" target="_blank" rel="noopener">十五、估计器流水线</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/16" target="_blank" rel="noopener">十六、模型评估、得分指标和处理不平衡类别</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/17" target="_blank" rel="noopener">十七、深入：线性模型</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/18" target="_blank" rel="noopener">十八、深入：决策树与森林</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/19" target="_blank" rel="noopener">十九、自动特征选择</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/20" target="_blank" rel="noopener">二十、无监督学习：层次和基于密度的聚类算法</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/21" target="_blank" rel="noopener">二十一、无监督学习：非线性降维</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/22" target="_blank" rel="noopener">二十二、无监督学习：异常检测</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/scipycon-2018-sklearn-tut/23" target="_blank" rel="noopener">二十三、核外学习 - 用于语义分析的大规模文本分类</a></li>
+</ul>
+</li>
+<li>社交媒体挖掘<ul>
+<li>第一部分 数据挖掘<ul>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/1" target="_blank" rel="noopener">1 应了解的编程语言</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/2" target="_blank" rel="noopener">2 从哪里获取数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/3" target="_blank" rel="noopener">3 用代码获取数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/4" target="_blank" rel="noopener">4 收集自己的 FACEBOOK 数据</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/5" target="_blank" rel="noopener">5 抓取实时站点</a></li>
+</ul>
+</li>
+<li>第二部分 数据分析<ul>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/6" target="_blank" rel="noopener">6 数据分析导论</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/7" target="_blank" rel="noopener">7 数据可视化</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/8" target="_blank" rel="noopener">8 数据分析的高级工具</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/8" target="_blank" rel="noopener">9 在 REDDIT 数据中寻找趋势</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/10" target="_blank" rel="noopener">10 测量公众人物的 Twitter 活动</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/11" target="_blank" rel="noopener">11 何去何从</a></li>
+</ul>
+</li>
+<li>附录<ul>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/101" target="_blank" rel="noopener">1 编写程序通过 API 获取网站的信息</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/102" target="_blank" rel="noopener">2 通过解析网页直接获取哔哩某播主的详细信息</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/social-media-mining/103" target="_blank" rel="noopener">3 在离线表格软件中打开和处理 csv 文件</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Python 机器学习在线指南<ul>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/3" target="_blank" rel="noopener">作者</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/5" target="_blank" rel="noopener">引言</a></li>
+<li>核心概念<ul>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/7" target="_blank" rel="noopener">交叉验证</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/8" target="_blank" rel="noopener">线性回归</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/9" target="_blank" rel="noopener">过拟合和欠拟合</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/10" target="_blank" rel="noopener">正则化</a></li>
+</ul>
+</li>
+<li>监督学习<ul>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/12" target="_blank" rel="noopener">逻辑回归</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/13" target="_blank" rel="noopener">朴素贝叶斯分类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/14" target="_blank" rel="noopener">决策树</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/15" target="_blank" rel="noopener">k 最近邻</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/16" target="_blank" rel="noopener">线性支持向量机</a></li>
+</ul>
+</li>
+<li>无监督学习<ul>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/18" target="_blank" rel="noopener">聚类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/19" target="_blank" rel="noopener">主成分分析</a></li>
+</ul>
+</li>
+<li>深度学习<ul>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/21" target="_blank" rel="noopener">多层感知机</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/22" target="_blank" rel="noopener">卷积神经网络</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/23" target="_blank" rel="noopener">自编码器</a></li>
+</ul>
+</li>
+<li><a href="https://ds.apachecn.org/#/docs/vt-cs4624-pyml/25" target="_blank" rel="noopener">原文的协议</a></li>
+</ul>
+</li>
+<li>数据科学和人工智能技术笔记<ul>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/1" target="_blank" rel="noopener">一、向量、矩阵和数组</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/2" target="_blank" rel="noopener">二、数据准备</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/3" target="_blank" rel="noopener">三、数据预处理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/4" target="_blank" rel="noopener">四、图像预处理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/5" target="_blank" rel="noopener">五、文本预处理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/6" target="_blank" rel="noopener">六、日期时间预处理</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/7" target="_blank" rel="noopener">七、特征工程</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/8" target="_blank" rel="noopener">八、特征选择</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/9" target="_blank" rel="noopener">九、模型验证</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/10" target="_blank" rel="noopener">十、模型选择</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/11" target="_blank" rel="noopener">十一、线性回归</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/12" target="_blank" rel="noopener">十二、逻辑回归</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/13" target="_blank" rel="noopener">十三、树和森林</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/14" target="_blank" rel="noopener">十四、K 最近邻</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/15" target="_blank" rel="noopener">十五、支持向量机</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/16" target="_blank" rel="noopener">十六、朴素贝叶斯</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/17" target="_blank" rel="noopener">十七、聚类</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/18" target="_blank" rel="noopener">十八、Keras</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/19.1" target="_blank" rel="noopener">十九、数据整理（上）</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/19.2" target="_blank" rel="noopener">十九、数据整理（下）</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/20" target="_blank" rel="noopener">二十、数据可视化</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ds-ai-tech-notes/21" target="_blank" rel="noopener">二十一、统计学</a></li>
+</ul>
+</li>
+<li>写给人类的机器学习<ul>
+<li><a href="https://ds.apachecn.org/#/docs/ml-for-humans/1" target="_blank" rel="noopener">一、为什么机器学习重要</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ml-for-humans/2.1" target="_blank" rel="noopener">2.1 监督学习</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ml-for-humans/2.2" target="_blank" rel="noopener">2.2 监督学习 II</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ml-for-humans/2.3" target="_blank" rel="noopener">2.3 监督学习 III</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ml-for-humans/3" target="_blank" rel="noopener">三、无监督学习</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ml-for-humans/4" target="_blank" rel="noopener">四、神经网络和深度学习</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ml-for-humans/5" target="_blank" rel="noopener">五、强化学习</a></li>
+<li><a href="https://ds.apachecn.org/#/docs/ml-for-humans/6" target="_blank" rel="noopener">六、最好的机器学习资源</a></li>
+</ul>
+</li>
+<li><a href="https://ds.apachecn.org/#/docs/super-machine-learning-revision-notes/README" target="_blank" rel="noopener">机器学习超级复习笔记</a></li>
+</ul>
+<h1 id="一、处理不同种类的数据集"><a href="#一、处理不同种类的数据集" class="headerlink" title="一、处理不同种类的数据集"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=一、处理不同种类的数据集" target="_blank" rel="noopener">一、处理不同种类的数据集</a></h1><p>在本章中，我们将学习如何在 Pandas 中使用不同种类的数据集格式。 我们将学习如何使用 Pandas 导入的 CSV 文件提供的高级选项。 我们还将研究如何在 Pandas 中使用 Excel 文件，以及如何使用<code>read_excel</code>方法的高级选项。 我们将探讨其他一些使用流行数据格式的 Pandas 方法，例如 HTML，JSON，PKL 文件，SQL 等。</p>
+<h1 id="从-CSV-文件读取数据时使用高级选项-1"><a href="#从-CSV-文件读取数据时使用高级选项-1" class="headerlink" title="从 CSV 文件读取数据时使用高级选项"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=从-csv-文件读取数据时使用高级选项" target="_blank" rel="noopener">从 CSV 文件读取数据时使用高级选项</a></h1><p>在本部分中，我们将 CSV 和 Pandas 结合使用，并学习如何使用<code>read_csv</code>方法读取 CSV 数据集以及高级选项。</p>
+<h1 id="导入模块"><a href="#导入模块" class="headerlink" title="导入模块"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=导入模块" target="_blank" rel="noopener">导入模块</a></h1><p>首先，我们将使用以下命令导入<code>pandas</code>模块：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>要读取 CSV 文件，我们使用<code>read_csv</code>方法，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>为了执行基本导入，请将数据集的文件名传递给<code>read_csv</code>，并将结果数据帧分配给变量。 在以下屏幕截图中，我们可以看到 Pandas 已将数据集转换为表格格式：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/cfe3ed2e-29c2-480d-8033-c65564c39388.png" alt="img"></p>
+<h1 id="高级读取选项"><a href="#高级读取选项" class="headerlink" title="高级读取选项"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=高级读取选项" target="_blank" rel="noopener">高级读取选项</a></h1><p>在 Python 中，pandas 具有<code>read_csv</code>方法的许多高级选项，您可以在其中控制如何从 CSV 文件读取数据。</p>
+<h1 id="处理列，索引位置和名称"><a href="#处理列，索引位置和名称" class="headerlink" title="处理列，索引位置和名称"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=处理列，索引位置和名称" target="_blank" rel="noopener">处理列，索引位置和名称</a></h1><p>默认情况下，<code>read_csv</code>将 CSV 文件第一行中的条目视为列名。 我们可以通过将<code>header</code>设置为<code>None</code>来关闭此功能，如以下代码块所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, header=<span class="literal">None</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/e1f24ca1-344b-4700-bb36-38a6102167a3.png" alt="img"></p>
+<h1 id="指定另一行作为标题"><a href="#指定另一行作为标题" class="headerlink" title="指定另一行作为标题"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=指定另一行作为标题" target="_blank" rel="noopener">指定另一行作为标题</a></h1><p>您还可以通过将行号传递给<code>header</code>选项，从而从其他行（而不是默认的第一行）设置列名，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, header=<span class="number">2</span>)</span><br><span class="line">df.head()</span><br><span class="line">复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7bf7d1c8-8b22-4fe1-bdcf-82a45d868d85.png" alt="img"></p>
+<h1 id="将列指定为索引"><a href="#将列指定为索引" class="headerlink" title="将列指定为索引"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=将列指定为索引" target="_blank" rel="noopener">将列指定为索引</a></h1><p>默认情况下，<code>read_csv</code>在读取数据时分配一个默认的数字索引，该索引从零开始。 但是，您可以通过将列名传递给索引列选项来更改此行为。 然后，Pandas 会将索引设置为此列，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, index_col=<span class="string">'Title'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在这里，我们传递了电影标题作为索引名称。 现在，索引名称为<code>Title</code>，而不是默认的数字索引，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/478b7fde-0165-48fc-a2a6-9b8207751094.png" alt="img"></p>
+<h1 id="选择要读取的列的子集"><a href="#选择要读取的列的子集" class="headerlink" title="选择要读取的列的子集"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=选择要读取的列的子集" target="_blank" rel="noopener">选择要读取的列的子集</a></h1><p>我们还可以选择读取 CSV 文件中特定列的子集。 为此，我们将列名作为列表传递，以使用<code>columns</code>选项，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, usecols=[<span class="string">'Title'</span>, <span class="string">'Genre1'</span>])</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面的代码段的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/0f20610e-b198-4572-9084-ab850b82c096.png" alt="img"></p>
+<h1 id="处理缺失和不适用的数据"><a href="#处理缺失和不适用的数据" class="headerlink" title="处理缺失和不适用的数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=处理缺失和不适用的数据" target="_blank" rel="noopener">处理缺失和不适用的数据</a></h1><p>接下来，我们将看到如何通过读取 CSV 文件来处理丢失的数据。 默认情况下，<code>read_csv</code>认为缺少以下值并将其标记为<code>NaN</code>：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/c330d7f5-b1c0-4fc8-8fb2-d4bf7a5eb8a7.png" alt="img"></p>
+<p>但是，您可以添加到此列表。 为此，只需将要视为<code>NaN</code>的值列表传递给，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, na_values=[<span class="string">''</span>])复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<h1 id="选择是否跳过空白行"><a href="#选择是否跳过空白行" class="headerlink" title="选择是否跳过空白行"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=选择是否跳过空白行" target="_blank" rel="noopener">选择是否跳过空白行</a></h1><p>有时整行没有值； 因此，我们可以在读取数据时选择处理这些行。 默认情况下，<code>read_csv</code>会忽略空白行，但是我们可以通过将<code>skip_blank_lines</code>设置为<code>False</code>来关闭此行，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, skip_blank_lines=<span class="literal">False</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<h1 id="数据解析选项"><a href="#数据解析选项" class="headerlink" title="数据解析选项"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=数据解析选项" target="_blank" rel="noopener">数据解析选项</a></h1><p>我们可以通过读取 CSV 文件来选择跳过哪些行。 我们可以将行号作为列表传递给<code>skiprows</code>选项。 第一行的索引为零，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, skiprows = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">7</span>])</span><br><span class="line">df.head()</span><br><span class="line">复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/80076b18-0c73-4252-b86f-f088e6ed6dad.png" alt="img"></p>
+<h1 id="从文件的页脚或结尾跳过行"><a href="#从文件的页脚或结尾跳过行" class="headerlink" title="从文件的页脚或结尾跳过行"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=从文件的页脚或结尾跳过行" target="_blank" rel="noopener">从文件的页脚或结尾跳过行</a></h1><p>要从页脚或文件末尾跳过行，请使用<code>skipfooter</code>选项并传递一个数字，该数字指定要跳过的行数。 在以下代码中，我们通过了<code>2</code>。 如我们所见，在跳过最后两行之后，我们创建的上一个数据帧与我们创建的数据帧之间存在差异：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df.tail(<span class="number">2</span>)</span><br><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, skipfooter=<span class="number">2</span>, engine=<span class="string">'python'</span>)</span><br><span class="line">df.tail(<span class="number">2</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>以下屏幕截图显示了输出：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/c874e464-2cf3-4677-9828-2202c05a536b.png" alt="img"></p>
+<h1 id="读取文件的子集或一定数量的行"><a href="#读取文件的子集或一定数量的行" class="headerlink" title="读取文件的子集或一定数量的行"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=读取文件的子集或一定数量的行" target="_blank" rel="noopener">读取文件的子集或一定数量的行</a></h1><p>有时数据文件太大，我们只想看一下前几行。 我们可以通过将要导入的行数传递到<code>nrows</code>选项来做到这一点，如以下代码所示。 在这里，我们将<code>100</code>传递给<code>nrows</code>，然后<code>nrows</code>仅读取数据集中的前一百行：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'IMDB.csv'</span>, encoding = <span class="string">"ISO-8859-1"</span>, nrows=<span class="number">100</span>)</span><br><span class="line">df.shape复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<h1 id="从-Excel-文件读取数据-1"><a href="#从-Excel-文件读取数据-1" class="headerlink" title="从 Excel 文件读取数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=从-excel-文件读取数据" target="_blank" rel="noopener">从 Excel 文件读取数据</a></h1><p>在本节中，我们将学习如何使用 Pandas 使用 Excel 数据来处理表格，以及如何使用 Pandas 的<code>read_excel</code>方法从 Excel 文件中读取数据。 我们将阅读并探索一个真实的 Excel 数据集，并使用 xplore 解析一些可用于解析 Excel 数据的高级选项。</p>
+<p>熊猫内部使用 Python Excel 库<code>rd</code>从 Excel 文件中提取数据。 我们可以通过执行<code>conda install xlrd</code>来安装它。</p>
+<p>首先，请确保命令行程序在安装前以管理员模式运行，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/aa1344e7-c572-4fdf-add1-89fc1e472e84.png" alt="img"></p>
+<p>以下屏幕截图显示了我们将使用 Pandas 阅读和探索的 Excel 数据集：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/184c0d1e-e396-4c78-91af-0ba3ee54aaab.png" alt="img"></p>
+<p>上一个屏幕截图是电影分级的集合，<a href="https://github.com/saipranava/IMDB" target="_blank" rel="noopener">可以在这里找到它</a>。</p>
+<h1 id="基本的-Excel-读取"><a href="#基本的-Excel-读取" class="headerlink" title="基本的 Excel 读取"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=基本的-excel-读取" target="_blank" rel="noopener">基本的 Excel 读取</a></h1><p>我们正在使用 Pandas 的<code>read_excel</code>方法读取此数据。 以最简单的格式，我们只是将想要的 Excel 数据集的文件名传递给<code>read_excel</code>方法。 pandas 将 Excel 文件中的数据转换为 Pandas 数据帧。 Pandas 内部为此使用 Excel <code>rd</code>库。 在这里，Pandas 已读取数据并在内存中创建了表格数据对象，我们可以在我们的代码中访问，浏览和操作，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>)</span><br><span class="line">df.head()</span><br><span class="line">复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前一个代码块的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2815fd21-3be7-4ffa-829b-85e735677409.png" alt="img"></p>
+<p>pandas 有很多高级选项，我们可以使用它们来控制应如何读取数据。如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5a286568-dfd0-4d26-8ce9-1805adc4690b.png" alt="img"></p>
+<h1 id="指定应读取的工作表"><a href="#指定应读取的工作表" class="headerlink" title="指定应读取的工作表"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=指定应读取的工作表" target="_blank" rel="noopener">指定应读取的工作表</a></h1><p>要指定应读取的纸张，请将值传递给<code>sheetname</code>选项。 如下面的屏幕快照所示，我们只是传递<code>0</code>，它是 Excel 工作表中第一张工作表的索引值。 这非常方便，尤其是当我们不知道确切的工作表名称时：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname=<span class="number">0</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/821fc1c4-66e5-4d78-8833-5a18bd54d4dd.png" alt="img"></p>
+<h1 id="从多张表读取数据"><a href="#从多张表读取数据" class="headerlink" title="从多张表读取数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=从多张表读取数据" target="_blank" rel="noopener">从多张表读取数据</a></h1><p>Excel 数据集文件附带数据和多个工作表。 实际上，这是许多用户更喜欢 Excel 而不是 CSV 的主要原因之一。 幸运的是，Pandas 支持从多张纸中读取数据。</p>
+<h1 id="查找工作表名称"><a href="#查找工作表名称" class="headerlink" title="查找工作表名称"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=查找工作表名称" target="_blank" rel="noopener">查找工作表名称</a></h1><p>要找出工作表的名称，请将 Excel 文件传递到<code>ExcelFile</code>类，然后在结果对象上调用<code>sheet_names</code>属性。 该类将 Excel 文件中的图纸名称打印为列表。 如果我们想从名为<code>data-movies</code>的工作表中读取数据，它将类似于以下代码片段：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xls_file = pd.ExcelFile(<span class="string">'IMDB.xlsx'</span>)</span><br><span class="line">xls_file.sheet_names复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>接下来，我们在之前创建的 Excel 文件对象上调用<code>parse</code>方法，并传入我们想要读取的工作表名称。 然后我们将结果分配给两个单独的数据帧对象，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df1 = xls_file.parse(<span class="string">'movies'</span>)</span><br><span class="line">df2 = xls_file.parse(<span class="string">'by genre'</span>)</span><br><span class="line">df1.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>现在，我们从两个单独的数据帧，中的两个工作表中获取数据，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/51df758b-0331-47f7-9f5a-d53195e29b7f.png" alt="img"></p>
+<h1 id="选择标题或列标签"><a href="#选择标题或列标签" class="headerlink" title="选择标题或列标签"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=选择标题或列标签" target="_blank" rel="noopener">选择标题或列标签</a></h1><p>默认情况下，pandas 会将列名称或标题设置为 Excel 文件中第一个非空白行的值。 但是，我们可以更改此行为。 在以下屏幕截图中，我们将值<code>3</code>传递给<code>header</code>选项，该选项告诉<code>read_excel</code>方法设置索引行<code>3</code>中的标题名称：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname=<span class="number">1</span>, header=<span class="number">3</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/12d7f628-5b08-4cfa-9919-306cca42da97.png" alt="img"></p>
+<h1 id="没有标题"><a href="#没有标题" class="headerlink" title="没有标题"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=没有标题" target="_blank" rel="noopener">没有标题</a></h1><p>我们还可以告诉<code>read_excel</code>忽略标题并将所有行都视为记录。 只要 Excel 没有标题行，就很方便。 为此，我们将<code>header</code>设置为<code>None</code>和，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname=<span class="number">1</span>, header=<span class="literal">None</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/a1b88a66-420f-4bb6-ac46-103fd63509d4.png" alt="img"></p>
+<h1 id="在开头跳过行"><a href="#在开头跳过行" class="headerlink" title="在开头跳过行"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=在开头跳过行" target="_blank" rel="noopener">在开头跳过行</a></h1><p>要跳过文件开头的行，只需将<code>skiprows</code>设置为要跳过的行数，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname=<span class="number">1</span>, skiprows=<span class="number">7</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<h1 id="在末尾跳过行"><a href="#在末尾跳过行" class="headerlink" title="在末尾跳过行"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=在末尾跳过行" target="_blank" rel="noopener">在末尾跳过行</a></h1><p>为此，我们使用<code>skip_footer</code>选项，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname=<span class="number">1</span>, ski_footer=<span class="number">10</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<h1 id="选择列"><a href="#选择列" class="headerlink" title="选择列"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=选择列" target="_blank" rel="noopener">选择列</a></h1><p>我们还可以选择只读取列的子集。 这是通过将<code>parse_cols</code>选项设置为数值来完成的，这将导致将列从<code>0</code>读取到我们设置解析列值的任何索引。 我们在这种情况下设置了<code>parse_cols=2</code>，它将读取 Excel 文件中的前三列，如以下代码片段所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname= <span class="number">0</span>, parse_cols=<span class="number">2</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>以下是输出：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/cbc17e06-e0cb-4693-a19d-1d2e8101bc39.png" alt="img"></p>
+<h1 id="列名"><a href="#列名" class="headerlink" title="列名"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=列名" target="_blank" rel="noopener">列名</a></h1><p>我们可以选择给列使用不同的名称，而不是标题行中提供的默认名称。 为此，我们将列名列表传递给<code>names</code>参数，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname=<span class="number">0</span>, parse_cols = <span class="number">2</span>, names=[<span class="string">'X'</span>,<span class="string">'Title'</span>,</span><br><span class="line">   <span class="string">'Rating'</span>], )</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在下面的屏幕截图中，我们将列名设置为读取时传递的名称：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/cb689dbe-dff6-448e-ad42-896429b363f3.png" alt="img"></p>
+<h1 id="读取数据时设置索引"><a href="#读取数据时设置索引" class="headerlink" title="读取数据时设置索引"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=读取数据时设置索引" target="_blank" rel="noopener">读取数据时设置索引</a></h1><p>默认情况下，<code>read_excel</code>用数字索引标记零，从<code>0</code>开始。 我们可以将索引或行标签设置为更高的值或我们的选择。 为此，我们将数据集的列名传递给<code>index_col</code>选项。 在以下代码中，我们将索引设置为<code>Title</code>列：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname=<span class="number">0</span>, index_col=<span class="string">'Title'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/75fb95a9-93d5-4196-aff7-d4bfa3c1541e.png" alt="img"></p>
+<h1 id="读取时处理丢失的数据"><a href="#读取时处理丢失的数据" class="headerlink" title="读取时处理丢失的数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=读取时处理丢失的数据" target="_blank" rel="noopener">读取时处理丢失的数据</a></h1><p><code>read_excel</code>方法有一个值列表，它将被视为丢失，然后将其设置为<code>NaN</code>。 我们可以在使用<code>na_values</code>参数传递值列表时添加此代码，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">'IMDB.xlsx'</span>, sheetname= <span class="number">0</span>, na_values=[<span class="string">' '</span>])复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<h1 id="读取其他流行格式的数据"><a href="#读取其他流行格式的数据" class="headerlink" title="读取其他流行格式的数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=读取其他流行格式的数据" target="_blank" rel="noopener">读取其他流行格式的数据</a></h1><p>在本节中，我们将探索 Pandas 的功能，以读取和使用各种流行的数据格式。 我们还将学习如何从 JSON 格式，HTML 文件和 PICKLE 数据集中读取数据，并且可以从基于 SQL 的数据库中读取数据。</p>
+<h1 id="读取-JSON-文件"><a href="#读取-JSON-文件" class="headerlink" title="读取 JSON 文件"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=读取-json-文件" target="_blank" rel="noopener">读取 JSON 文件</a></h1><p>JSON 是用于结构化数据的最小可读格式。 它主要用于在服务器和 Web 应用之间传输数据，以替代 XML，如以下屏幕快照所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/c67f9d24-a64c-43d4-9f07-d5eccf714d35.png" alt="img"></p>
+<h1 id="将-JSON-数据读入-Pandas-1"><a href="#将-JSON-数据读入-Pandas-1" class="headerlink" title="将 JSON 数据读入 Pandas"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=将-json-数据读入-pandas" target="_blank" rel="noopener">将 JSON 数据读入 Pandas</a></h1><p>为了读取 JSON 数据，pandas 提供了一种名为<code>read_json</code>的方法，其中我们传递了要读取的 JSON 数据文件的文件名和位置。 文件位置可以是本地文件，甚至可以是具有有效 URL 方案的互联网。 我们将结果数据帧分配给变量<code>DF</code>。</p>
+<p><code>read_json</code>方法读取 JSON 数据并将其转换为 Pandas 数据帧对象，即表格数据格式，如以下代码所示。 JSON 数据现在可以以数据帧格式轻松访问，可以更轻松地进行操作和浏览：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movies_json = pd.read_json(<span class="string">'IMDB.json'</span>)</span><br><span class="line">movies_json.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>上一个代码块将产生以下输出：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/4a1818ca-391b-48cb-9593-35960d5553bf.png" alt="img"></p>
+<h1 id="读取-HTML-数据-1"><a href="#读取-HTML-数据-1" class="headerlink" title="读取 HTML 数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/1?id=读取-html-数据" target="_blank" rel="noopener">读取 HTML 数据</a></h1><p>pandas 内部使用<code>lxml</code> Python 模块读取 HTML 数据。 您可以通过执行<code>conda install lxml</code>，从命令行程序安装它，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7b60aa19-d51d-43a7-bd80-bd26473a7a62.png" alt="img"></p>
+<p>我们还可以从本地文件甚至直接从互联网导入 HTML 数据：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5ef932a6-3683-46dd-ac95-62d223a07840.png" alt="img"></p>
+<p>在这里，我们将 HTML 文件或 URL 的位置传递给<code>read_html</code>方法。<code>read_html</code>从 HTML 提取表格数据，然后将其转换为 Pandas 数据帧。 在以下代码中，我们以表格格式获取了从 HTML 文件提取的数据：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.read_html(<span class="string">'IMDB.html'</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/86a8b673-bec2-4b09-82aa-a733b9ab7cdc.png" alt="img"></p>
+<h2 id="读取-PICKLE-文件-1"><a href="#读取-PICKLE-文件-1" class="headerlink" title="读取 PICKLE 文件"></a>读取 PICKLE 文件</h2><p>酸洗是将任何类型的 Python 对象（包括列表，字典等）转换为字符串的一种方式。 这个想法是，该字符串包含在另一个 Python 脚本中重构对象所需的所有信息。</p>
+<p>我们使用<code>read_pickle</code>方法读取我们的 PICKLE 文件，如以下代码所示。 与其他数据格式一样，Pandas 根据读取的数据创建数据帧：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_pickle(<span class="string">'IMDB.p'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/db67347d-5356-40ff-a4ec-38485abb9f6b.png" alt="img"></p>
+<h2 id="读取-SQL-数据"><a href="#读取-SQL-数据" class="headerlink" title="读取 SQL 数据"></a>读取 SQL 数据</h2><p>在这里，我们将从流行的数据库浏览器 SQLite 中读取 SQL 数据，可以通过执行以下命令进行安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install sqlite</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlite3</span><br><span class="line">conn = sqlite3.connect(<span class="string">"IMDB.sqlite"</span>)</span><br><span class="line">df = pd.read_sql_query(<span class="string">"SELECT * FROM IMDB;"</span>, conn)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<h2 id="从剪贴板读取数据"><a href="#从剪贴板读取数据" class="headerlink" title="从剪贴板读取数据"></a>从剪贴板读取数据</h2><p>使用 pandas 的<code>read_clipboard</code>方法读取数据并创建一个数据帧，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_clipboard()</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在本章中，我们学习了如何在 Pandas 中使用不同种类的数据集格式。 我们学习了在导入 CSV 文件时如何使用 Pandas 提供的高级选项。 我们还看到了如何使用 Excel 数据集，并且探讨了可用于处理各种数据格式（例如 HTML，JSON，PICKLE 文件，SQL 等）的方法。</p>
+<p>在下一章中，我们将学习如何在高级数据选择中使用 Pandas 技术。</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Pandas/">#Pandas</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2020/12/28/使用Raml构建Restful-API/"></a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2020/11/23/榨菜指数-中国城镇化的缩影/">榨菜指数--中国城镇化的缩影</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bca03367b9b8c57"></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'dFKWAKQMOWFegpmxBmcPAKYs-gzGzoHsz',
+        app_key: '8GcXGC2fPHu8puRWbgX1zSS4',
+        placeholder: ''
+    });
+</script>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

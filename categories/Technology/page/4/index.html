@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>分类: Technology - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5><i class="far fa-folder"></i>Technology</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/12/14/Kubernetes-V1-9-6-安装Dashboard/" itemprop="url">Kubernetes V1.9.6 安装Dashboard</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-14T15:19:59.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1380 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>[TOC]</p>
+<p>今天想为测试用的Kubernetes V1.9.6版本集群安装Dashboard，以便更直观的了解各种Kubernetes概念。然后参照网上的教程进行了操作，遇到了HTTPS证书的问题，始终打不开网页。经过Google了一番，终于找到了解决方案，在此记录一下。</p>
+<h1 id="安装Dashboard"><a href="#安装Dashboard" class="headerlink" title="安装Dashboard"></a>安装Dashboard</h1><h2 id="1-下载文件"><a href="#1-下载文件" class="headerlink" title="1. 下载文件"></a>1. 下载文件</h2><p>  wget <a href="https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml" target="_blank" rel="noopener">https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml</a></p>
+<h2 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h2><p>添加type: NodePort，暴露Dashboard服务。注意这里只添加行type: NodePort和nodePort: 30001即可，其他配置不用改，大概位置在末尾的Dashboard Service的spec中，参考如下。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">NodePort</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">    - port:</span> <span class="number">443</span></span><br><span class="line"><span class="attr">      targetPort:</span> <span class="number">8443</span></span><br><span class="line"><span class="attr">      nodePort:</span> <span class="number">30001</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-下载镜像-每个节点"><a href="#3-下载镜像-每个节点" class="headerlink" title="3. 下载镜像 (每个节点)"></a>3. 下载镜像 (每个节点)</h2><p>由于网络原因，配置文件中的k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3镜像无法下载，所以需要进行以下操作提前下载好。由于我使用了docker 代理，并且在代理机器上拨了翻墙VPN，所以可以访问到谷歌的镜像库下周k8s有关插件的镜像。</p>
+<h2 id="4-安装dashboard"><a href="#4-安装dashboard" class="headerlink" title="4. 安装dashboard"></a>4. 安装dashboard</h2><p>kubectl create -f kubernetes-dashboard.yaml</p>
+<h2 id="5-授予Dashboard账户集群管理权限"><a href="#5-授予Dashboard账户集群管理权限" class="headerlink" title="5. 授予Dashboard账户集群管理权限"></a>5. 授予Dashboard账户集群管理权限</h2><p>编写配置文件</p>
+<p>vim kubernetes-dashboard-admin.rbac.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-admin</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRoleBinding</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-admin</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line"><span class="attr">  apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line"><span class="attr">  kind:</span> <span class="string">ClusterRole</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">cluster-admin</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line"><span class="attr">- kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-admin</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br></pre></td></tr></table></figure>
+<p>创建账户管理</p>
+<p>kubectl create -f kubernetes-dashboard-admin.rbac.yaml</p>
+<h2 id="6-查看dashboard运行的node的IP"><a href="#6-查看dashboard运行的node的IP" class="headerlink" title="6. 查看dashboard运行的node的IP"></a>6. 查看dashboard运行的node的IP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n kube-system get pods -o wide|grep dashboard|awk &apos;&#123;print $7&#125;&apos;</span><br></pre></td></tr></table></figure>
+<h1 id="排除NET-ERR-CERT-INVALID错误"><a href="#排除NET-ERR-CERT-INVALID错误" class="headerlink" title="排除NET::ERR_CERT_INVALID错误"></a>排除NET::ERR_CERT_INVALID错误</h1><p>可以通过之前设置的MasterIP：端口访问到dashboard，但是如果没有设置签名证书，而是用了原始的证书，会出现认证问题，即打开浏览器访问，会报告NET::ERR_CERT_INVALID错误，如下图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img  ERR_CERT_INVALID.png NET::ERR_CERT_INVALID%&#125;</span><br></pre></td></tr></table></figure>
+<p>如访问提示了证书错误<code>NET::ERR_CERT_INVALID</code>，原因是由于物理机的浏览器证书不可用。我们可以生成一个私有证书或者使用公有证书，下面开始配置证书。</p>
+<h2 id="1-查看kubernetes-dashboard-容器跑在哪台node节点上，这里跑在docker-slave2上"><a href="#1-查看kubernetes-dashboard-容器跑在哪台node节点上，这里跑在docker-slave2上" class="headerlink" title="1.查看kubernetes-dashboard 容器跑在哪台node节点上，这里跑在docker-slave2上"></a>1.查看kubernetes-dashboard 容器跑在哪台node节点上，这里跑在docker-slave2上</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@docker-master1 pki]# kubectl get pod -n kube-system -o wide</span><br><span class="line">NAME                                     READY   STATUS    RESTARTS   AGE     IP               NODE             NOMINATED NODE</span><br><span class="line">coredns-576cbf47c7-l5wlh                 1/1     Running   1          9d      10.244.0.5       docker-master1   &lt;none&gt;</span><br><span class="line">coredns-576cbf47c7-zrl66                 1/1     Running   1          9d      10.244.0.4       docker-master1   &lt;none&gt;</span><br><span class="line">etcd-docker-master1                      1/1     Running   1          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-apiserver-docker-master1            1/1     Running   2          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-controller-manager-docker-master1   1/1     Running   2          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-flannel-ds-amd64-c7wz6              1/1     Running   0          9d      192.168.20.213   docker-slave1    &lt;none&gt;</span><br><span class="line">kube-flannel-ds-amd64-hqvz9              1/1     Running   0          9d      192.168.20.214   docker-slave2    &lt;none&gt;</span><br><span class="line">kube-flannel-ds-amd64-w7n4s              1/1     Running   2          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-proxy-8gj2w                         1/1     Running   1          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kube-proxy-mt6dk                         1/1     Running   0          9d      192.168.20.213   docker-slave1    &lt;none&gt;</span><br><span class="line">kube-proxy-qtxz7                         1/1     Running   0          9d      192.168.20.214   docker-slave2    &lt;none&gt;</span><br><span class="line">kube-scheduler-docker-master1            1/1     Running   2          9d      192.168.20.210   docker-master1   &lt;none&gt;</span><br><span class="line">kubernetes-dashboard-5f864b6c5f-5s2rw    1/1     Running   0          5d21h   10.244.3.9       docker-slave2    &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="2-在docker-slave2节点上查看kubernetes-dashboard容器ID"><a href="#2-在docker-slave2节点上查看kubernetes-dashboard容器ID" class="headerlink" title="2. 在docker-slave2节点上查看kubernetes-dashboard容器ID"></a>2. 在docker-slave2节点上查看kubernetes-dashboard容器ID</h2><p>root@docker-slave2 ~]# docker ps | grep dashboard<br>384d9dc0170b        registry.cn-hangzhou.aliyuncs.com/kube_containers/kubernetes-dashboard-amd64   “/dashboard –insecu…”   5 days ago          Up 44 hours                             k8s_kubernetes-dashboard_kubernetes-dashboard-5f864b6c5f-5s2rw_kube-system_94c8c50b-f484-11e8-80e8-000c29c3dca5_0</p>
+<h2 id="3-查看kubernetes-dashboard容器certs所挂载的宿主主机目录"><a href="#3-查看kubernetes-dashboard容器certs所挂载的宿主主机目录" class="headerlink" title="3.查看kubernetes-dashboard容器certs所挂载的宿主主机目录"></a>3.查看kubernetes-dashboard容器certs所挂载的宿主主机目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[root@docker-slave2 ~]# docker inspect -f &#123;&#123;.Mounts&#125;&#125; 384d9dc0170b</span><br><span class="line">&quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/volumes/kubernetes.io~empty-dir/tmp-volume&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/tmp&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/volumes/kubernetes.io~secret/kubernetes-dashboard-token-tbctd&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/var/run/secrets/kubernetes.io/serviceaccount&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;ro&quot;,</span><br><span class="line">                &quot;RW&quot;: false,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/etc-hosts&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/etc/hosts&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/containers/kubernetes-dashboard/0e84c511&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/dev/termination-log&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/volumes/kubernetes.io~secret/kubernetes-dashboard-certs&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/certs&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;ro&quot;,</span><br><span class="line">                &quot;RW&quot;: false,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br></pre></td></tr></table></figure>
+<h2 id="4-这里以私有证书配置，生成dashboard证书"><a href="#4-这里以私有证书配置，生成dashboard证书" class="headerlink" title="4. 这里以私有证书配置，生成dashboard证书"></a>4. 这里以私有证书配置，生成dashboard证书</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -des3 -passout pass:x -out dashboard.pass.key 2048</span><br><span class="line">openssl rsa -passin pass:x -in dashboard.pass.key -out dashboard.key</span><br><span class="line">openssl req -new -key dashboard.key -out dashboard.csr</span><br><span class="line">openssl x509 -req -sha256 -days 365 -in dashboard.csr -signkey dashboard.key -out dashboard.crt</span><br></pre></td></tr></table></figure>
+<h2 id="5-将生成的dashboard-crt-dashboard-key放到certs对应的宿主主机souce目录"><a href="#5-将生成的dashboard-crt-dashboard-key放到certs对应的宿主主机souce目录" class="headerlink" title="5.将生成的dashboard.crt  dashboard.key放到certs对应的宿主主机souce目录"></a>5.将生成的dashboard.crt  dashboard.key放到certs对应的宿主主机souce目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp dashboard.crt dashboard.key 192.168.20.214:/var/lib/kubelet/pods/94c8c50b-f484-11e8-80e8-000c29c3dca5/volumes/kubernetes.io~secret/kubernetes-dashboard-certs</span><br></pre></td></tr></table></figure>
+<h2 id="6-重启kubernetes-dashboard容器"><a href="#6-重启kubernetes-dashboard容器" class="headerlink" title="6.重启kubernetes-dashboard容器"></a>6.重启kubernetes-dashboard容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart 384d9dc0170b</span><br></pre></td></tr></table></figure>
+<p>完成以上步骤即可访问kubernetes-dashboard web了，由于使用的是私有证书，所以还是会弹出不安全的连接，需要添加例外。</p>
+<h2 id="7-登录"><a href="#7-登录" class="headerlink" title="7. 登录"></a>7. 登录</h2><p>页面上有两种登录方式，这时我们使用token的方式登录。token的获取方式如下。</p>
+<p>在master节点执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$kubectl -n kube-system get secret | grep kubernetes-dashboard-admin|awk &apos;&#123;print &quot;secret/&quot;$1&#125;&apos;|xargs kubectl describe -n kube-system|grep token:|awk -F : &apos;&#123;print $2&#125;&apos;|xargs echo</span><br><span class="line"></span><br><span class="line">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbi10b2tlbi1qYm0ycCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6Ijg5ZmFiOGFmLTNjYzEtMTFlOC1iODQ4LTAwMGMyOTQwYWRiYSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTprdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbiJ9.YS-ZklZ8fbkDp3tuOxFHyhiflXtCGDY0C5C3PYU1ot7YFCGA67_vDKY55OiE36sZNGNhWEmK52Yak7SrFZ75KwyMbM7TK69SGLftFiMedsUCfuUpBPB-Fc4beaxMuWWqVcHOs892VfE6I85xhhYLv_xD6t8x2DcJ1Cl6c5UVg_GBw13cSVaSA7asMpVuSj8MdOQcBNIUaRaxY04PDvZDWIN8Cqud9yDNkueFeuqP3DN_rN0FzLGg0Lqv3Q-fm4hKcIiiVi6E9J-i_T8QCsoKE36wEWg3hJdUTmzBufew2YrbPH4f0Aezq-OeKT8-x89vQwkbj1vttiVVtluTTX53T</span><br></pre></td></tr></table></figure>
+<p>上面获取到的就是token了，复制到登录页就可以登录了。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/12/13/管理员无法本地登录Oracle数据库，报错ORA-12560-TNS-协议适配器错误的解决方法/" itemprop="url">管理员无法本地登录Oracle数据库，报错ORA-12560: TNS: 协议适配器错误的解决方法</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-13T07:55:31.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 分钟 读完 (约 116 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>今日财务报销平台出现了数据源连接不上，查找问题后发现数据库故障。</p>
+<p>当使用管理员本地登录数据库进行管理的时候，出现了报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;sqlplus / as sysdba</span><br><span class="line">ORA-12560: TNS: 协议适配器错误的解决方法</span><br></pre></td></tr></table></figure>
+<p>貌似是由于监听连接数过高，无法进行连接响应了。故重启了服务器后故障恢复。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/11/09/基于Gitlab和Kubernetes的持续部署（三）——将镜像部署到Kubernetes集群/" itemprop="url">基于Gitlab和Kubernetes的持续部署（三）——将镜像部署到Kubernetes集群</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-11-09T01:37:54.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 1031 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>本文将使用Gitlab CI的Kubenetes集群特性将前面构建的容器镜像部署到Kubernetes。</p>
+<h1 id="基本环境"><a href="#基本环境" class="headerlink" title="基本环境"></a>基本环境</h1><ul>
+<li>kubernetes集群</li>
+<li>Gitlab实例<ul>
+<li>开启Gitlab Container Registry</li>
+<li>配置并启用Gitlab runner：CI runner必须可与Kubernetes APIserver通信。</li>
+</ul>
+</li>
+<li>Kubectl配置Kubernetes集群访问</li>
+<li>Kubernetes ServiceAccount<ul>
+<li>有特殊的权限。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Setp1-从Kubernetes获取ServiceAccount-Token"><a href="#Setp1-从Kubernetes获取ServiceAccount-Token" class="headerlink" title="Setp1. 从Kubernetes获取ServiceAccount Token"></a>Setp1. 从Kubernetes获取ServiceAccount Token</h1><p>Kubernetes1.6及以上版本增加了基于角色的访问控制（RBAC），ServiceAccount需要正确的权限来部署你想要的名称空间。使用kubeadm初始化的1.6及以上版本的Kubernetes集群，已经默认为API Server开启了RBAC，可以查看Master Node上API Server的静态Pod定义文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Kubernetes ~]# cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep RBAC</span><br><span class="line">    - --authorization-mode=Node,RBAC</span><br></pre></td></tr></table></figure>
+<p>Kubernetes1.5及以下版本只需要创建一个ServiceAccount或者使用一个选定名称空间中已存在的ServiceAccount。</p>
+<ol>
+<li><p>首先考虑为部署到kubernetes里的Gitlab项目创建一个专门的名称空间：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@Kubernetes ~]# kubectl get namespace</span><br><span class="line">NAME          STATUS    AGE</span><br><span class="line">default       Active    164d</span><br><span class="line">kube-public   Active    164d</span><br><span class="line">kube-system   Active    164d</span><br><span class="line">[root@Kubernetes ~]# kubectl create namespace devops</span><br><span class="line">namespace "devops" created</span><br><span class="line">[root@Kubernetes pki]# kubectl get namespaces</span><br><span class="line">NAME          STATUS    AGE</span><br><span class="line">default       Active    161d</span><br><span class="line">devops        Active    14s</span><br><span class="line">kube-public   Active    161d</span><br><span class="line">kube-system   Active    161d</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取DevOps名称空间下默认的ServiceAccount Token</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Kubernetes pki]# kubectl get -n devops secret</span><br><span class="line">NAME                  TYPE                                  DATA      AGE</span><br><span class="line">default-token-ph7sj   kubernetes.io/service-account-token   3         2m</span><br><span class="line">[root@Kubernetes pki]# kubectl get -n devops secret default-token-ph7sj -o yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  ca.crt: [REDACATED]</span><br><span class="line">  namespace: [REDACATED]</span><br><span class="line">  token: [THIS IS YOUR TOKEN BASE64 ENCODED]</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    kubernetes.io/service-account.name: default</span><br><span class="line">  [...]</span><br><span class="line">  name: default-token-nmx1q</span><br><span class="line">  namespace: presentation-gitlab-k8s</span><br><span class="line">  [...]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>因为Token是进行了base64编码的，索引需要对Token进行base64解码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> YOUR_TOKEN_HERE | base64 -d</span></span><br><span class="line">YOUR_DECODED_TOKEN</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Setp2-获取Kubernetes的CA授权"><a href="#Setp2-获取Kubernetes的CA授权" class="headerlink" title="Setp2. 获取Kubernetes的CA授权"></a>Setp2. 获取Kubernetes的CA授权</h1><p>Kubernetes的授权在文件夹/etc/kubernetes/pki目录（我的是V1.9版本）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /etc/kubernetes/pki/ca.crt</span></span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">[REDACATED]</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure>
+<h1 id="Step3-在Gitlab-CI里创建Kubernetes集群"><a href="#Step3-在Gitlab-CI里创建Kubernetes集群" class="headerlink" title="Step3. 在Gitlab CI里创建Kubernetes集群"></a>Step3. 在Gitlab CI里创建Kubernetes集群</h1><p>需要ServiceAccount Token（step1.）、CA 授权（step2.）、Kubernetes API地址和需要运行应用的名称空间。在Gitlab中选择CI/CD-&gt;Kubernetes，进入如下页面进行设置：</p>
+<img src="/2018/11/09/基于Gitlab和Kubernetes的持续部署（三）——将镜像部署到Kubernetes集群/gitlab-ci-kubernetes-cluster-add-existing-cluster.png">
+<p>其中Kubernetes Cluster name可以任意设置，Project namespace是可选项，此处设置为你需要创建应用的Kubernetes名称空间，我使用的名称空间是DevOps。</p>
+<h1 id="Step4-为项目添加-gitlab-ci-yml"><a href="#Step4-为项目添加-gitlab-ci-yml" class="headerlink" title="Step4. 为项目添加.gitlab-ci.yml"></a>Step4. 为项目添加.gitlab-ci.yml</h1><p>我的项目是一个简单的Spring-boot Java项目，使用Maven进行构建，比较简单。此处贴出.gitlab-ci.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">image:</span> <span class="attr">docker:latest</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  - docker:</span><span class="string">dind</span></span><br><span class="line"></span><br><span class="line"><span class="attr">variables:</span></span><br><span class="line"><span class="attr">  DOCKER_DRIVER:</span> <span class="string">overlay</span></span><br><span class="line"><span class="attr">  SPRING_PROFILES_ACTIVE:</span> <span class="string">gitlab-ci</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">build</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">package</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">maven-build:</span></span><br><span class="line"><span class="attr">  image:</span> <span class="attr">maven:3-jdk-8</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">build</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">"mvn clean package -B -Dmaven.test.skip=true"</span></span><br><span class="line"><span class="attr">  artifacts:</span></span><br><span class="line"><span class="attr">    paths:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">target/*.jar</span></span><br><span class="line"></span><br><span class="line"><span class="attr">docker-build:</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">package</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">info</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="string">registry.gitlab.nasg.gov.cn/$&#123;CI_PROJECT_PATH&#125;:latest</span> <span class="string">.</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">tag</span> <span class="string">registry.gitlab.nasg.gov.cn/$&#123;CI_PROJECT_PATH&#125;:latest</span> <span class="string">registry.gitlab.nasg.gov.cn/$&#123;CI_PROJECT_PATH&#125;:$&#123;CI_COMMIT_REF_NAME&#125;</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">login</span> <span class="bullet">-u</span> <span class="string">gitlab-ci-token</span> <span class="bullet">-p</span> <span class="string">$CI_BUILD_TOKEN</span> <span class="string">registry.gitlab.nasg.gov.cn</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">test</span> <span class="string">!</span> <span class="bullet">-z</span> <span class="string">"$&#123;CI_COMMIT_TAG&#125;"</span> <span class="string">&amp;&amp;</span> <span class="string">docker</span> <span class="string">push</span> <span class="string">registry.zerbytes.net/$&#123;CI_PROJECT_PATH&#125;:latest</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">push</span> <span class="string">registry.gitlab.nasg.gov.cn/$&#123;CI_PROJECT_PATH&#125;:$&#123;CI_COMMIT_REF_NAME&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">k8s-deploy:</span></span><br><span class="line"><span class="attr">  image:</span> <span class="string">lachlanevenson/k8s-kubectl:latest</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">  environment:</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">live</span></span><br><span class="line"><span class="attr">      url:</span> <span class="attr">https://live-presentation-gitlab-k8s.edenmal.net</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">kubectl</span> <span class="string">version</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">echo</span> <span class="string">"$&#123;KUBE_CA_PEM&#125;"</span> <span class="string">&gt; kube_ca.pem</span></span><br><span class="line"><span class="string">  - kubectl config set-cluster kubernetes --server=$&#123;KUBE_URL&#125; --certificate-authority=kube_ca.pem</span></span><br><span class="line"><span class="string">  - kubectl config set-credentials kube-admin --token=$&#123;KUBE_TOKEN&#125;</span></span><br><span class="line"><span class="string">  - kubectl config set-context kubernetes-system --cluster=kubernetes --user=kube-admin</span></span><br><span class="line"><span class="string">  - kubectl config use-context kubernetes-system</span></span><br><span class="line"><span class="string">  - kubectl cluster-info</span></span><br><span class="line"><span class="string">  - kubectl create -f deployment.yml -n devops</span></span><br><span class="line"><span class="string">#  - gcloud auth activate-service-account --key-file key.json</span></span><br><span class="line"><span class="string">#  - gcloud config set compute/zone europe-west1-c</span></span><br><span class="line"><span class="string">#  - gcloud config set project actuator-sample</span></span><br><span class="line"><span class="string">#  - gcloud config set container/use_client_certificate True</span></span><br><span class="line"><span class="string">#  - gcloud container clusters get-credentials actuator-sample</span></span><br><span class="line"><span class="string">#  - kubectl delete secret registry.gitlab.com</span></span><br><span class="line"><span class="string">#  - kubectl create secret docker-registry registry.gitlab.com --docker-server=https://registry.gitlab.com --docker-username=marcolenzo --docker-password=$REGISTRY_PASSWD --docker-email=lenzo.marco@gmail.com</span></span><br><span class="line"><span class="string">#  - kubectl apply -f deployment.yml</span></span><br></pre></td></tr></table></figure>
+<h1 id="Step-5-在Kubernetes中增加Docker-login-信息"><a href="#Step-5-在Kubernetes中增加Docker-login-信息" class="headerlink" title="Step 5. 在Kubernetes中增加Docker login 信息"></a>Step 5. 在Kubernetes中增加Docker login 信息</h1><p>为了能够从GitLab registry（GitLab自带的私有镜像仓库功能）下载部署所需的镜像，必须在Kubernetes中增加一个Secret元素，用它访问GitLab Registry的Docker login信息。下面的命令必须在安装有Kubectl的节点中运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> YOUR_SECRET_NAME <span class="keyword">for</span> example <span class="string">"registry-example-gitlab-key"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create \</span></span><br><span class="line">    -n devops \</span><br><span class="line">    secret docker-registry regsecret \</span><br><span class="line">    --docker-server=registry.gitlab.nasg.gov.cn \</span><br><span class="line">    --docker-username=xiaof \</span><br><span class="line">    --docker-password=******* \</span><br><span class="line">    --docker-email=xiaof@sbsm.gov.cn</span><br></pre></td></tr></table></figure>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/11/07/Mvnw-简介/" itemprop="url">Mvnw 简介</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-11-07T13:24:29.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 636 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>maven是一款非常流行的java项目构建软件，它集项目的依赖管理、测试用例运行、打包、构件管理于一身，是我们工作的好帮手，maven飞速发展，它的发行版本也越来越多，如果我们的项目是基于maven构件的，那么如何保证拿到我们项目源码的同事的maven版本和我们开发时的版本一致呢，可能你认为很简单，一个公司嘛，规定所有的同事都用一maven版本不就万事大吉了吗？一个组织内部这是可行的，要是你开源了一个项目呢？如何保证你使用的maven的版本和下载你源码的人的maven的版本一致呢，这时候mvnw就大显身手了。<br>mvnw 全名是maven wrapper,它的原理是在maven-wrapper.properties文件中记录你要使用的maven版本，当用户执行mvnw clean 命令时，发现当前用户的maven版本和期望的版本不一致，那么就下载期望的版本，然后用期望的版本来执行mvn命令，比如刚才的mvn clean。<br>为项目添加mvnw支持很简单，有两种方式：</p>
+<h1 id="方法一，在Pom-Xml中添加Plugin声明："><a href="#方法一，在Pom-Xml中添加Plugin声明：" class="headerlink" title="方法一，在Pom.Xml中添加Plugin声明："></a>方法一，在Pom.Xml中添加Plugin声明：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;groupId&gt;com.rimerosolutions.maven.plugins&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;wrapper-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.0.4&lt;/version&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+<p>这样当我们执行mvn wrapper:wrapper 时，会帮我们生成mvnw.bat, mvnw, maven/maven-wrapper.jar, maven/maven-wrapper.properties这些文件。<br>然后我们就可以使用mvnw代替mvn命令执行所有的maven命令，比如mvnw clean package</p>
+<h1 id="方法二，直接执行Goal"><a href="#方法二，直接执行Goal" class="headerlink" title="方法二，直接执行Goal"></a>方法二，直接执行Goal</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#表示我们期望使用的maven的版本为3.3.3</span><br><span class="line">mvn -N io.takari:maven:wrapper -Dmaven=3.3.3</span><br></pre></td></tr></table></figure>
+<p>产生的内容和第一种方式是一样的，只是目录结构不一样，maven-wrapper.jar和maven-wrapper.properties在”.mvn/wrapper”目录下</p>
+<h1 id="使用的注意事项"><a href="#使用的注意事项" class="headerlink" title="使用的注意事项"></a>使用的注意事项</h1><p>1、由于我们使用了新的maven ,如果你的settings.xml没有放在当前用户下的.m2目录下，那么执行mvnw时不会去读取你原来的settings.xml文件<br>2、在mvnw.bat中有如下的一段脚本<br>if exist “%M2_HOME%\bin\mvn.cmd” goto init<br>意思是如果找到mvn.cmd就执行初始化操作，但是maven早期版本不叫mvn.cmd,而是叫mvn.bat,所以会报”Error: M2_HOME is set to an invalid directory”错误，改成你本地的maven的匹配后缀就好了。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/" itemprop="url">Sharding-Sphere开源分布式数据库中间件</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-29T06:28:29.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 647 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <img src="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/sharding-sphere.jpg" title="Sharding-Sphere">
+<p>Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar（计划中）这3款相互独立的产品组成。他们均提供标准化的数据分片、分布式事务和数据库治理功能，可适用于如Java同构、异构语言、容器、云原生等各种多样化的应用场景。</p>
+<p>Sharding-Sphere定位为关系型数据库中间件，旨在充分合理地在分布式的场景下利用关系型数据库的计算和存储能力，而并非实现一个全新的关系型数据库。 它与NoSQL和NewSQL是并存而非互斥的关系。NoSQL和NewSQL作为新技术探索的前沿，放眼未来，拥抱变化，是非常值得推荐的。反之，也可以用另一种思路看待问题，放眼未来，关注不变的东西，进而抓住事物本质。关系型数据库当今依然占有巨大市场，是各个公司核心业务的基石，未来也难于撼动，我们目前阶段更加关注在原有基础上的增量，而非颠覆。</p>
+<img src="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/sharding-sphere-scope_cn.png">
+<h1 id="Sharding-JDBC"><a href="#Sharding-JDBC" class="headerlink" title="Sharding-JDBC"></a>Sharding-JDBC</h1><p>定位为轻量级Java框架，在Java的JDBC层提供的额外服务。 它使用客户端直连数据库，以jar包形式提供服务，无需额外部署和依赖，可理解为增强版的JDBC驱动，完全兼容JDBC和各种ORM框架。</p>
+<ul>
+<li><p>适用于任何基于Java的ORM框架，如：JPA, Hibernate, Mybatis, Spring JDBC Template或直接使用JDBC。</p>
+</li>
+<li><p>基于任何第三方的数据库连接池，如：DBCP, C3P0, BoneCP, Druid, HikariCP等。</p>
+</li>
+<li><p>支持任意实现JDBC规范的数据库。目前支持MySQL，Oracle，SQLServer和PostgreSQL。</p>
+</li>
+</ul>
+<img src="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/sharding-jdbc-brief.png">
+<h1 id="Sharding-Proxy"><a href="#Sharding-Proxy" class="headerlink" title="Sharding-Proxy"></a>Sharding-Proxy</h1><p>定位为透明化的数据库代理端，提供封装了数据库二进制协议的服务端版本，用于完成对异构语言的支持。 目前先提供MySQL版本，它可以使用任何兼容MySQL协议的访问客户端(如：MySQL Command Client, MySQL Workbench等)操作数据，对DBA更加友好。</p>
+<ul>
+<li><p>向应用程序完全透明，可直接当做MySQL使用。</p>
+</li>
+<li><p>适用于任何兼容MySQL协议的客户端。</p>
+<img src="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/sharding-proxy-brief_v2.png">
+</li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/26/使用Guava处理文件改名并拷贝的例子，超简单！/" itemprop="url">使用Guava处理文件改名并拷贝的例子，超简单！</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-26T03:05:28.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            3 分钟 读完 (约 406 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>今天需要对原有档案文件进行一个处理：需要把原文件名中包括“DD”或“KJ”的pdf文档重新改名为“WS”，并复制到另一个文件夹。如果使用Java文件IO去处理比较繁琐，自己还需要处理Steam等很多接口。这时想到了Java库中的神器——谷歌的基础库Guava，能够提供很多便利的API给用户，可以轻而易举地进行文件操作和字符串处理等，这里把代码记录下来，有空闲可以发几篇Guava的使用。</p>
+<p>这里有几点需要额外注意：</p>
+<ol>
+<li>文件夹路径的字符串表示，Windows中的路径在字符串双引号中要进行转义\\</li>
+<li>寻找路径下的文件，可以使用 Files.fileTreeTraverser().breadthFirstTraversal(rootDir)方法。</li>
+<li>使用public String replaceAll(String regex, String replacement)进行字符串的匹配和替换。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.sbsm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.base.CharMatcher;</span><br><span class="line"><span class="keyword">import</span> com.google.common.io.Files;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hello world!</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        String sourcePath = <span class="string">"F:\\changeFileName\\"</span>;</span><br><span class="line">        String targetPath = <span class="string">"F:\\new\\"</span>;</span><br><span class="line">        <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        File rootDir = <span class="keyword">new</span> File(sourcePath);</span><br><span class="line">            <span class="keyword">for</span>(File f: Files.fileTreeTraverser().breadthFirstTraversal(rootDir))&#123;</span><br><span class="line">                <span class="keyword">if</span>(f.isFile())&#123;</span><br><span class="line">                    String fName=f.getName();</span><br><span class="line">                    String newName=fName.replaceAll(<span class="string">"DD"</span>,<span class="string">"WS"</span>).replaceAll(<span class="string">"KJ"</span>,<span class="string">"WS"</span>);</span><br><span class="line">                    File newFile = <span class="keyword">new</span> File(targetPath+newName);</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Files.copy(f,newFile);</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    count++;</span><br><span class="line">                    System.out.println(f.getName()+<span class="string">"处理成功"</span>+<span class="string">"newFile:"</span>+newFile.getName());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"复制文件总数："</span>+count);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用Maven构建工程，需要在pom文件中引入Guava：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.guava<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>guava<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>21.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>总共执行了800多个文件的拷贝，比较稳定。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/25/ORA-00604-递归-SQL-级别-1-出现错误-ORA-01653-表-SYS-AUD-无法通过-8192-在表空间-SYSTEM-中-扩展/" itemprop="url"> ORA-00604: 递归 SQL 级别 1 出现错误 ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-25T08:35:58.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 721 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>今日遇到OA数据库报错，报错内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ORA-00604: 递归 SQL 级别 1 出现错误</span><br><span class="line">ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展</span><br><span class="line">ORA-02002: 写入审计线索时出错</span><br><span class="line">ORA-00604: 递归 SQL 级别 1 出现错误</span><br></pre></td></tr></table></figure>
+<p>这种情况是遇到了表空间已满的情况，由于Windows版32位的Oracle限制每个表空间存储文件最大32G，所以必须手动增加表空间存储文件进行扩容。步骤如下：</p>
+<ol>
+<li><p>本地模式登录数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line">SQL*Plus: Release 11.2.0.1.0 Production on Thu Oct 25 16:16:49 2018</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2010, Oracle.  All rights reserved.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connected to:</span><br><span class="line">Oracle Database 11g Enterprise Edition <span class="keyword">Release</span> <span class="number">11.2</span><span class="number">.0</span><span class="number">.1</span><span class="number">.0</span> - Production</span><br><span class="line"><span class="keyword">With</span> the Partitioning, OLAP, <span class="keyword">Data</span> <span class="keyword">Mining</span> <span class="keyword">and</span> <span class="built_in">Real</span> Application Testing options</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li><p>查看表空间情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)</span><br><span class="line">&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTT</span><br><span class="line">E_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BY</span><br><span class="line">TES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(S</span><br><span class="line">UM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024), 2)</span><br><span class="line">MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLES</span><br><span class="line">PACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_D</span><br><span class="line">ATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPA</span><br><span class="line">CE_NAME ORDER BY 4 DESC;</span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">SYSTEM                                 65482      65409.19   99.89       72.81</span><br><span class="line">        47</span><br><span class="line"></span><br><span class="line">OA                                      1248       1184.94   94.95       63.06</span><br><span class="line">        63</span><br><span class="line"></span><br><span class="line">SYSAUX                                   920        852.06   92.62       67.94</span><br><span class="line">        59</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">UNDOTBS1                                1000         420.5   42.05       579.5</span><br><span class="line">       353</span><br><span class="line"></span><br><span class="line">USERS                                      5          1.31   26.20        3.69</span><br><span class="line">      3.69</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>查看表空间文件名和是否自动增长</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT FILE_NAME,TABLESPACE_NAME,AUTOEXTENSIBLE FROM dba_data_files;</span><br><span class="line"></span><br><span class="line">FILE_NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TABLESPACE_NAME                AUT</span><br><span class="line">------------------------------ ---</span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\USERS01.DBF</span><br><span class="line">USERS                          YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\UNDOTBS01.DBF</span><br><span class="line">UNDOTBS1                       YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSAUX01.DBF</span><br><span class="line">SYSAUX                         YES</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FILE_NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TABLESPACE_NAME                AUT</span><br><span class="line">------------------------------ ---</span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSTEM01.DBF</span><br><span class="line">SYSTEM                         YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\OA.DBF</span><br><span class="line">OA                             YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSTEM02.DBF</span><br><span class="line">SYSTEM                         NO</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">6 rows selected.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>增加表空间的存储文件，system03.dbf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; ALTER TABLESPACE SYSTEM ADD DATAFILE &apos;D:\app\Administrator\oradata\orcl\SYS</span><br><span class="line">TEM03.DBF&apos; SIZE 32752M;</span><br><span class="line"></span><br><span class="line">Tablespace altered.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="5">
+<li><p>执行完成后查看表空间的使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)</span><br><span class="line">&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTT</span><br><span class="line">E_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BY</span><br><span class="line">TES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(S</span><br><span class="line">UM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024), 2)</span><br><span class="line">MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLES</span><br><span class="line">PACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_D</span><br><span class="line">ATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPA</span><br><span class="line">CE_NAME ORDER BY 4 DESC;</span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">OA                                      1248       1184.94   94.95       63.06</span><br><span class="line">        63</span><br><span class="line"></span><br><span class="line">SYSAUX                                   920        852.06   92.62       67.94</span><br><span class="line">        59</span><br><span class="line"></span><br><span class="line">SYSTEM                                 98234      65474.19   66.65    32759.81</span><br><span class="line">      3968</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">UNDOTBS1                                1000         460.5   46.05       539.5</span><br><span class="line">       353</span><br><span class="line"></span><br><span class="line">USERS                                      5          1.31   26.20        3.69</span><br><span class="line">      3.69</span><br></pre></td></tr></table></figure>
+<p>可见SYSTEM表空间已经扩大了，任务完成。</p>
+</li>
+</ol>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/22/LVM简单介绍/" itemprop="url">LVM简单介绍</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-22T05:22:23.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            10 分钟 读完 (约 1543 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>原文见：<a href="http://www.debian-administration.org/articles/410" target="_blank" rel="noopener">http://www.debian-administration.org/articles/410</a></p>
+<p>LVM允许你用一种有效地方法创建和管理服务器上的存储，按照意愿增加、移除、改变分区大小。刚开始接触LVM会使初学者感到疑惑，而这篇文字就用简单的方式讲述LVM的基本知识。</p>
+<p>以下术语对你学习使用LVM很重要，是你必须知道的：</p>
+<ul>
+<li><p>物理卷（physical volumes）</p>
+<p>这是你的物理硬盘或磁盘分区，例如/dev/hda或/dev/hdb1.这是你在mounting/unmounting时经常使用的。利用LVM能够合并多个物理卷成为卷群（volume groups）</p>
+</li>
+<li><p>卷群（volume groups）</p>
+<p>卷群由真实的物理卷组成，它能够用来创建逻辑卷（logical volumes）。你能够创建、改变大小、移除、使用逻辑卷。可以认为卷群是一个由任意数量的物理卷组成的虚拟分区。</p>
+</li>
+<li><p>逻辑卷（logical volumes）</p>
+<p>逻辑卷是你最终在系统上挂载的，它们能够快速的添加、移除、改变大小。因为逻辑卷由卷群组成，所有它的空间能大于组成它的单一物理卷的空间。例如由4个5G大小的硬盘（逻辑卷）能够组合成20G的卷群，所有你能在此基础上创建两个10G的逻辑卷。</p>
+</li>
+</ul>
+<p>在逻辑层面上，他们的概念层次自上而下如图所示。</p>
+<img src="/2018/10/22/LVM简单介绍/LVM_hierarchy.png" title="LVM的概念层次">
+<h1 id="创建卷群（Volume-Group）"><a href="#创建卷群（Volume-Group）" class="headerlink" title="创建卷群（Volume Group）"></a>创建卷群（Volume Group）</h1><p>使用LVM你至少需要一个分区，并使用LVM进行初始化。然后把它加入一个卷群。怎样操作呢？</p>
+<p>在我的例子中，我的笔记本有如下设置：</p>
+<h3 id="Name-Flags-Part-Type-FS-Type-Label-Size-MB"><a href="#Name-Flags-Part-Type-FS-Type-Label-Size-MB" class="headerlink" title="Name        Flags    Part Type   FS Type          [Label]        Size (MB)"></a>Name        Flags    Part Type   FS Type          [Label]        Size (MB)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hda1        Boot        Primary   		Linux ext3       [/]             8000.01 </span><br><span class="line">hda2                    Primary   		Linux swap 		/ Solaris        1000.20</span><br><span class="line">hda3                    Primary   		Linux                            31007.57</span><br></pre></td></tr></table></figure>
+<p>这里我有一个7GB的根分区，用来存储我的Debian GNU/Linux安装。我有一个28GB的分区用来给LVM使用。按照我的设置，我能用LVM创建一个专用的/home分区，而且我能够在空间不足时扩展/home分区增大空间。</p>
+<p>在这个例子中hda1、hda2、hda3是物理卷。我对hda3进行物理卷初始化：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~<span class="comment"># pvcreate /dev/hda3</span></span><br></pre></td></tr></table></figure>
+<p>如果你想合并硬盘或者分区，你可以像这样操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# pvcreate /dev/hdb</span><br><span class="line">root@lappy:~# pvcreate /dev/hdc</span><br></pre></td></tr></table></figure>
+<p>一旦你初始化好了分区或磁盘驱动器，我们用这些物理卷来创建卷群：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# vgcreate skx-vol /dev/hda3</span><br></pre></td></tr></table></figure></p>
+<p>这里skx-vol是卷群的名称。如果你想跨两个磁盘创建卷群，你可以使用“vgcreate skx-vol /dev/hdb /dev/hdc”的方式。</p>
+<p>如果你操作正确，你可以通过vgscan命令查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# vgscan</span><br><span class="line">  Reading all physical volumes.  This may take a while...</span><br><span class="line">  Found volume group "skx-vol" using metadata type lvm2</span><br></pre></td></tr></table></figure>
+<p>这样我们就创建好了一个名为skx-vol的卷群，我们下面开始使用他。</p>
+<h1 id="创建和使用逻辑卷（Working-with-logical-volumes）"><a href="#创建和使用逻辑卷（Working-with-logical-volumes）" class="headerlink" title="创建和使用逻辑卷（Working with logical volumes）"></a>创建和使用逻辑卷（Working with logical volumes）</h1><p>我们真正想要的是创建一个能够挂载和使用的逻辑卷。如果以后我们的逻辑卷空间不足，可以对其空间进行重新分配，增加新的存储空间。当然这取决于你算则的文件系统类型。</p>
+<p>我们将创建一个名为test的卷：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvcreate -n test --size 1g skx-vol</span><br><span class="line">Logical volume "test" created</span><br></pre></td></tr></table></figure>
+<p>这个命令创建了一个大小为1G名为test的逻辑卷，它在LVM卷群skx-vol之上。</p>
+<p>现在这个逻辑卷可以通过/dev/skx-vol/test进行操作，它能像其他分区一样进行格式化和挂载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# mkfs.ext3 /dev/skx-vol/test</span><br><span class="line">root@lappy:~# mkdir /home/test</span><br><span class="line">root@lappy:~# mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure>
+<p>很酷是吧？</p>
+<p>下面的操作将更有意思！我们假设这个test分区空间已满，我们要对这个分区进行扩大。首先，我们可以通过lvdisplay命令查看当前硬盘的状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvdisplay </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                /dev/skx-vol/test</span><br><span class="line">  VG Name                skx-vol</span><br><span class="line">  LV UUID                J5XlaT-e0Zj-4mHz-wtET-P6MQ-wsDV-Lk2o5A</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Status              available</span><br><span class="line"><span class="meta">  #</span><span class="bash"> open                 0</span></span><br><span class="line">  LV Size                1.00 GB</span><br><span class="line">  Current LE             256</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     0</span><br><span class="line">  Block device           254:0</span><br></pre></td></tr></table></figure>
+<p>我们能看到test分区大小为1G。在我们对它重新分配空间时记得要先卸载这个卷（unmount）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# umount  /home/test/</span><br><span class="line">root@lappy:~# lvextend -L+1g /dev/skx-vol/test </span><br><span class="line">Extending logical volume test to 2.00 GB</span><br><span class="line">Logical volume test successfully resized</span><br></pre></td></tr></table></figure></p>
+<p>(注意：ext3文件系统可以在挂载状态重划大小，但是我建议还是先把它卸载掉，这样可以免除不必要的担心)</p>
+<p>在此通过lvdisplay命令查看，test卷已经重新分配了大小：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvdisplay </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                /dev/skx-vol/test</span><br><span class="line">  VG Name                skx-vg</span><br><span class="line">  LV UUID                uh7umg-7DqT-G2Ve-nNSX-03rs-KzFA-4fEwPX</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Status              available</span><br><span class="line"><span class="meta">  #</span><span class="bash"> open                 0</span></span><br><span class="line">  LV Size                2.00 GB</span><br><span class="line">  Current LE             512</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     0</span><br><span class="line">  Block device           254:0</span><br></pre></td></tr></table></figure></p>
+<p>需要着重提醒的是，即使这个卷的空间重新分配，但是它上面的ext3文件系统却没有改变，我们需要对文件系统重划大小满足扩大了的卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# e2fsck -f /dev/skx-vol/test </span><br><span class="line">root@lappy:~# resize2fs /dev/skx-vol/test</span><br></pre></td></tr></table></figure></p>
+<p>然后对test卷重新挂载后你会发现它的空间变成了2G。</p>
+<p>当然你也可以通过lvremove操纵移除这个卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvremove /dev/skx-vol/test</span><br><span class="line">Do you really want to remove active logical volume "test"? [y/n]: y</span><br><span class="line">Logical volume "test" successfully removed</span><br></pre></td></tr></table></figure></p>
+<h1 id="挂载逻辑卷（Mounting-Logical-Volumes）"><a href="#挂载逻辑卷（Mounting-Logical-Volumes）" class="headerlink" title="挂载逻辑卷（Mounting Logical Volumes）"></a>挂载逻辑卷（Mounting Logical Volumes）</h1><p>在之前的章节，我们使用如下的命令来挂载一个逻辑卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure></p>
+<p>如果你想在开机引导的时候就挂载你的分区，你可以编辑/etc/fstab文件，增加如下内容：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/dev/skx-vol/home    /home       ext3  noatime  0 2</span><br><span class="line">/dev/skx-vol/backups /backups    ext3  noatime  0 2</span><br></pre></td></tr></table></figure></p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/06/28/空间数据库索引综述/" itemprop="url">空间数据库索引综述</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-06-28T12:28:59.000Z" itemprop="datePublished">3 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 分钟 读完 (约 212 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>空间索引在某些方面是基于某些已有的点索引，例如kd树和B+树。这些通过扩展点索引来应用于空间对象的技术一般可以分为三类：<strong>对象映射、对象复制和对象约束</strong>。对象映射方法将n个顶点定义的对象从k维空间映射到n*k维空间的点或者映射到原来k维空间的单值对象。对象复制方法将同一个对象存储在与此对象重叠的多个数据空间，而对象约束方法通过层级分组将数据对象划分为不同的组，每个分组代表一个数据空间。每种方法都有其优点和缺点，并直接影响索引性能。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/06/20/Jeffrey-Dean论文：基于学习的索引结构/" itemprop="url">Jeffrey Dean论文：基于学习的索引结构</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-06-20T00:41:50.000Z" itemprop="datePublished">3 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 327 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>索引即是模型：B树索引是一个在排序数组中用键映射记录位置的模型，哈希索引是一个在非排序数组中用键映射记录位置的模型，位图索引是一个指示记录是否存在的模型。本文假设现有的索引结构都可以被替换为其他的模型，包括深度学习模型，我们称此<em>学习索引</em>。其核心思想是，模型可以学习查找键的顺序或结构，并使用这个信息有效地预测记录的位置或是否存在。我们从理论上分析了在何种情况下学习索引优于传统索引，并且概况了设计学习索引的诀窍和调整。初步结果表明，通过神经网络，学习索引比高速缓存优化的B树速度快70%，并且在多个真实的结果集上节省一个数量级的内存。更重要的是，我们相信通过深度学习模型取代数据管理系统的核心组件对未来系统设计有着深远的影响，并且这只是未来应用的冰山一角。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+        
+<nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
+    <div class="pagination-previous">
+        <a href="/categories/Technology/page/3/">上一页</a>
+    </div>
+    <div class="pagination-next">
+        <a href="/categories/Technology/page/5/">下一页</a>
+    </div>
+    <ul class="pagination-list is-hidden-mobile">
+        
+        <li><a class="pagination-link" href="/categories/Technology/">1</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/2/">2</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/3/">3</a></li>
+        
+        <li><a class="pagination-link is-current" href="/categories/Technology/page/4/">4</a></li>
+        
+        <li><a class="pagination-link" href="/categories/Technology/page/5/">5</a></li>
+        
+    </ul>
+</nav>
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

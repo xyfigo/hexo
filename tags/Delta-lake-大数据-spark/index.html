@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>标签: Delta-lake, 大数据, spark - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5>#Delta-lake, 大数据, spark</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2020/02/16/表批量读取和写入/" itemprop="url">表批量读取和写入</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-02-16T13:17:17.000Z" itemprop="datePublished">10 个月前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1598 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Delta Lake支持Apache Spark DataFrame读取和写入API提供的大多数选项，用于对表执行批量读取和写入。</p>
+<h1 id="建立表格"><a href="#建立表格" class="headerlink" title="建立表格"></a>建立表格</h1><p>使用<code>DataFrameWriter</code>（<a href="https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrameWriter" target="_blank" rel="noopener">Scala或Java</a> / <a href="https://spark.apache.org/docs/2.1.0/api/python/pyspark.sql.html#pyspark.sql.DataFrameWriter" target="_blank" rel="noopener">Python</a>）将数据作为原子操作写入Delta Lake。至少必须指定格式<code>delta</code>：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.write.format(<span class="string">"delta"</span>).save(<span class="string">"/delta/events"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="分区数据"><a href="#分区数据" class="headerlink" title="## 分区数据"></a>## 分区数据</h2><p>您可以对数据进行分区以加快查询或对分区列执行的带有谓词的DML。要在创建增量表时，指定分区的列对数据进行分区。常见的模式是按日期分区，例如：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.write.format(<span class="string">"delta"</span>).partitionBy(<span class="string">"date"</span>).save(<span class="string">"/delta/events"</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="读取表"><a href="#读取表" class="headerlink" title="读取表"></a>读取表</h1><p>您可以通过指定路径将Delta表作为DataFrame加载：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark.read.format(<span class="string">"delta"</span>).load(<span class="string">"/delta/events"</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="查询表的旧快照（时间旅行）"><a href="#查询表的旧快照（时间旅行）" class="headerlink" title="查询表的旧快照（时间旅行）"></a>查询表的旧快照（时间旅行）</h1><p>Delta Lake时间旅行允许您查询Delta表的旧快照。时间旅行有许多用例，包括：</p>
+<ul>
+<li>重新创建分析，报告或输出（例如，机器学习模型的输出）。这对于调试或审核尤其有用，特别是在受管制的行业中。</li>
+<li>编写复杂的时间查询。</li>
+<li>修正数据中的错误。</li>
+<li>为快速更改表的一组查询提供快照隔离。</li>
+</ul>
+<p>本节介绍了查询表的较旧版本时所支持的方法，数据保留问题并提供了示例。</p>
+<h2 id="句法"><a href="#句法" class="headerlink" title="句法"></a>句法</h2><p>有几种查询旧版Delta表的方法。</p>
+<h5 id="DataFrameReader选项"><a href="#DataFrameReader选项" class="headerlink" title="DataFrameReader选项"></a>DataFrameReader选项</h5><p>DataFrameReader选项允许您从固定到表的特定版本的Delta表创建DataFrame。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df1 = spark.read.format(<span class="string">"delta"</span>).option(<span class="string">"timestampAsOf"</span>, timestamp_string).load(<span class="string">"/delta/events"</span>)</span><br><span class="line">df2 = spark.read.format(<span class="string">"delta"</span>).option(<span class="string">"versionAsOf"</span>, version).load(<span class="string">"/delta/events"</span>)</span><br></pre></td></tr></table></figure>
+<p>对于<code>timestamp_string</code>，仅接受日期或时间戳记字符串。例如<code>&quot;2019-01-01&quot;</code>和<code>&quot;2019-01-01&#39;T&#39;00:00:00.000Z&quot;</code>。</p>
+<p>一种常见的模式是在执行Databricks作业期间使用Delta表的最新状态来更新下游应用程序。</p>
+<h1 id="写入表格"><a href="#写入表格" class="headerlink" title="写入表格"></a>写入表格</h1><p>使用<code>append</code>模式，您可以将新数据原子添加到现有的Delta表中：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.write.format(<span class="string">"delta"</span>).mode(<span class="string">"append"</span>).save(<span class="string">"/delta/events"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="使用DataFrames覆盖"><a href="#使用DataFrames覆盖" class="headerlink" title="使用DataFrames覆盖"></a>使用DataFrames覆盖</h2><p>要自动替换表中的所有数据，可以使用<code>overwrite</code>模式：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.write.format(<span class="string">"delta"</span>).mode(<span class="string">"overwrite"</span>).save(<span class="string">"/delta/events"</span>)</span><br></pre></td></tr></table></figure>
+<p>您可以有选择地仅覆盖分区列上与谓词匹配的数据。以下命令用中的数据原子替换一月<code>df</code>：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df.write</span><br><span class="line">  .format(<span class="string">"delta"</span>)</span><br><span class="line">  .mode(<span class="string">"overwrite"</span>)</span><br><span class="line">  .option(<span class="string">"replaceWhere"</span>, <span class="string">"date &gt;= '2017-01-01' AND date &lt;= '2017-01-31'"</span>)</span><br><span class="line">  .save(<span class="string">"/delta/events"</span>)</span><br></pre></td></tr></table></figure>
+<p>此示例代码将数据写入<code>df</code>，验证所有数据均位于指定分区内，并执行原子替换。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>与Apache Spark中的文件API不同，Delta Lake会记住并强制执行表的架构。这意味着默认情况下，覆盖<em>不会</em>替换现有表的架构。</p>
+<p>有关Delta Lake支持更新表的信息，请参阅<a href="https://docs.delta.io/latest/delta-update.html#-delta-update" target="_blank" rel="noopener">更新表</a>。</p>
+<h1 id="模式验证"><a href="#模式验证" class="headerlink" title="模式验证"></a>模式验证</h1><p>Delta Lake自动验证正在写入的DataFrame的架构与表的架构兼容。Delta Lake使用以下规则来确定从DataFrame到表的写入是否兼容：</p>
+<ul>
+<li>所有DataFrame列都必须存在于目标表中。如果表中不存在DataFrame中的列，则会引发异常。表中存在但DataFrame中不存在的列设置为null。</li>
+<li>DataFrame列数据类型必须与目标表中的列数据类型匹配。如果它们不匹配，则会引发异常。</li>
+<li>DataFrame列名称不能只是大小写不同（而文字相同）。这意味着您不能在同一表中定义诸如“ Foo”和“ foo”之类的列。虽然可以在区分大小写或不区分大小写（默认）模式下使用Spark，但在存储和返回列信息时，<strong>Parquet区分大小写</strong>。Delta Lake保留大小写，但在存储模式时不敏感，并且具有此限制以避免潜在的错误，数据损坏或丢失问题。</li>
+</ul>
+<p>如果您指定其他选项（例如<code>partitionBy</code>与附加模式结合使用），则Delta Lake会验证它们是否匹配，并为任何不匹配项引发错误。如果<code>partitionBy</code>不存在，则append操作将自动继续按原有数据的分区。</p>
+<h1 id="自动模式更新"><a href="#自动模式更新" class="headerlink" title="自动模式更新"></a>自动模式更新</h1><p>Delta Lake可以作为DML事务的一部分（附加或覆盖）自动更新表的架构，并使该架构与正在写入的数据兼容。</p>
+<h2 id="添加列"><a href="#添加列" class="headerlink" title="添加列"></a>添加列</h2><p>在以下情况下，DataFrame中存在但表中缺失的列将作为写事务的一部分自动添加：</p>
+<ul>
+<li><code>write</code>或<code>writeStream</code>有<code>.option(&quot;mergeSchema&quot;, &quot;true&quot;)</code></li>
+</ul>
+<p>添加的列将追加到它们所在的结构的末尾。追加新列时将保留大小写。</p>
+<h2 id="NullType-列"><a href="#NullType-列" class="headerlink" title="NullType 列"></a><code>NullType</code> 列</h2><p>由于Parquet不支持<code>NullType</code>，在写入Delta表时<code>NullType</code>会从DataFrame中被删除，但仍存储在模式中。当为该列接收到其他不同的数据类型时，Delta Lake会将模式合并到新的数据类型。如果Delta Lake收到<code>NullType</code>更换现有列，则在写入过程中将保留原有旧模式，并删除新列。</p>
+<p><code>NullType</code>不支持流式传输。由于必须在使用流式传输时设置模式，因此这种情况很少见。<code>NullType</code>也不适用于诸如<code>ArrayType</code>和<code>MapType</code>等复杂类型。</p>
+<h1 id="替换表架构"><a href="#替换表架构" class="headerlink" title="替换表架构"></a>替换表架构</h1><p>默认情况下，覆盖表中的数据不会覆盖架构。当使用mode(“overwrite”)<code>覆盖表而没有</code>replaceWhere<code>，你可能仍然要覆盖写入的数据的架构。通过将</code>overwriteSchema<code>选项设置为</code>true`，可以替换表的模式和分区：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.write.option(<span class="string">"overwriteSchema"</span>, <span class="string">"true"</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="表的视图"><a href="#表的视图" class="headerlink" title="表的视图"></a>表的视图</h1><p>Delta Lake支持在Delta表之上创建视图，就像使用数据源表一样。</p>
+<p>使用视图进行操作时的核心挑战是解析模式。如果更改Delta表模式，则必须重新创建派生视图以说明对该模式的任何添加。例如，如果将新列添加到Delta表中，则必须确保该列在该基表之上构建的有关视图中可用。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2020/02/16/基于Spark的新一代数据湖产品：DELTA-LAKE/" itemprop="url">基于Spark的新一代数据湖产品：DELTA LAKE</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-02-16T12:36:09.000Z" itemprop="datePublished">10 个月前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 366 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><a href="https://delta.io/" target="_blank" rel="noopener">Delta Lake</a>是一个<a href="https://github.com/delta-io/delta" target="_blank" rel="noopener">开源存储层</a>，可为数据湖带来可靠性。Delta Lake提供ACID事务，可伸缩的元数据处理，并统一流和批处理数据处理。Delta Lake在您现有的数据湖之上运行，并且与Apache Spark API完全兼容。</p>
+<img src="/2020/02/16/基于Spark的新一代数据湖产品：DELTA-LAKE/Delta-Lake.png" title="Delta-Lake">
+<p>具体来说，Delta Lake提供：</p>
+<ul>
+<li>Spark上的ACID事务：可序列化的隔离级别确保读者永远不会看到不一致的数据。</li>
+<li>可扩展的元数据处理：利用Spark的分布式处理能力，可以轻松处理数十亿个文件的PB级表的所有元数据。</li>
+<li>流和批处理的统一：Delta Lake中的表既是批处理表，又是流的源和接收器。流数据提取，批处理历史回填，交互式查询都可以直接使用。</li>
+<li>模式实施：自动处理模式变化，以防止在摄取过程中插入不良记录。</li>
+<li>时间旅行：数据版本控制支持回滚，完整的历史审核跟踪以及可重复的机器学习实验。</li>
+<li>Upserts和Deletes：支持合并（Merge），更新和删除操作，以启用复杂的用例，例如更改数据捕获，缓慢维度变化（SCD）操作，流化Upserts等。</li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>标签: 神经网络 - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section section-heading">
+    <div class="container">
+        <div class="content">
+            <h5>#神经网络</h5>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/02/12/使用TensorFlow进行神经网络计算/" itemprop="url">使用TensorFlow进行神经网络计算</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-02-12T02:25:46.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 821 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="神经网络简介"><a href="#神经网络简介" class="headerlink" title="神经网络简介"></a>神经网络简介</h1><p><strong>学习目标：</strong></p>
+<ul>
+<li>使用 TensorFlow <code>DNNRegressor</code> 类定义神经网络 (NN) 及其隐藏层</li>
+<li>训练神经网络学习数据集中的非线性规律，并实现比线性回归模型更好的效果</li>
+</ul>
+<p>在之前的练习中，我们使用合成特征来帮助模型学习非线性规律。</p>
+<p>一组重要的非线性关系是纬度和经度的关系，但也可能存在其他非线性关系。</p>
+<p>现在我们从之前练习中的逻辑回归任务回到标准的（线性）回归任务。也就是说，我们将直接预测 <code>median_house_value</code>。</p>
+<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>首先加载和准备数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> IPython <span class="keyword">import</span> display</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> cm</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> gridspec</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.data <span class="keyword">import</span> Dataset</span><br><span class="line"></span><br><span class="line">tf.logging.set_verbosity(tf.logging.ERROR)</span><br><span class="line">pd.options.display.max_rows = <span class="number">10</span></span><br><span class="line">pd.options.display.float_format = <span class="string">'&#123;:.1f&#125;'</span>.format</span><br><span class="line"></span><br><span class="line">california_housing_dataframe = pd.read_csv(<span class="string">"https://download.mlcc.google.cn/mledu-datasets/california_housing_train.csv"</span>, sep=<span class="string">","</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">为了保证数据训练集和测试集选取的随机性，故对原数据集进行shuffle</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">california_housing_dataframe = california_housing_dataframe.reindex(</span><br><span class="line">    np.random.permutation(california_housing_dataframe.index))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preprocess_features</span><span class="params">(california_housing_dataframe)</span>:</span></span><br><span class="line">  <span class="string">"""Prepares input features from California housing data set.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Args:</span></span><br><span class="line"><span class="string">    california_housing_dataframe: A Pandas DataFrame expected to contain data</span></span><br><span class="line"><span class="string">      from the California housing data set.</span></span><br><span class="line"><span class="string">  Returns:</span></span><br><span class="line"><span class="string">    A DataFrame that contains the features to be used for the model, including</span></span><br><span class="line"><span class="string">    synthetic features.</span></span><br><span class="line"><span class="string">  """</span></span><br><span class="line">  selected_features = california_housing_dataframe[</span><br><span class="line">    [<span class="string">"latitude"</span>,</span><br><span class="line">     <span class="string">"longitude"</span>,</span><br><span class="line">     <span class="string">"housing_median_age"</span>,</span><br><span class="line">     <span class="string">"total_rooms"</span>,</span><br><span class="line">     <span class="string">"total_bedrooms"</span>,</span><br><span class="line">     <span class="string">"population"</span>,</span><br><span class="line">     <span class="string">"households"</span>,</span><br><span class="line">     <span class="string">"median_income"</span>]]</span><br><span class="line">  processed_features = selected_features.copy()</span><br><span class="line">  <span class="comment"># Create a synthetic feature.</span></span><br><span class="line">  processed_features[<span class="string">"rooms_per_person"</span>] = (</span><br><span class="line">    california_housing_dataframe[<span class="string">"total_rooms"</span>] /</span><br><span class="line">    california_housing_dataframe[<span class="string">"population"</span>])</span><br><span class="line">  <span class="keyword">return</span> processed_features</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preprocess_targets</span><span class="params">(california_housing_dataframe)</span>:</span></span><br><span class="line">  <span class="string">"""Prepares target features (i.e., labels) from California housing data set.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Args:</span></span><br><span class="line"><span class="string">    california_housing_dataframe: A Pandas DataFrame expected to contain data</span></span><br><span class="line"><span class="string">      from the California housing data set.</span></span><br><span class="line"><span class="string">  Returns:</span></span><br><span class="line"><span class="string">    A DataFrame that contains the target feature.</span></span><br><span class="line"><span class="string">  """</span></span><br><span class="line">  output_targets = pd.DataFrame()</span><br><span class="line">  <span class="comment"># Scale the target to be in units of thousands of dollars.</span></span><br><span class="line">  output_targets[<span class="string">"median_house_value"</span>] = (</span><br><span class="line">    california_housing_dataframe[<span class="string">"median_house_value"</span>] / <span class="number">1000.0</span>)</span><br><span class="line">  <span class="keyword">return</span> output_targets</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Choose the first 12000 (out of 17000) examples for training.</span></span><br><span class="line">training_examples = preprocess_features(california_housing_dataframe.head(<span class="number">12000</span>))</span><br><span class="line">training_targets = preprocess_targets(california_housing_dataframe.head(<span class="number">12000</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Choose the last 5000 (out of 17000) examples for validation.</span></span><br><span class="line">validation_examples = preprocess_features(california_housing_dataframe.tail(<span class="number">5000</span>))</span><br><span class="line">validation_targets = preprocess_targets(california_housing_dataframe.tail(<span class="number">5000</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Double-check that we've done the right thing.</span></span><br><span class="line">print(<span class="string">"Training examples summary:"</span>)</span><br><span class="line">display.display(training_examples.describe())</span><br><span class="line">print(<span class="string">"Validation examples summary:"</span>)</span><br><span class="line">display.display(validation_examples.describe())</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Training targets summary:"</span>)</span><br><span class="line">display.display(training_targets.describe())</span><br><span class="line">print(<span class="string">"Validation targets summary:"</span>)</span><br><span class="line">display.display(validation_targets.describe())</span><br></pre></td></tr></table></figure>
+<h2 id="构建神经网络"><a href="#构建神经网络" class="headerlink" title="构建神经网络"></a>构建神经网络</h2><p>神经网络由 <a href="https://www.tensorflow.org/api_docs/python/tf/estimator/DNNRegressor" target="_blank" rel="noopener">DNNRegressor</a> 类定义。</p>
+<p>使用 <strong><code>hidden_units</code></strong> 定义神经网络的结构。<code>hidden_units</code> 参数会创建一个整数列表，其中每个整数对应一个隐藏层，表示其中的节点数。以下面的赋值为例：</p>
+<p><code>hidden_units=[3,10]</code></p>
+<p>上述赋值为神经网络指定了两个隐藏层：</p>
+<ul>
+<li>第一个隐藏层包含 3 个节点。</li>
+<li>第二个隐藏层包含 10 个节点。</li>
+</ul>
+<p>如果我们想要添加更多层，可以向该列表添加更多整数。例如，<code>hidden_units=[10,20,30,40]</code> 会创建 4 个分别包含 10、20、30 和 40 个单元的隐藏层。</p>
+<p>默认情况下，所有隐藏层都会使用 ReLu 激活函数，且是全连接层。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">construct_feature_columns</span><span class="params">(input_features)</span>:</span></span><br><span class="line">  <span class="string">"""Construct the TensorFlow Feature Columns.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Args:</span></span><br><span class="line"><span class="string">    input_features: The names of the numerical input features to use.</span></span><br><span class="line"><span class="string">  Returns:</span></span><br><span class="line"><span class="string">    A set of feature columns</span></span><br><span class="line"><span class="string">  """</span> </span><br><span class="line">  <span class="keyword">return</span> set([tf.feature_column.numeric_column(my_feature)</span><br><span class="line">              <span class="keyword">for</span> my_feature <span class="keyword">in</span> input_features])</span><br></pre></td></tr></table></figure>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

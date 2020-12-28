@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/11/07/Mvnw-简介/" itemprop="url">Mvnw 简介</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-11-07T13:24:29.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 636 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>maven是一款非常流行的java项目构建软件，它集项目的依赖管理、测试用例运行、打包、构件管理于一身，是我们工作的好帮手，maven飞速发展，它的发行版本也越来越多，如果我们的项目是基于maven构件的，那么如何保证拿到我们项目源码的同事的maven版本和我们开发时的版本一致呢，可能你认为很简单，一个公司嘛，规定所有的同事都用一maven版本不就万事大吉了吗？一个组织内部这是可行的，要是你开源了一个项目呢？如何保证你使用的maven的版本和下载你源码的人的maven的版本一致呢，这时候mvnw就大显身手了。<br>mvnw 全名是maven wrapper,它的原理是在maven-wrapper.properties文件中记录你要使用的maven版本，当用户执行mvnw clean 命令时，发现当前用户的maven版本和期望的版本不一致，那么就下载期望的版本，然后用期望的版本来执行mvn命令，比如刚才的mvn clean。<br>为项目添加mvnw支持很简单，有两种方式：</p>
+<h1 id="方法一，在Pom-Xml中添加Plugin声明："><a href="#方法一，在Pom-Xml中添加Plugin声明：" class="headerlink" title="方法一，在Pom.Xml中添加Plugin声明："></a>方法一，在Pom.Xml中添加Plugin声明：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;groupId&gt;com.rimerosolutions.maven.plugins&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;wrapper-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.0.4&lt;/version&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+<p>这样当我们执行mvn wrapper:wrapper 时，会帮我们生成mvnw.bat, mvnw, maven/maven-wrapper.jar, maven/maven-wrapper.properties这些文件。<br>然后我们就可以使用mvnw代替mvn命令执行所有的maven命令，比如mvnw clean package</p>
+<h1 id="方法二，直接执行Goal"><a href="#方法二，直接执行Goal" class="headerlink" title="方法二，直接执行Goal"></a>方法二，直接执行Goal</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#表示我们期望使用的maven的版本为3.3.3</span><br><span class="line">mvn -N io.takari:maven:wrapper -Dmaven=3.3.3</span><br></pre></td></tr></table></figure>
+<p>产生的内容和第一种方式是一样的，只是目录结构不一样，maven-wrapper.jar和maven-wrapper.properties在”.mvn/wrapper”目录下</p>
+<h1 id="使用的注意事项"><a href="#使用的注意事项" class="headerlink" title="使用的注意事项"></a>使用的注意事项</h1><p>1、由于我们使用了新的maven ,如果你的settings.xml没有放在当前用户下的.m2目录下，那么执行mvnw时不会去读取你原来的settings.xml文件<br>2、在mvnw.bat中有如下的一段脚本<br>if exist “%M2_HOME%\bin\mvn.cmd” goto init<br>意思是如果找到mvn.cmd就执行初始化操作，但是maven早期版本不叫mvn.cmd,而是叫mvn.bat,所以会报”Error: M2_HOME is set to an invalid directory”错误，改成你本地的maven的匹配后缀就好了。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/" itemprop="url">Sharding-Sphere开源分布式数据库中间件</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-29T06:28:29.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 647 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <img src="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/sharding-sphere.jpg" title="Sharding-Sphere">
+<p>Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar（计划中）这3款相互独立的产品组成。他们均提供标准化的数据分片、分布式事务和数据库治理功能，可适用于如Java同构、异构语言、容器、云原生等各种多样化的应用场景。</p>
+<p>Sharding-Sphere定位为关系型数据库中间件，旨在充分合理地在分布式的场景下利用关系型数据库的计算和存储能力，而并非实现一个全新的关系型数据库。 它与NoSQL和NewSQL是并存而非互斥的关系。NoSQL和NewSQL作为新技术探索的前沿，放眼未来，拥抱变化，是非常值得推荐的。反之，也可以用另一种思路看待问题，放眼未来，关注不变的东西，进而抓住事物本质。关系型数据库当今依然占有巨大市场，是各个公司核心业务的基石，未来也难于撼动，我们目前阶段更加关注在原有基础上的增量，而非颠覆。</p>
+<img src="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/sharding-sphere-scope_cn.png">
+<h1 id="Sharding-JDBC"><a href="#Sharding-JDBC" class="headerlink" title="Sharding-JDBC"></a>Sharding-JDBC</h1><p>定位为轻量级Java框架，在Java的JDBC层提供的额外服务。 它使用客户端直连数据库，以jar包形式提供服务，无需额外部署和依赖，可理解为增强版的JDBC驱动，完全兼容JDBC和各种ORM框架。</p>
+<ul>
+<li><p>适用于任何基于Java的ORM框架，如：JPA, Hibernate, Mybatis, Spring JDBC Template或直接使用JDBC。</p>
+</li>
+<li><p>基于任何第三方的数据库连接池，如：DBCP, C3P0, BoneCP, Druid, HikariCP等。</p>
+</li>
+<li><p>支持任意实现JDBC规范的数据库。目前支持MySQL，Oracle，SQLServer和PostgreSQL。</p>
+</li>
+</ul>
+<img src="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/sharding-jdbc-brief.png">
+<h1 id="Sharding-Proxy"><a href="#Sharding-Proxy" class="headerlink" title="Sharding-Proxy"></a>Sharding-Proxy</h1><p>定位为透明化的数据库代理端，提供封装了数据库二进制协议的服务端版本，用于完成对异构语言的支持。 目前先提供MySQL版本，它可以使用任何兼容MySQL协议的访问客户端(如：MySQL Command Client, MySQL Workbench等)操作数据，对DBA更加友好。</p>
+<ul>
+<li><p>向应用程序完全透明，可直接当做MySQL使用。</p>
+</li>
+<li><p>适用于任何兼容MySQL协议的客户端。</p>
+<img src="/2018/10/29/Sharding-Sphere开源分布式数据库中间件/sharding-proxy-brief_v2.png">
+</li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/26/推荐一个学习音乐的好资源——Nice-Chord-好和弦/" itemprop="url">推荐一个学习音乐的好资源——Nice Chord 好和弦</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-26T05:40:22.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Music/">Music</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 356 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <img src="/2018/10/26/推荐一个学习音乐的好资源——Nice-Chord-好和弦/nicechord.jpg" title="Nice Chord">
+<p>最近对音乐的东西比较感兴趣，尝试着搜了一下学习资源，发现台湾有个叫Wiwi官大为的音乐人在网络上开放了一个叫“Nice Chord好和弦“的学习视频，片子不长但制作精良，没有废话，都是他对音乐乐理和编曲、伴奏等方面的心得体会，顺着下来看能学到很多之前隐隐约约能感觉到，但都不是特别懂的东西。</p>
+<p>这个教学视频系列主要以钢琴作为伴奏，但是其中讲的内容对吉他等其他乐器都很有用，通过他的介绍渐渐可以了解到为什么大部分流行歌曲的伴奏都差不多，常见的和弦以及它们在音乐表达上的风格，如何变化和正确使用和弦……等等一系列很有意思的问题，让人看完之后忍不住想买把吉他弹奏试试。</p>
+<p>如果你有小孩在学习音乐，这部视频将是对他很有帮助。</p>
+<p>下面给出好和弦的官方地址：</p>
+<p><a href="http://nicechord.com/" target="_blank" rel="noopener">http://nicechord.com/</a></p>
+<p>国内有视频转载但是好像没有YouTube更新快，想看的更多更好的视频资源，就看你翻墙的本事了。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/26/使用Guava处理文件改名并拷贝的例子，超简单！/" itemprop="url">使用Guava处理文件改名并拷贝的例子，超简单！</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-26T03:05:28.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            3 分钟 读完 (约 406 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>今天需要对原有档案文件进行一个处理：需要把原文件名中包括“DD”或“KJ”的pdf文档重新改名为“WS”，并复制到另一个文件夹。如果使用Java文件IO去处理比较繁琐，自己还需要处理Steam等很多接口。这时想到了Java库中的神器——谷歌的基础库Guava，能够提供很多便利的API给用户，可以轻而易举地进行文件操作和字符串处理等，这里把代码记录下来，有空闲可以发几篇Guava的使用。</p>
+<p>这里有几点需要额外注意：</p>
+<ol>
+<li>文件夹路径的字符串表示，Windows中的路径在字符串双引号中要进行转义\\</li>
+<li>寻找路径下的文件，可以使用 Files.fileTreeTraverser().breadthFirstTraversal(rootDir)方法。</li>
+<li>使用public String replaceAll(String regex, String replacement)进行字符串的匹配和替换。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.sbsm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.base.CharMatcher;</span><br><span class="line"><span class="keyword">import</span> com.google.common.io.Files;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hello world!</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        String sourcePath = <span class="string">"F:\\changeFileName\\"</span>;</span><br><span class="line">        String targetPath = <span class="string">"F:\\new\\"</span>;</span><br><span class="line">        <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        File rootDir = <span class="keyword">new</span> File(sourcePath);</span><br><span class="line">            <span class="keyword">for</span>(File f: Files.fileTreeTraverser().breadthFirstTraversal(rootDir))&#123;</span><br><span class="line">                <span class="keyword">if</span>(f.isFile())&#123;</span><br><span class="line">                    String fName=f.getName();</span><br><span class="line">                    String newName=fName.replaceAll(<span class="string">"DD"</span>,<span class="string">"WS"</span>).replaceAll(<span class="string">"KJ"</span>,<span class="string">"WS"</span>);</span><br><span class="line">                    File newFile = <span class="keyword">new</span> File(targetPath+newName);</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Files.copy(f,newFile);</span><br><span class="line">                    &#125;<span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    count++;</span><br><span class="line">                    System.out.println(f.getName()+<span class="string">"处理成功"</span>+<span class="string">"newFile:"</span>+newFile.getName());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"复制文件总数："</span>+count);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用Maven构建工程，需要在pom文件中引入Guava：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.guava<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>guava<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>21.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>总共执行了800多个文件的拷贝，比较稳定。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/25/ORA-00604-递归-SQL-级别-1-出现错误-ORA-01653-表-SYS-AUD-无法通过-8192-在表空间-SYSTEM-中-扩展/" itemprop="url"> ORA-00604: 递归 SQL 级别 1 出现错误 ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-25T08:35:58.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 721 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>今日遇到OA数据库报错，报错内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ORA-00604: 递归 SQL 级别 1 出现错误</span><br><span class="line">ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展</span><br><span class="line">ORA-02002: 写入审计线索时出错</span><br><span class="line">ORA-00604: 递归 SQL 级别 1 出现错误</span><br></pre></td></tr></table></figure>
+<p>这种情况是遇到了表空间已满的情况，由于Windows版32位的Oracle限制每个表空间存储文件最大32G，所以必须手动增加表空间存储文件进行扩容。步骤如下：</p>
+<ol>
+<li><p>本地模式登录数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line">SQL*Plus: Release 11.2.0.1.0 Production on Thu Oct 25 16:16:49 2018</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2010, Oracle.  All rights reserved.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connected to:</span><br><span class="line">Oracle Database 11g Enterprise Edition <span class="keyword">Release</span> <span class="number">11.2</span><span class="number">.0</span><span class="number">.1</span><span class="number">.0</span> - Production</span><br><span class="line"><span class="keyword">With</span> the Partitioning, OLAP, <span class="keyword">Data</span> <span class="keyword">Mining</span> <span class="keyword">and</span> <span class="built_in">Real</span> Application Testing options</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li><p>查看表空间情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)</span><br><span class="line">&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTT</span><br><span class="line">E_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BY</span><br><span class="line">TES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(S</span><br><span class="line">UM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024), 2)</span><br><span class="line">MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLES</span><br><span class="line">PACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_D</span><br><span class="line">ATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPA</span><br><span class="line">CE_NAME ORDER BY 4 DESC;</span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">SYSTEM                                 65482      65409.19   99.89       72.81</span><br><span class="line">        47</span><br><span class="line"></span><br><span class="line">OA                                      1248       1184.94   94.95       63.06</span><br><span class="line">        63</span><br><span class="line"></span><br><span class="line">SYSAUX                                   920        852.06   92.62       67.94</span><br><span class="line">        59</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">UNDOTBS1                                1000         420.5   42.05       579.5</span><br><span class="line">       353</span><br><span class="line"></span><br><span class="line">USERS                                      5          1.31   26.20        3.69</span><br><span class="line">      3.69</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>查看表空间文件名和是否自动增长</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT FILE_NAME,TABLESPACE_NAME,AUTOEXTENSIBLE FROM dba_data_files;</span><br><span class="line"></span><br><span class="line">FILE_NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TABLESPACE_NAME                AUT</span><br><span class="line">------------------------------ ---</span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\USERS01.DBF</span><br><span class="line">USERS                          YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\UNDOTBS01.DBF</span><br><span class="line">UNDOTBS1                       YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSAUX01.DBF</span><br><span class="line">SYSAUX                         YES</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FILE_NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TABLESPACE_NAME                AUT</span><br><span class="line">------------------------------ ---</span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSTEM01.DBF</span><br><span class="line">SYSTEM                         YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\OA.DBF</span><br><span class="line">OA                             YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSTEM02.DBF</span><br><span class="line">SYSTEM                         NO</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">6 rows selected.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>增加表空间的存储文件，system03.dbf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; ALTER TABLESPACE SYSTEM ADD DATAFILE &apos;D:\app\Administrator\oradata\orcl\SYS</span><br><span class="line">TEM03.DBF&apos; SIZE 32752M;</span><br><span class="line"></span><br><span class="line">Tablespace altered.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="5">
+<li><p>执行完成后查看表空间的使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)</span><br><span class="line">&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTT</span><br><span class="line">E_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BY</span><br><span class="line">TES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(S</span><br><span class="line">UM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024), 2)</span><br><span class="line">MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLES</span><br><span class="line">PACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_D</span><br><span class="line">ATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPA</span><br><span class="line">CE_NAME ORDER BY 4 DESC;</span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">OA                                      1248       1184.94   94.95       63.06</span><br><span class="line">        63</span><br><span class="line"></span><br><span class="line">SYSAUX                                   920        852.06   92.62       67.94</span><br><span class="line">        59</span><br><span class="line"></span><br><span class="line">SYSTEM                                 98234      65474.19   66.65    32759.81</span><br><span class="line">      3968</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">UNDOTBS1                                1000         460.5   46.05       539.5</span><br><span class="line">       353</span><br><span class="line"></span><br><span class="line">USERS                                      5          1.31   26.20        3.69</span><br><span class="line">      3.69</span><br></pre></td></tr></table></figure>
+<p>可见SYSTEM表空间已经扩大了，任务完成。</p>
+</li>
+</ol>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/22/LVM简单介绍/" itemprop="url">LVM简单介绍</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-22T05:22:23.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            10 分钟 读完 (约 1543 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>原文见：<a href="http://www.debian-administration.org/articles/410" target="_blank" rel="noopener">http://www.debian-administration.org/articles/410</a></p>
+<p>LVM允许你用一种有效地方法创建和管理服务器上的存储，按照意愿增加、移除、改变分区大小。刚开始接触LVM会使初学者感到疑惑，而这篇文字就用简单的方式讲述LVM的基本知识。</p>
+<p>以下术语对你学习使用LVM很重要，是你必须知道的：</p>
+<ul>
+<li><p>物理卷（physical volumes）</p>
+<p>这是你的物理硬盘或磁盘分区，例如/dev/hda或/dev/hdb1.这是你在mounting/unmounting时经常使用的。利用LVM能够合并多个物理卷成为卷群（volume groups）</p>
+</li>
+<li><p>卷群（volume groups）</p>
+<p>卷群由真实的物理卷组成，它能够用来创建逻辑卷（logical volumes）。你能够创建、改变大小、移除、使用逻辑卷。可以认为卷群是一个由任意数量的物理卷组成的虚拟分区。</p>
+</li>
+<li><p>逻辑卷（logical volumes）</p>
+<p>逻辑卷是你最终在系统上挂载的，它们能够快速的添加、移除、改变大小。因为逻辑卷由卷群组成，所有它的空间能大于组成它的单一物理卷的空间。例如由4个5G大小的硬盘（逻辑卷）能够组合成20G的卷群，所有你能在此基础上创建两个10G的逻辑卷。</p>
+</li>
+</ul>
+<p>在逻辑层面上，他们的概念层次自上而下如图所示。</p>
+<img src="/2018/10/22/LVM简单介绍/LVM_hierarchy.png" title="LVM的概念层次">
+<h1 id="创建卷群（Volume-Group）"><a href="#创建卷群（Volume-Group）" class="headerlink" title="创建卷群（Volume Group）"></a>创建卷群（Volume Group）</h1><p>使用LVM你至少需要一个分区，并使用LVM进行初始化。然后把它加入一个卷群。怎样操作呢？</p>
+<p>在我的例子中，我的笔记本有如下设置：</p>
+<h3 id="Name-Flags-Part-Type-FS-Type-Label-Size-MB"><a href="#Name-Flags-Part-Type-FS-Type-Label-Size-MB" class="headerlink" title="Name        Flags    Part Type   FS Type          [Label]        Size (MB)"></a>Name        Flags    Part Type   FS Type          [Label]        Size (MB)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hda1        Boot        Primary   		Linux ext3       [/]             8000.01 </span><br><span class="line">hda2                    Primary   		Linux swap 		/ Solaris        1000.20</span><br><span class="line">hda3                    Primary   		Linux                            31007.57</span><br></pre></td></tr></table></figure>
+<p>这里我有一个7GB的根分区，用来存储我的Debian GNU/Linux安装。我有一个28GB的分区用来给LVM使用。按照我的设置，我能用LVM创建一个专用的/home分区，而且我能够在空间不足时扩展/home分区增大空间。</p>
+<p>在这个例子中hda1、hda2、hda3是物理卷。我对hda3进行物理卷初始化：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~<span class="comment"># pvcreate /dev/hda3</span></span><br></pre></td></tr></table></figure>
+<p>如果你想合并硬盘或者分区，你可以像这样操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# pvcreate /dev/hdb</span><br><span class="line">root@lappy:~# pvcreate /dev/hdc</span><br></pre></td></tr></table></figure>
+<p>一旦你初始化好了分区或磁盘驱动器，我们用这些物理卷来创建卷群：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# vgcreate skx-vol /dev/hda3</span><br></pre></td></tr></table></figure></p>
+<p>这里skx-vol是卷群的名称。如果你想跨两个磁盘创建卷群，你可以使用“vgcreate skx-vol /dev/hdb /dev/hdc”的方式。</p>
+<p>如果你操作正确，你可以通过vgscan命令查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# vgscan</span><br><span class="line">  Reading all physical volumes.  This may take a while...</span><br><span class="line">  Found volume group "skx-vol" using metadata type lvm2</span><br></pre></td></tr></table></figure>
+<p>这样我们就创建好了一个名为skx-vol的卷群，我们下面开始使用他。</p>
+<h1 id="创建和使用逻辑卷（Working-with-logical-volumes）"><a href="#创建和使用逻辑卷（Working-with-logical-volumes）" class="headerlink" title="创建和使用逻辑卷（Working with logical volumes）"></a>创建和使用逻辑卷（Working with logical volumes）</h1><p>我们真正想要的是创建一个能够挂载和使用的逻辑卷。如果以后我们的逻辑卷空间不足，可以对其空间进行重新分配，增加新的存储空间。当然这取决于你算则的文件系统类型。</p>
+<p>我们将创建一个名为test的卷：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvcreate -n test --size 1g skx-vol</span><br><span class="line">Logical volume "test" created</span><br></pre></td></tr></table></figure>
+<p>这个命令创建了一个大小为1G名为test的逻辑卷，它在LVM卷群skx-vol之上。</p>
+<p>现在这个逻辑卷可以通过/dev/skx-vol/test进行操作，它能像其他分区一样进行格式化和挂载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# mkfs.ext3 /dev/skx-vol/test</span><br><span class="line">root@lappy:~# mkdir /home/test</span><br><span class="line">root@lappy:~# mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure>
+<p>很酷是吧？</p>
+<p>下面的操作将更有意思！我们假设这个test分区空间已满，我们要对这个分区进行扩大。首先，我们可以通过lvdisplay命令查看当前硬盘的状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvdisplay </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                /dev/skx-vol/test</span><br><span class="line">  VG Name                skx-vol</span><br><span class="line">  LV UUID                J5XlaT-e0Zj-4mHz-wtET-P6MQ-wsDV-Lk2o5A</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Status              available</span><br><span class="line"><span class="meta">  #</span><span class="bash"> open                 0</span></span><br><span class="line">  LV Size                1.00 GB</span><br><span class="line">  Current LE             256</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     0</span><br><span class="line">  Block device           254:0</span><br></pre></td></tr></table></figure>
+<p>我们能看到test分区大小为1G。在我们对它重新分配空间时记得要先卸载这个卷（unmount）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# umount  /home/test/</span><br><span class="line">root@lappy:~# lvextend -L+1g /dev/skx-vol/test </span><br><span class="line">Extending logical volume test to 2.00 GB</span><br><span class="line">Logical volume test successfully resized</span><br></pre></td></tr></table></figure></p>
+<p>(注意：ext3文件系统可以在挂载状态重划大小，但是我建议还是先把它卸载掉，这样可以免除不必要的担心)</p>
+<p>在此通过lvdisplay命令查看，test卷已经重新分配了大小：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvdisplay </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                /dev/skx-vol/test</span><br><span class="line">  VG Name                skx-vg</span><br><span class="line">  LV UUID                uh7umg-7DqT-G2Ve-nNSX-03rs-KzFA-4fEwPX</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Status              available</span><br><span class="line"><span class="meta">  #</span><span class="bash"> open                 0</span></span><br><span class="line">  LV Size                2.00 GB</span><br><span class="line">  Current LE             512</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     0</span><br><span class="line">  Block device           254:0</span><br></pre></td></tr></table></figure></p>
+<p>需要着重提醒的是，即使这个卷的空间重新分配，但是它上面的ext3文件系统却没有改变，我们需要对文件系统重划大小满足扩大了的卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# e2fsck -f /dev/skx-vol/test </span><br><span class="line">root@lappy:~# resize2fs /dev/skx-vol/test</span><br></pre></td></tr></table></figure></p>
+<p>然后对test卷重新挂载后你会发现它的空间变成了2G。</p>
+<p>当然你也可以通过lvremove操纵移除这个卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvremove /dev/skx-vol/test</span><br><span class="line">Do you really want to remove active logical volume "test"? [y/n]: y</span><br><span class="line">Logical volume "test" successfully removed</span><br></pre></td></tr></table></figure></p>
+<h1 id="挂载逻辑卷（Mounting-Logical-Volumes）"><a href="#挂载逻辑卷（Mounting-Logical-Volumes）" class="headerlink" title="挂载逻辑卷（Mounting Logical Volumes）"></a>挂载逻辑卷（Mounting Logical Volumes）</h1><p>在之前的章节，我们使用如下的命令来挂载一个逻辑卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure></p>
+<p>如果你想在开机引导的时候就挂载你的分区，你可以编辑/etc/fstab文件，增加如下内容：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/dev/skx-vol/home    /home       ext3  noatime  0 2</span><br><span class="line">/dev/skx-vol/backups /backups    ext3  noatime  0 2</span><br></pre></td></tr></table></figure></p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/06/28/空间数据库索引综述/" itemprop="url">空间数据库索引综述</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-06-28T12:28:59.000Z" itemprop="datePublished">3 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 分钟 读完 (约 212 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>空间索引在某些方面是基于某些已有的点索引，例如kd树和B+树。这些通过扩展点索引来应用于空间对象的技术一般可以分为三类：<strong>对象映射、对象复制和对象约束</strong>。对象映射方法将n个顶点定义的对象从k维空间映射到n*k维空间的点或者映射到原来k维空间的单值对象。对象复制方法将同一个对象存储在与此对象重叠的多个数据空间，而对象约束方法通过层级分组将数据对象划分为不同的组，每个分组代表一个数据空间。每种方法都有其优点和缺点，并直接影响索引性能。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/06/20/Jeffrey-Dean论文：基于学习的索引结构/" itemprop="url">Jeffrey Dean论文：基于学习的索引结构</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-06-20T00:41:50.000Z" itemprop="datePublished">3 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 327 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>索引即是模型：B树索引是一个在排序数组中用键映射记录位置的模型，哈希索引是一个在非排序数组中用键映射记录位置的模型，位图索引是一个指示记录是否存在的模型。本文假设现有的索引结构都可以被替换为其他的模型，包括深度学习模型，我们称此<em>学习索引</em>。其核心思想是，模型可以学习查找键的顺序或结构，并使用这个信息有效地预测记录的位置或是否存在。我们从理论上分析了在何种情况下学习索引优于传统索引，并且概况了设计学习索引的诀窍和调整。初步结果表明，通过神经网络，学习索引比高速缓存优化的B树速度快70%，并且在多个真实的结果集上节省一个数量级的内存。更重要的是，我们相信通过深度学习模型取代数据管理系统的核心组件对未来系统设计有着深远的影响，并且这只是未来应用的冰山一角。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/06/12/Services/" itemprop="url">Services</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-06-12T06:42:38.000Z" itemprop="datePublished">3 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1608 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p><img src="https://blog.zhangruipeng.me/hexo-theme-minos/gallery/forest.jpg" alt="forest"></p>
+<p>Kubenetes Pods 不是永生的。当他们生命结束后无法复活。实际上<a href="https://v1-9.docs.kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/" target="_blank" rel="noopener">ReplicationController</a>动态的创建和销毁Pods（例如，应用扩展、停用或者回滚更新时）。由于每个Pod拥有各自的Ip地址，所以这些IP地址无法被固定下来。这导致一个问题：如果某些Pods（所谓后端）在kubenetes集群中向其他Pods提供了某些功能，这些前端是怎么样找到并记录与哪一个后端关联的呢？<strong>通过Services</strong></p>
+<p>Kubenetes Service是一组有内在逻辑Pods的抽象，并且定义了如何访问他们的策略，有时称为微服务。一组成为Service的Pods通常使用<a href="https://v1-9.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors" target="_blank" rel="noopener">Label Selector</a>进行定义。</p>
+<p>举个例子，假如一个图像处理后端程序运行3个副本。这些副本是可替代的，前端不关心使用哪一个副本。而实际上组成后端的Pods会改变，前端业务无法知道和跟踪后端的列表。Services抽象使这种解耦变得可能。</p>
+<p>对于Kubenetes原生的应用，kubenetes提供简单的Endpoints API，每当服务中的Pods改变的时候都会进行更新。对于非原生的应用，kubenetes提供虚拟Ip的网桥，转至后端的Pods。</p>
+<h1 id="定义服务"><a href="#定义服务" class="headerlink" title="定义服务"></a>定义服务</h1><p>Kubenetes服务是一个REST对象，与Pod类似。像所有的REST对象一样，Service 定义能够被提交至apiserver用来创建新的实例。例如，有一组具有“app=MyApp”标签的Pods，对外暴露9376端口。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">spec:</span> </span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">app:</span> <span class="string">MyApp</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - protocol:</span><span class="string">TCP</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">      targetPort:</span><span class="number">9376</span></span><br></pre></td></tr></table></figure></p>
+<p>这个配置将创建一个新的服务对象，命名为“my-service”，在任何标签是“app=MyApp”的Pod上映射目标端口是9376。这个服务会被分配一个IP地址（有时被称为“cluster IP”），改地址被服务代理使用。这个服务的选择器会持续不断地进行检索，结果会被提交到一样被命名为“my-service”的Endpoints对象。</p>
+<p>注意，一个服务能够映射一个入栈端口到一个出栈端口。默认地，目标端口会被设置与上面“port”字段一样的值。更有意思的是，目标端口能够被设置成为一个字符串，引用在后端Pods中一样的端口名。在每个后端pod中，被分配给那个名称的实际端口可以是不同的。这给部署和演化服务提供了很大的灵活性。例如，你可以在下一个后端软件版本中改变pods暴露的端口，而对前端没有影响。</p>
+<p>kubenetes服务支持TCP和UDP协议。默认是TCP。</p>
+<h2 id="没有选择器的服务"><a href="#没有选择器的服务" class="headerlink" title="没有选择器的服务"></a>没有选择器的服务</h2><p>服务通常是对kubenetes Pods的访问抽象，但是他们也可以抽象其他类型的后端。例如：</p>
+<ul>
+<li><p>在生产环境中使用外部数据库，而在测试环境中使用自己的数据库。</p>
+</li>
+<li><p>在另一个命名空间或者另一个集群中将一个服务咨询另一个服务。</p>
+</li>
+<li><p>将一部分负载迁移到kubenetes中，而其中一些负载在kubenetes外的后端。</p>
+</li>
+</ul>
+<p>在上面的情景下，你可以定义一个没有选择器的服务：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="number">9376</span></span><br></pre></td></tr></table></figure>
+<p>因为这个服务没有选择器，相关联的Endpoints对象是不会被创建。你可以手动的映射服务到自己的特定endpoints：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Endpoints</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">subsets:</span></span><br><span class="line"><span class="attr">  - addresses:</span></span><br><span class="line"><span class="attr">      - ip:</span> <span class="number">1.2</span><span class="number">.3</span><span class="number">.4</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="attr">      - port:</span> <span class="number">9376</span></span><br></pre></td></tr></table></figure>
+<p>注意：Endpoint IP不能设置为回环地址 (127.0.0.0/8) ,本地连接地址(169.254.0.0/16) ，或者本地广播地址(224.0.0.0/24)。</p>
+<p>访问一个没有选择器的服务同有选择器的服务一样。流量会被路由至用户定义的endpoints（在上面的例子中是<code>1.2.3.4:9376</code>）</p>
+<p>一个ExternalName服务是另一类没有选择器的特殊服务。它不定义任何端口和endpoints。它提供了一种向集群外的外部服务返回别名的方式。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">prod</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">ExternalName</span></span><br><span class="line"><span class="attr">  externalName:</span> <span class="string">my.database.example.com</span></span><br></pre></td></tr></table></figure>
+<p>当查找my-service.prod.svc.CLUSTER主机时，集群DNS服务会返回一个值为my.database.example.com的CNAME记录。访问这个服务的方式跟访问其他服务一样，仅有的不同只是在DNS级别进行重定向，没有进行代理和转发。如果以后决定将数据库迁移到集群中，可以启动pods，添加适当的选择器和端点并改变服务的类型。</p>
+<h1 id="虚拟IP和服务代理"><a href="#虚拟IP和服务代理" class="headerlink" title="虚拟IP和服务代理"></a>虚拟IP和服务代理</h1><p>kubenetes中的每一个节点都会运行kube-proxy。kube-proxy负责实现一种ExternalName以外的虚拟IP形式。在kubenetes1.0版本中，服务是4层的（IP上的TCP/UDP）结构，代理纯粹在用户空间。在kubenetes1.1中，添加了Ingress API表示7层（HTTP）服务，也添加了iptables 代理，并从1.2版本后成为默认的操作模式。在kubenetes1.8-beta.0中，增加了ipvs proxy。</p>
+<h2 id="Proxy-mode：userspace"><a href="#Proxy-mode：userspace" class="headerlink" title="Proxy-mode：userspace"></a>Proxy-mode：userspace</h2><p>在这个模式下，kube-proxy观察kubenetes master添加和删除Service和endpoint对象。对于每一个服务它都会在本地节点打开一个端口（任意选择）。任意与代理端口的连接都会被代理到其中一个服务后端Pods（在endpoints中报告的）。使用哪一个后端pod是基于服务的SessionAffinity决定。最终它会安装iptables规则，这个规则捕获到服务cluster IP（虚拟IP）和端口的流量，并转发流量到代理后端pod的代理端口。默认地，后端选择使用轮询方式。</p>
+<p><img src="https://v1-9.docs.kubernetes.io/images/docs/services-userspace-overview.svg" alt="services-userspace-overview "></p>
+<p>注意，在上图中clusterIP被写成ServiceIP</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+        
+<nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
+    <div class="pagination-previous">
+        <a href="/page/4/">上一页</a>
+    </div>
+    <div class="pagination-next is-invisible is-hidden-mobile">
+        <a href="/page/6/">下一页</a>
+    </div>
+    <ul class="pagination-list is-hidden-mobile">
+        
+        <li><a class="pagination-link" href="/">1</a></li>
+        
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+        
+        <li><a class="pagination-link" href="/page/4/">4</a></li>
+        
+        <li><a class="pagination-link is-current" href="/page/5/">5</a></li>
+        
+    </ul>
+</nav>
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

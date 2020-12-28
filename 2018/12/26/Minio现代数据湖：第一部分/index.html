@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>Minio现代数据湖：第一部分 - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Minio现代数据湖：第一部分
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-26T02:40:48.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            14 分钟 读完 (约 2062 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>现代数据湖构筑于云存储之上，帮助用户取得扩展性和对象存储经济性的平衡，并简化全部的数据存储和分析流程。</p>
+<p>在此系列的第一部分，我们将探讨对象存储与其他存储方式的不同，以及为何对象存储对于数据湖的构建意义重大。</p>
+<h1 id="什么是对象存储"><a href="#什么是对象存储" class="headerlink" title="什么是对象存储"></a>什么是对象存储</h1><p>对象存储泛指一种平台组织存储单元的方式，这种组织方式成为对象。每个对象通常包括以下三部分：</p>
+<ul>
+<li>数据本身。数据可以是任何想要存储的东西，从一张家庭照片到有40万页的火箭建造指南。</li>
+<li>数量可扩展的元数据。元数据被创建对象存储的人所定义，它包括描述数据内容的上下文信息、数据的用途、机密性、以及与数据使用方式相关的任何其他内容。</li>
+<li>全局唯一的标识符。标识符是一个赋予对象的地址，可以通过标识符在分布式系统中找到该对象。用这种方式，能够在不知道其物理地址的情况下找到数据。它可能位于一个数据中心的不同主机上甚至是不同的数据中心中。</li>
+</ul>
+<h1 id="块存储和对象存储"><a href="#块存储和对象存储" class="headerlink" title="块存储和对象存储"></a>块存储和对象存储</h1><img src="/2018/12/26/Minio现代数据湖：第一部分/OS_VS_BS.png" title="Block storage vs object storage">
+<p>对象存储不像块存储，它不将文件切分为原始数据块。相反，数据被作为一个包括真实文件数据、元数据和唯一标识符的对象进行存储。注意元数据可以包括与对象有关的任何文本。</p>
+<p>现代企业数据中心越来越像私有云，使用对象存储作为事实上的存储标准。对象存储可以以高可用、高容错的方式提供更好的扩展经济性，确保数据可以全球可用。</p>
+<p>以下是块存储和对象存储的详细对比：</p>
+<img src="/2018/12/26/Minio现代数据湖：第一部分/The_detailed_comparison.png" title="The detailed comparison">
+<h1 id="为何对象存储如此重要"><a href="#为何对象存储如此重要" class="headerlink" title="为何对象存储如此重要"></a>为何对象存储如此重要</h1><p>Hadoop一度成为数据湖选型的主宰。但是现在技术发展迅速，已经出现了更加先进的解决方案。现代数据湖基于对象存储，使用包括Apache Spark、Presto、TensorFlow等工具进行高级分析和机器学习。</p>
+<p>让我们回顾过去，看看事情是如何改变的。Hadoop出现在21世纪前十年，并且在过去5年内非常流行。事实上，因为许多公司都得益于开源，5、6年前的许多大数据项目都基于Hadoop。</p>
+<p>简单的说，Hadoop有两个主要的功能：</p>
+<ul>
+<li>分布式文件系统（HDFS）用来存储数据</li>
+<li>处理框架（MapReduce）可以并行地处理这些数据</li>
+</ul>
+<p>越来越多的组织开始希望处理和分析他们拥有的全部数据，而不只是一部分。所以，Hadoop逐渐流行因为它可以存储和处理新的数据源，包括系统日志、点击流、传感器和机器生成的数据。</p>
+<p>在2008-2009年左右，游戏改变了。当时，Hadoop的主要设计目标是利用通用商业硬件构建一个本地集群，从而以较低的成本存储和处理这些新数据。Hadoop非常适合这个目标。这在当时是正确的，但在今天却不是。</p>
+<h1 id="Spark的出现"><a href="#Spark的出现" class="headerlink" title="Spark的出现"></a>Spark的出现</h1><p>开源世界最美妙的是新事物不断涌现，最坏的事情也是如此。</p>
+<p>我的意思是，随着最新的、最大的、最好的新项目陆续推出，你不得不追随潮流。让我们看看现在发生了什么。</p>
+<p>近年来，比MapReduce更新的扩建不断涌现：Apache Spark。从概念是看，它与MapReduce相似。但是一个重要的不同是，它优化了Hadoop原本基于硬盘的计算方式，改为基于内存的数据计算。这导致了运行在Spark上的算法运行速度显著加快。</p>
+<p>事实上，今天要开始建设一个大数据项目，如果没有强制要求与历史遗留的Hadoop或MapReduce应用协同的话，Spark是最佳的方案。你仍然需要持久化数据，因为Spark已经捆绑了许多Hadoop发行版，大多数本地集群使用HDFS。但是，随着云计算的兴起，出现了持久化数据更好的方式：对象存储。</p>
+<p>对象存储不同于文件存储和块存储。因为它将数据存储为一个对象，而不是一个构成文件的数据块。元数据与该文件绑定，就不需要在文件存储中的使用的层级结构，并且没有限制元数据的大小。任何内容都可以存储在易于扩展的扁平的地址空间。</p>
+<h1 id="对象存储的诸多优势"><a href="#对象存储的诸多优势" class="headerlink" title="对象存储的诸多优势"></a>对象存储的诸多优势</h1><p>根本上来讲，对象存储在大文件和高流量吞吐方面性能优越。它可以运行数据跨区域存储，容量可以无限扩展至P字节甚至更大，它提供可以帮助取回文件的自定义的元数据。</p>
+<p>许多公司，特别是运营私有云环境的公司，将对象存储视作达到合规要求的一种面向非结构化大数据的长期存储库。但是合规性并不是唯一的原因。公司可以使用对象存储在Facebook上保存照片，在Spotify上保存歌曲，在Dropbox上保存文件。</p>
+<p>事实上对象存储让人们更为青睐的原因是成本优势。使用对象存储的成本较使用HDFS的块存储成本低许多。你可以看看大部分的云计算提供商，对象存储的成本只是块存储的1/3到1/5。这意味着在HDFS存储相同容量的数据要比使用对象存储贵3-5倍。</p>
+<p>综上所述，Spark是一个比MapReduce更快的框架，对象存储是比使用块存储的HDFS更便宜。下面我们把这两部分放在一起，形成一个新的架构。</p>
+<h1 id="对象存储-Spark的优势"><a href="#对象存储-Spark的优势" class="headerlink" title="对象存储+Spark的优势"></a>对象存储+Spark的优势</h1><p>我们特别推荐的是在云环境中基于对象存储和Spark构建数据湖。对象存储和Spark的解决方案比基于Hadoop的数据湖解决方案更具扩展性、成本更低。</p>
+<p>在云环境中将对象存储与Spark结合，比经典的Hadoop/MapReduce配置更有弹性。如果你曾经在Hadoop集群中增加或移除节点，你肯定理解我的意思。即使配置也并不容易，但是在云环境下这个工作并不重要。</p>
+<p>灵活性的另一个方面。如果要使用Hadoop增加更多的存储容量，你需要增加更多的（计算）节点。不论你是否需要计算能力，你都在需要存储能力的时候，无形中增加了计算容量。</p>
+<p>对象存储架构则完全不同。如果需要更多的计算能力，只需要扩充Spark集群，而使存储集群保持不变。如果需要存储新的数据，只需要扩充对象存储即可。在云环境下，计算和存储不只是弹性的，并且是独立弹性的。这样非常不错，因为我们需要计算和存储具备独立的弹性。</p>
+<h1 id="对象存储-Spark"><a href="#对象存储-Spark" class="headerlink" title="对象存储+Spark"></a>对象存储+Spark</h1><h2 id="业务敏捷"><a href="#业务敏捷" class="headerlink" title="业务敏捷"></a>业务敏捷</h2><p>要获得性能提升有许多方式。</p>
+<h2 id="稳定性、可靠性"><a href="#稳定性、可靠性" class="headerlink" title="稳定性、可靠性"></a>稳定性、可靠性</h2><h2 id="更低的TCO"><a href="#更低的TCO" class="headerlink" title="更低的TCO"></a>更低的TCO</h2>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Minio/">#Minio</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2018/12/28/为Linux逻辑卷增加物理磁盘空间/">为Linux逻辑卷增加物理磁盘空间</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2018/12/17/裸机Kubernetes集群上运行Nginx-Ingress的若干考虑/">裸机Kubernetes集群上运行Nginx Ingress的若干考虑</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bca03367b9b8c57"></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'dFKWAKQMOWFegpmxBmcPAKYs-gzGzoHsz',
+        app_key: '8GcXGC2fPHu8puRWbgX1zSS4',
+        placeholder: ''
+    });
+</script>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>
