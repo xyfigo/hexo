@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>使用Raml构建Restful-API - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            使用Raml构建Restful-API
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-12-02T15:19:36.000Z" itemprop="datePublished">1 个月前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            15 分钟 读完 (约 2202 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>本文重点介绍如何使用Raml来构建RESTful API，从而来提高微服务团队开发人员的合作，涵盖了以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 恰到好处的Raml。</span><br><span class="line">2. 十分钟快速上手。</span><br><span class="line">3. 搭建Mock Server。</span><br><span class="line">4. 使用Docker分离数据和构建过程。</span><br></pre></td></tr></table></figure>
+<p>本文的目的是在决策支持系统房地产调控专题中应用RAML，提高前后端开发效率及软件质量。</p>
+<h2 id="恰到好处的Raml"><a href="#恰到好处的Raml" class="headerlink" title="恰到好处的Raml"></a>恰到好处的Raml</h2><p>在前后端分离的架构中，一个经典的优秀实践是<code>CDCD</code>（Consumer Driven Contract Development），即消费者驱动契约开发。该实践的两个核心点是：<code>消费者驱动</code>+ <code>契约</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 消费者驱动。Service所提供的API是给不同的消费者去使用的，所以消费端需要消费什么数据，API就应该返回什么数据。剩下就是合同了，通俗的将就是API契约，</span><br><span class="line">2. 契约。通俗的讲是一个API契约，Service和Consumer（Consumer可以是前端或另一个Service）的API结构需要一个契约来统一管理，这样一来，负责Service和Consumer的开发人员都能参照同一套API契约独立并行开发，双方完成后进行集成联调。</span><br></pre></td></tr></table></figure>
+<p>优秀的实践（CDCD）总是离不开优秀工具来做支撑，<a href="https://link.jianshu.com/?t=http://raml.org" target="_blank" rel="noopener">Raml</a>以及其生态群恰到好处地提供了我们想要的合同功能。<a href="https://link.jianshu.com/?t=http://raml.org" target="_blank" rel="noopener">Raml</a>是什么，先看一张官网：</p>
+<img src="/2020/12/02/使用Raml构建Restful-API/raml.png" title="RAML">
+<p><code>Design</code>、<code>Build</code>、<code>Test</code>、<code>Document</code>、<code>Share</code>，我们选择 <a href="https://link.jianshu.com/?t=http://raml.org" target="_blank" rel="noopener">Raml</a>，究根结底也是因为它这几大优秀的特性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 设计API。你可以快速的构造你的API，并以人类友好的格式将它呈现出来。它涵盖了一些重要设计的最佳实践，如建模、模式、模板以及代码重用。</span><br><span class="line">2. 构建API。一旦设计好你的API，你就可以借助一些开发工具，将设计好的静态API文档，变成一个服务器端来提供服务。</span><br><span class="line">3. 测试API。引入单元测试可以有效地保证API实现的正确性，你可以通过运行一些脚本来测试你服务端是否涵盖了你设计好的API。</span><br><span class="line">4. 文档化API。Raml可以帮助你脱离同步维护一份额外文档的痛苦。RAML是一门API描述语言，所以你的API一旦被描述，它就是一份现成的API文档。你可以借助一些工具将它生成可视化的文档。</span><br><span class="line">5. 分享以及维护你的API。你可以借助一个基本的JavaScript来生成一些交互式工具（API Consoles或API Nodebooks），这样其他开发者可以使用标准格式与你的维护团队进行交流。</span><br></pre></td></tr></table></figure>
+<p>接下来，我们主要针对 <a href="https://link.jianshu.com/?t=http://raml.org" target="_blank" rel="noopener">Raml</a> 的前四个特性进行一个实践尝试。</p>
+<h2 id="窥探Raml"><a href="#窥探Raml" class="headerlink" title="窥探Raml"></a>窥探Raml</h2><blockquote>
+<p><code>共享</code>俨然成为了一个非常时髦的词汇。共享单车、共享汽车这些产品雨后春笋般的兴起。它们有一个共性：<code>商家集中提供大规模的服务，用户可以付出极低的价格就可以享用这种服务。</code>不可否认，这些产品正在促进社会进步（绿色出行），而真的共享了吗？我是持有怀疑态度的…</p>
+</blockquote>
+<p>我们要开发一款产品<code>共享图书馆</code>，一句话描述该产品的理念：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">任何注册用户都可以将自己拥有的图书共享到一个集中的虚拟图书馆，同时可以从这个图书馆中借阅任何图书。</span><br></pre></td></tr></table></figure>
+<p>产品立项进入了开发期，第一个迭代（敏捷开发的术语，关于敏捷开发推荐阅读 <a href="https://link.jianshu.com/?t=http://www.infoq.com/cn/articles/my-agile-practice-in-thoughtworks" target="_blank" rel="noopener">我在ThoughtWorks的敏捷实践</a>），团队目标是用户管理的功能。我们将以用户故事的形式展开展开：</p>
+<p><strong>作为管理员，ta可以查阅用户列表:</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/users:</span><br><span class="line">  get:</span><br><span class="line">  description: 查看用户列表</span><br><span class="line">  queryParameters:</span><br><span class="line">    gender:</span><br><span class="line">      description: "性别"</span><br><span class="line">      required: false</span><br><span class="line">      type: string</span><br><span class="line">      pattern: "MALE|FEMALE"</span><br><span class="line">  responses:</span><br><span class="line">    200:</span><br><span class="line">      body:</span><br><span class="line">        application/json:</span><br><span class="line">          example: |</span><br><span class="line">            [</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">"id"</span>: <span class="string">"2nldksfr4f2ifoa4g43rvfsdfdsfdaf2"</span>,</span><br><span class="line">                <span class="attr">"account"</span>: <span class="string">"sjyuan"</span>,</span><br><span class="line">                <span class="attr">"phoneNumber"</span>: <span class="string">"18192235667"</span>,</span><br><span class="line">                <span class="attr">"gender"</span>: <span class="string">"MALE"</span>,</span><br><span class="line">                <span class="attr">"name"</span>: <span class="string">"张三"</span></span><br><span class="line">              &#125;</span><br><span class="line">            ]</span><br></pre></td></tr></table></figure>
+<p>该API表示：操作资源<code>/users</code>，<code>get</code>表示使用的是HTTP GET方法。<code>queryParameters</code>定义了查询参数，<code>responses</code>定义了返回值，<code>example</code>描述了response body，它是一个JSON数组。</p>
+<p><strong>作为普通用户，ta首先要注册一个账号：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/users:</span><br><span class="line">  post:</span><br><span class="line">  description: 注册一个新用户</span><br><span class="line">  body:</span><br><span class="line">    application/json:</span><br><span class="line">      schema: |</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">"type"</span>: <span class="string">"object"</span>,</span><br><span class="line">          <span class="string">"$schema"</span>: <span class="string">"http://json-schema.org/draft-03/schema"</span>,</span><br><span class="line">          <span class="string">"required"</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="string">"properties"</span>: &#123;</span><br><span class="line">            <span class="string">"account"</span>: &#123;</span><br><span class="line">              <span class="string">"type"</span>: <span class="string">"string"</span>,</span><br><span class="line">              <span class="string">"required"</span>: <span class="literal">true</span>,</span><br><span class="line">              <span class="string">"minLength"</span>: <span class="number">2</span>,</span><br><span class="line">              <span class="string">"maxLength"</span>: <span class="number">20</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"password"</span>: &#123;</span><br><span class="line">              <span class="string">"type"</span>: <span class="string">"string"</span>,</span><br><span class="line">              <span class="string">"required"</span>: <span class="literal">true</span>,</span><br><span class="line">              <span class="string">"minLength"</span>: <span class="number">6</span>,</span><br><span class="line">              <span class="string">"maxLength"</span>: <span class="number">32</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"phoneNumber"</span>: &#123;</span><br><span class="line">              <span class="string">"type"</span>: <span class="string">"string"</span>,</span><br><span class="line">              <span class="string">"required"</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"name"</span>: &#123;</span><br><span class="line">              <span class="string">"type"</span>: <span class="string">"string"</span>,</span><br><span class="line">              <span class="string">"required"</span>: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">  responses:</span><br><span class="line">    <span class="number">201</span>:</span><br><span class="line">      body:</span><br><span class="line">        application/json:</span><br><span class="line">          example: |</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="string">"id"</span>: <span class="string">"2nldksfr4f2ifoa4g43rvfsdfdsfdaf2"</span>,</span><br><span class="line">              <span class="string">"account"</span>: <span class="string">"sjyuan"</span>,</span><br><span class="line">              <span class="string">"phoneNumber"</span>: <span class="string">"18192235667"</span>,</span><br><span class="line">              <span class="string">"name"</span>: <span class="string">"张三"</span></span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<p>该API使用了HTTP POST请求，<code>schema</code>定义了request body的校验格式。</p>
+<p><strong>作为普通用户，ta可以查看自己的详情：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/users:</span><br><span class="line">  /&#123;account&#125;:</span><br><span class="line">    <span class="keyword">get</span>:</span><br><span class="line">    description: 查看给定账户名的用户信息</span><br><span class="line">    responses:</span><br><span class="line">      200:</span><br><span class="line">        body:</span><br><span class="line">          application/json:</span><br><span class="line">            example: |</span><br><span class="line">              [</span><br><span class="line">                &#123;</span><br><span class="line">                  <span class="string">"id"</span>: <span class="string">"2nldksfr4f2ifoa4g43rvfsdfdsfdaf2"</span>,</span><br><span class="line">                  <span class="string">"account"</span>: <span class="string">"sjyuan"</span>,</span><br><span class="line">                  <span class="string">"phoneNumber"</span>: <span class="string">"18192235667"</span>,</span><br><span class="line">                  <span class="string">"gender"</span>: <span class="string">"MALE"</span>,</span><br><span class="line">                  <span class="string">"name"</span>: <span class="string">"袁慎建"</span></span><br><span class="line">                &#125;</span><br><span class="line">              ]</span><br></pre></td></tr></table></figure>
+<p><code>/{account}</code>是一个URI参数，传入的是用户的账号。</p>
+<p><strong>作为普通用户，ta可以编辑自己的信息：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/users:</span><br><span class="line">  /&#123;account&#125;:</span><br><span class="line">    put:</span><br><span class="line">    description: 更新给定账户名的用户信息</span><br><span class="line">    body:</span><br><span class="line">      application/json:</span><br><span class="line">        schema: |</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="string">"type"</span>: <span class="string">"object"</span>,</span><br><span class="line">            <span class="string">"$schema"</span>: <span class="string">"http://json-schema.org/draft-03/schema"</span>,</span><br><span class="line">            <span class="string">"required"</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="string">"properties"</span>: &#123;</span><br><span class="line">              <span class="string">"password"</span>: &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"string"</span>,</span><br><span class="line">                <span class="string">"required"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"minLength"</span>: <span class="number">6</span>,</span><br><span class="line">                <span class="string">"maxLength"</span>: <span class="number">32</span></span><br><span class="line">              &#125;,</span><br><span class="line">              <span class="string">"name"</span>: &#123;</span><br><span class="line">                <span class="string">"type"</span>: <span class="string">"string"</span>,</span><br><span class="line">                <span class="string">"required"</span>: <span class="literal">false</span></span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">    responses:</span><br><span class="line">      <span class="number">301</span>:</span><br></pre></td></tr></table></figure>
+<p>更新一个用户信息，我们使用了HTTP POST 请求。</p>
+<p><strong>作为一个管理员，ta可以禁用或删除某些违规操作的用户：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/users:</span><br><span class="line">  /&#123;account&#125;:</span><br><span class="line">    <span class="keyword">delete</span>:</span><br><span class="line">      description: 删除给定账户名的用户</span><br><span class="line">      responses:</span><br><span class="line">        <span class="number">204</span>:</span><br></pre></td></tr></table></figure>
+<p>删除一个用户，我们使用了HTTP DELETE请求。</p>
+<p>到此为止，我们完成了简单的User增删改查的API设计。我们只是做一个快速的窥探，真实业务场景中的API远比这要复杂得多，我们会利用<code>include</code>来提高代码的复用，而一些Raml的高级特性，诸如：<code>data type</code>、<code>seurity</code>、<code>Resource Types</code>、<code>Traits</code>等，也将成为强有力的工具。关于Raml更多详细指南，可参阅： <a href="https://link.jianshu.com/?t=https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md/" target="_blank" rel="noopener">Raml-spec</a>。</p>
+<p>完整源代码保存在我的GitHub的 <a href="https://link.jianshu.com/?t=https://github.com/sjyuan-cc/restful-api-raml/tree/for-blog" target="_blank" rel="noopener">restful-api-raml</a>。</p>
+<h2 id="构建你的API"><a href="#构建你的API" class="headerlink" title="构建你的API"></a>构建你的API</h2><p>我们已经完成了API的设计（用户的增删改查），API契约（合同）定好了。前、后端开发人员开始进入开发阶段。</p>
+<p>接下来有新的需求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. API设计好了，如何将其文档化，提供用户有好的阅读格式呢？</span><br><span class="line">2. API设计好，如何搭建基于设计API的Web Server，给前端的集成测试提供支持呢？</span><br></pre></td></tr></table></figure>
+<p>问题一是前文提到的Raml的一大特性：<code>文档化API</code>。</p>
+<p>问题二就需要我们将设计好API文档转变成一个Web Server，它也是Raml一大特性的体现：<code>构建API</code>。我们需要借助一些工具来完成这两件事情。</p>
+<h3 id="文档化API"><a href="#文档化API" class="headerlink" title="文档化API"></a>文档化API</h3><p>在Raml官方文档中提及了三种工具，<a href="https://link.jianshu.com/?t=https://github.com/mulesoft/api-console" target="_blank" rel="noopener">API Console</a>、<a href="https://link.jianshu.com/?t=https://github.com/raml2html/raml2html" target="_blank" rel="noopener">RAML to HTML</a>、<a href="https://link.jianshu.com/?t=https://github.com/mikestowe/php-raml2html" target="_blank" rel="noopener">RAML2HTML for PHP</a>，我们将使用 <a href="https://link.jianshu.com/?t=https://github.com/raml2html/raml2html" target="_blank" rel="noopener">RAML to HTML</a>去做Raml到html的转换，再利用 <a href="https://link.jianshu.com/?t=https://github.com/tapio/live-server" target="_blank" rel="noopener">Live Server</a> run起一个静态文件服务，提供在浏览器查阅API文档的功能。</p>
+<p>在开始之前，我们需要安装 <a href="https://link.jianshu.com/?t=https://www.npmjs.com/" target="_blank" rel="noopener">npm</a>。使用npm下载依赖，并定义一个任务：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "dependencies": &#123;</span><br><span class="line">    "raml2html": "^6.1.0",</span><br><span class="line">  &#125;</span><br><span class="line">  "scripts": &#123;</span><br><span class="line">    "docs-generator": "raml2html data/api.raml &gt; api.html"</span><br><span class="line">    "docs-server": "live-server --port=8081 --watch=api.html --entry-file=api.html"</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>docs-generator 任务是用来将raml文档转换成html文档，docs-server 启动了一个轻量的静态文件服务，它可以监听api.html文件的变化（只需要刷新浏览器），运行下面命令，之后访问<code>http://127.0.0.1:8081</code>之后，可以看到：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm run docs-generator</span><br><span class="line">$ npm run docs-server</span><br></pre></td></tr></table></figure>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Raml/">#Raml</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2020/12/28/精通Pandas探索性分析（一）：处理不同种类的数据集/">精通Pandas探索性分析（一）：处理不同种类的数据集</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2020/11/23/榨菜指数-中国城镇化的缩影/">榨菜指数--中国城镇化的缩影</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bca03367b9b8c57"></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'dFKWAKQMOWFegpmxBmcPAKYs-gzGzoHsz',
+        app_key: '8GcXGC2fPHu8puRWbgX1zSS4',
+        placeholder: ''
+    });
+</script>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

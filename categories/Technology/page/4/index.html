@@ -92,6 +92,82 @@
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
+            <a href="/2018/12/17/裸机Kubernetes集群上运行Nginx-Ingress的若干考虑/" itemprop="url">裸机Kubernetes集群上运行Nginx Ingress的若干考虑</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-17T07:04:55.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1306 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>在传统的云环境下，网络负载均衡是按需调用的，一个Kubernetes manifest可以提供一个单独的通信端点用于NGINX Ingress控制器与外部客户端通信。这样间接地可以与集群中的任何应用进行通信。裸机Kubernetes集群环境确实这一服务组件，所以需要进行一些不同的设置才能为外部用户提供类似的访问。</p>
+<p>本文描述了在裸机Kubernetes环境上部署NGINX Ingress控制器的推荐的配置。</p>
+<h1 id="MetalLB：一种纯软件的解决方案"><a href="#MetalLB：一种纯软件的解决方案" class="headerlink" title="MetalLB：一种纯软件的解决方案"></a>MetalLB：一种纯软件的解决方案</h1><h1 id="NodePort-服务方式"><a href="#NodePort-服务方式" class="headerlink" title="NodePort 服务方式"></a>NodePort 服务方式</h1><p>由于这种方式简单，所以这也是《安装指南》中用户默认部署的方式。</p>
+<p>在这个配置下，NGINX容器保持与主机网络的隔离。因此它可以安全的绑定至任何的端口，包括标准的HTTP80端口和443端口。但是由于容器名称空间的隔离，集群网络外的客户端（例如公网用户）无法直接访问Ingress主机的80和443端口。所以外部客户端必须在HTTP请求后面加上分配给ingre-nginx服务的NodePort端口号。</p>
+<img src="/2018/12/17/裸机Kubernetes集群上运行Nginx-Ingress的若干考虑/nodeport.jpg" title="NodePort">
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设NodePort30100分配给ingress-nginx服务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n ingress-nginx get svc</span><br><span class="line">NAME                   TYPE        CLUSTER-IP     PORT(S)</span><br><span class="line">default-http-backend   ClusterIP   10.0.64.249    80/TCP</span><br><span class="line">ingress-nginx          NodePort    10.0.220.217   80:30100/TCP,443:30101/TCP</span><br></pre></td></tr></table></figure>
+<p>Kubernetes节点的公共IP地址是203.0.113.2（下面的external IP只做个示例，在大多数裸机环境中这个值一般为<node>）</node></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
+<p>客户端可以通过myapp.example.com主机的30100端口来访问Ingress，在这里myapp.example.com域名会解析为203.0.113.2。</p>
+<h3 id="对主机系统的影响"><a href="#对主机系统的影响" class="headerlink" title="对主机系统的影响"></a>对主机系统的影响</h3><p>虽然使用–service-node-port-range API服务标志重新配置NodePort范围，并且可以包括非特权端口（例如80和443）端口，这样听起来很有吸引力。但是这样做会导致非预料的情况和问题，包括并不限于使用了其他系统守护进程占用的端口，或授予kube-proxy某些它并不必须的特权。</p>
+<p>因此并不推荐使用这一功能，请使用本文介绍的其他替代的做法。</p>
+<p>NodePort方式有其他几个需要注意的限制：</p>
+<ul>
+<li><h2 id="Source-IP-address"><a href="#Source-IP-address" class="headerlink" title="Source IP address"></a>Source IP address</h2><p>NodePort类型的服务默认执行原地址转换。这意味着HTTP请求的源IP总是接受NGINX请求的kubernetes节点的IP地址。</p>
+<p>在NodePort设置中避免源IP的推荐方式是在ingress-nginx服务spec中设置externalTrafficPolicy的属性值为Local</p>
+<h3 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a>Warning</h3><p>这个设置有效地识别和扔掉发送到没有运行NGINX Ingress控制器实例的Kubernetes节点。为了控制NGINX ingress控制器能够在哪些节点上进行调度，应当考虑分配NGINX Pods到特定节点。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>在Kubernetes集群中包括3个节点（external IP作为示例显示，大部分裸机环境中这个字段指一般为<none>）</none></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
+<p>ngingx-ingress-controller部署包括2个复制集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n ingress-nginx get pod -o wide</span><br><span class="line">NAME                                       READY   STATUS    IP           NODE</span><br><span class="line">default-http-backend-7c5bc89cc9-p86md      1/1     Running   172.17.1.1   host-2</span><br><span class="line">nginx-ingress-controller-cf9ff8c96-8vvf8   1/1     Running   172.17.0.3   host-3</span><br><span class="line">nginx-ingress-controller-cf9ff8c96-pxsds   1/1     Running   172.17.1.4   host-2</span><br></pre></td></tr></table></figure>
+<p>发送到host-2和host-3的请求能够被转发到NGINX并且源客户端IP能够被保留下来，发送到host-1的请求将被丢弃，因为在这个节点上没有NGINX复制集。</p>
+</li>
+<li><h2 id="Ingress-状态"><a href="#Ingress-状态" class="headerlink" title="Ingress 状态"></a>Ingress 状态</h2><p>因为NodePort服务不能获得定义中分配的LoadBalancerIP，NGINX Ingress控制器不能更新它管理的Ingress对象的状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get ingress</span><br><span class="line">NAME           HOSTS               ADDRESS   PORTS</span><br><span class="line">test-ingress   myapp.example.com             80</span><br></pre></td></tr></table></figure>
+<p>尽管事实上没有为NGINX ingress提供公共IP地址的负载均衡器，仍然能够强制更新所有被管理的Ingress对象，方法是设置ingress-nginx服务中的externalIPs字段。</p>
+<h3 id="Warning-1"><a href="#Warning-1" class="headerlink" title="Warning"></a>Warning</h3><p>设置externalIPs并不仅仅使NGINX ingress控制器更新ingress对象的状态。请在官方Kubernetes文档的Service页面阅读这个选项，以及关于ExternalIPs的章节获取更多信息。</p>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>在Kubernetes集群中包括3个节点（external IP作为示例显示，大部分裸机环境中这个字段指一般为&lt; Node &gt;）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
+<p>可以编辑ingress-nginx服务并添加一下的字段至spec对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spec:</span><br><span class="line">  externalIPs:</span><br><span class="line">  - 203.0.113.1</span><br><span class="line">  - 203.0.113.2</span><br><span class="line">  - 203.0.113.3</span><br></pre></td></tr></table></figure>
+<p>设置完毕后Ingress对象可以显示出以下属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get ingress -o wide</span><br><span class="line">NAME           HOSTS               ADDRESS                               PORTS</span><br><span class="line">test-ingress   myapp.example.com   203.0.113.1,203.0.113.2,203.0.113.3   80</span><br></pre></td></tr></table></figure>
+</li>
+<li><h2 id="Redirects"><a href="#Redirects" class="headerlink" title="Redirects"></a>Redirects</h2><p>因为NGINX不知道NodePort Service执行的端口转发，后端应用程序应当负责生成重定向URLs，并将外部客户端使用的URL和端口考虑进去。</p>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><p>在不使用NodePort的情况下，通过NGINX生成重定向，例如HTTP到HTTPS的重定向或者domain到<a href="http://www.domain" target="_blank" rel="noopener">www.domain</a> 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -D- http://myapp.example.com:30100`</span><br><span class="line">HTTP/1.1 308 Permanent Redirect</span><br><span class="line">Server: nginx/1.15.2</span><br><span class="line">Location: https://myapp.example.com/  #-&gt; missing NodePort in HTTPS redirect</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
             <a href="/2018/12/17/Kubectl-常用命令/" itemprop="url">Kubectl 常用命令</a>
         
     </h1>
@@ -598,44 +674,6 @@
 <p>当然你也可以通过lvremove操纵移除这个卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvremove /dev/skx-vol/test</span><br><span class="line">Do you really want to remove active logical volume "test"? [y/n]: y</span><br><span class="line">Logical volume "test" successfully removed</span><br></pre></td></tr></table></figure></p>
 <h1 id="挂载逻辑卷（Mounting-Logical-Volumes）"><a href="#挂载逻辑卷（Mounting-Logical-Volumes）" class="headerlink" title="挂载逻辑卷（Mounting Logical Volumes）"></a>挂载逻辑卷（Mounting Logical Volumes）</h1><p>在之前的章节，我们使用如下的命令来挂载一个逻辑卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure></p>
 <p>如果你想在开机引导的时候就挂载你的分区，你可以编辑/etc/fstab文件，增加如下内容：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/dev/skx-vol/home    /home       ext3  noatime  0 2</span><br><span class="line">/dev/skx-vol/backups /backups    ext3  noatime  0 2</span><br></pre></td></tr></table></figure></p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2018/06/28/空间数据库索引综述/" itemprop="url">空间数据库索引综述</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2018-06-28T12:28:59.000Z" itemprop="datePublished">3 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            1 分钟 读完 (约 212 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>空间索引在某些方面是基于某些已有的点索引，例如kd树和B+树。这些通过扩展点索引来应用于空间对象的技术一般可以分为三类：<strong>对象映射、对象复制和对象约束</strong>。对象映射方法将n个顶点定义的对象从k维空间映射到n*k维空间的点或者映射到原来k维空间的单值对象。对象复制方法将同一个对象存储在与此对象重叠的多个数据空间，而对象约束方法通过层级分组将数据对象划分为不同的组，每个分组代表一个数据空间。每种方法都有其优点和缺点，并直接影响索引性能。</p>
 
     
     </div>

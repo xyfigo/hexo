@@ -92,6 +92,57 @@
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
+            <a href="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/" itemprop="url">Cloud Native Geospatial之一: 基本假设和工作过程</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-03-08T06:18:42.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            9 分钟 读完 (约 1403 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>假设所有数据和计算都在云中，从开发人员的角度探讨其对工作流的影响是有意义的。结论意义重大，并且引发了一系列创新，例如容器编配和微服务架构不仅是纯技术性的工作，更是过程和方法论。</p>
+<p>以上4原则的含义外延十分广阔，引领我们创新出难以想象的工作流程。但是在Cloud Native Geospatial不长的历史过程中，已经开始出现了进展：</p>
+<h2 id="不需要复制数据"><a href="#不需要复制数据" class="headerlink" title="不需要复制数据"></a>不需要复制数据</h2><p>当数据所处的云环境中，各种各样的软件能够直接工作，所以不需要维护任何数据的拷贝。数据提供商为数据存储付费，并且按数据访问进行收费。数据用户根据需要访问数据，进行可视化或生产数据产品等处理。</p>
+<h2 id="发送算法到数据"><a href="#发送算法到数据" class="headerlink" title="发送算法到数据"></a>发送算法到数据</h2><p>数据存储在云中的某个位置，导致了一种发送算法到数据的范式，而不是其他的方式。如果所有的数据都在云中的某处，并且数据太大不能够在本地下载和处理，所以用户必须打包他们的算法，在云中运行。这会形成一个容器，像完整的Docker处理实例一样。但是更高级的云GIS系统，例如RasterFoundry 和Google Earth Engine，用户只是发送一个脚本和操作描述来运行。</p>
+<img src="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/send_algorithm_to_data.png" title="RasterFoundry algorithms live on the cloud and can be customized by anyone.">
+<h2 id="算法缓冲"><a href="#算法缓冲" class="headerlink" title="算法缓冲"></a>算法缓冲</h2><p>随着数据在一处访问和云提供一系列可用的算法，与桌面范式相比，处理工具变得的越来越可共享。事实上提高协作性可能是Web和云带来的最重要的意义。未来大多数用户只需要从最流行的算法中进行挑选，而不需要自己做大气辐射转换、去云、大气校正、表面反射率计算等专业性的算法区实现一个常态化差值植生指标(Normalized Difference Vegetation Index)的计算。只需要进行预处理，并选择一个最流行的NDVI算法。Web分层映射将帮助这种分析协作变为可能，因为处理的每个步骤都可以随时进行可视化和验证。</p>
+<h2 id="实时GIS"><a href="#实时GIS" class="headerlink" title="实时GIS"></a>实时GIS</h2><p>新IoT传感器、手机和卫星影像实时产生更多的数据流，并持续更新数据库。计算机视觉和深度学习的结合的最新算法（目标识别、变化检测等）会被添加到地理信息工具箱，用户必须访问持续更新的一系列地图。局限在于数据收集频率。</p>
+<p>随着在云中处理这些更新数据，这开启了一个新的过程，产生更高级的分析产品，例如在机场中发现新的飞机、发现农田健康的显著变化，以及发现新的油井。</p>
+<img src="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/Planet.png" title="New Oil Well Pads are identified weekly in an app built by Planet">
+<h2 id="地图核实"><a href="#地图核实" class="headerlink" title="地图核实"></a>地图核实</h2><p>当前GIS和遥感工作的成果一般以地图的形式输出，并经常被嵌入在PPT中。但是地图中的点会带来信息和知识，例如在这个机场上出现10架新飞机。关心这类信息的用户希望直接订阅这个信息，他们希望在所关心的信息到达阀值的时候得到提醒，而不需要查看检查每个图像。这类地理信息智能处理过程中的任何步骤都应该进行可视化，但是大多数用户应该在得到信息结果后使用地图进行核实，而不是以地图作为主要的信息界面。</p>
+<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1><p>本文介绍了可访问性、集中数据和工作流程的显著不同，Cloud Native Geospatial能够为新的非专业用户提供地理信息的强大能力，这种能力被GIS从业者使用了几十年。当前空间智能的受益人是那些构建GIS生态系统的参与者，他们依靠数据进行工作，手工生成信息，借助Web地图印制地图、报告。当这些生态系统本身真正实现云原生，开发信息价值的工作不再只由从业者承担。地理信息专家能够协作创造分析和成果，但是任何非专业的用户也能够选择和应用这些技术在他们关心的地理领域。</p>
+<p>有了正确的云架构，随着越来越多的新的、有创造性的用户从地理空间数据中创造价值，我们有潜力发现GIS技术的新应用。</p>
+<p>目前实现Cloud Native Geospatial仍有很多工作，但是各类组织和个人正在一起进行着努力。请继续关注本系列文章，我们将深入研究Cloud Native Geospatial如何工作，并探索当前运行的一些先进的Cloud Native Geospatial架构。</p>
+<p>下面，我们将研究Cloud Optimized GeoTIFFs——一个基于Cloud Native Geospatial之上构建的地理数据格式。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
             <a href="/2019/03/07/vim输入补全/" itemprop="url">vim输入补全</a>
         
     </h1>
@@ -681,82 +732,6 @@
 <p>对象存储架构则完全不同。如果需要更多的计算能力，只需要扩充Spark集群，而使存储集群保持不变。如果需要存储新的数据，只需要扩充对象存储即可。在云环境下，计算和存储不只是弹性的，并且是独立弹性的。这样非常不错，因为我们需要计算和存储具备独立的弹性。</p>
 <h1 id="对象存储-Spark"><a href="#对象存储-Spark" class="headerlink" title="对象存储+Spark"></a>对象存储+Spark</h1><h2 id="业务敏捷"><a href="#业务敏捷" class="headerlink" title="业务敏捷"></a>业务敏捷</h2><p>要获得性能提升有许多方式。</p>
 <h2 id="稳定性、可靠性"><a href="#稳定性、可靠性" class="headerlink" title="稳定性、可靠性"></a>稳定性、可靠性</h2><h2 id="更低的TCO"><a href="#更低的TCO" class="headerlink" title="更低的TCO"></a>更低的TCO</h2>
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2018/12/17/裸机Kubernetes集群上运行Nginx-Ingress的若干考虑/" itemprop="url">裸机Kubernetes集群上运行Nginx Ingress的若干考虑</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2018-12-17T07:04:55.000Z" itemprop="datePublished">2 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            9 分钟 读完 (约 1306 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>在传统的云环境下，网络负载均衡是按需调用的，一个Kubernetes manifest可以提供一个单独的通信端点用于NGINX Ingress控制器与外部客户端通信。这样间接地可以与集群中的任何应用进行通信。裸机Kubernetes集群环境确实这一服务组件，所以需要进行一些不同的设置才能为外部用户提供类似的访问。</p>
-<p>本文描述了在裸机Kubernetes环境上部署NGINX Ingress控制器的推荐的配置。</p>
-<h1 id="MetalLB：一种纯软件的解决方案"><a href="#MetalLB：一种纯软件的解决方案" class="headerlink" title="MetalLB：一种纯软件的解决方案"></a>MetalLB：一种纯软件的解决方案</h1><h1 id="NodePort-服务方式"><a href="#NodePort-服务方式" class="headerlink" title="NodePort 服务方式"></a>NodePort 服务方式</h1><p>由于这种方式简单，所以这也是《安装指南》中用户默认部署的方式。</p>
-<p>在这个配置下，NGINX容器保持与主机网络的隔离。因此它可以安全的绑定至任何的端口，包括标准的HTTP80端口和443端口。但是由于容器名称空间的隔离，集群网络外的客户端（例如公网用户）无法直接访问Ingress主机的80和443端口。所以外部客户端必须在HTTP请求后面加上分配给ingre-nginx服务的NodePort端口号。</p>
-<img src="/2018/12/17/裸机Kubernetes集群上运行Nginx-Ingress的若干考虑/nodeport.jpg" title="NodePort">
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设NodePort30100分配给ingress-nginx服务。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n ingress-nginx get svc</span><br><span class="line">NAME                   TYPE        CLUSTER-IP     PORT(S)</span><br><span class="line">default-http-backend   ClusterIP   10.0.64.249    80/TCP</span><br><span class="line">ingress-nginx          NodePort    10.0.220.217   80:30100/TCP,443:30101/TCP</span><br></pre></td></tr></table></figure>
-<p>Kubernetes节点的公共IP地址是203.0.113.2（下面的external IP只做个示例，在大多数裸机环境中这个值一般为<node>）</node></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
-<p>客户端可以通过myapp.example.com主机的30100端口来访问Ingress，在这里myapp.example.com域名会解析为203.0.113.2。</p>
-<h3 id="对主机系统的影响"><a href="#对主机系统的影响" class="headerlink" title="对主机系统的影响"></a>对主机系统的影响</h3><p>虽然使用–service-node-port-range API服务标志重新配置NodePort范围，并且可以包括非特权端口（例如80和443）端口，这样听起来很有吸引力。但是这样做会导致非预料的情况和问题，包括并不限于使用了其他系统守护进程占用的端口，或授予kube-proxy某些它并不必须的特权。</p>
-<p>因此并不推荐使用这一功能，请使用本文介绍的其他替代的做法。</p>
-<p>NodePort方式有其他几个需要注意的限制：</p>
-<ul>
-<li><h2 id="Source-IP-address"><a href="#Source-IP-address" class="headerlink" title="Source IP address"></a>Source IP address</h2><p>NodePort类型的服务默认执行原地址转换。这意味着HTTP请求的源IP总是接受NGINX请求的kubernetes节点的IP地址。</p>
-<p>在NodePort设置中避免源IP的推荐方式是在ingress-nginx服务spec中设置externalTrafficPolicy的属性值为Local</p>
-<h3 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a>Warning</h3><p>这个设置有效地识别和扔掉发送到没有运行NGINX Ingress控制器实例的Kubernetes节点。为了控制NGINX ingress控制器能够在哪些节点上进行调度，应当考虑分配NGINX Pods到特定节点。</p>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>在Kubernetes集群中包括3个节点（external IP作为示例显示，大部分裸机环境中这个字段指一般为<none>）</none></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
-<p>ngingx-ingress-controller部署包括2个复制集</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n ingress-nginx get pod -o wide</span><br><span class="line">NAME                                       READY   STATUS    IP           NODE</span><br><span class="line">default-http-backend-7c5bc89cc9-p86md      1/1     Running   172.17.1.1   host-2</span><br><span class="line">nginx-ingress-controller-cf9ff8c96-8vvf8   1/1     Running   172.17.0.3   host-3</span><br><span class="line">nginx-ingress-controller-cf9ff8c96-pxsds   1/1     Running   172.17.1.4   host-2</span><br></pre></td></tr></table></figure>
-<p>发送到host-2和host-3的请求能够被转发到NGINX并且源客户端IP能够被保留下来，发送到host-1的请求将被丢弃，因为在这个节点上没有NGINX复制集。</p>
-</li>
-<li><h2 id="Ingress-状态"><a href="#Ingress-状态" class="headerlink" title="Ingress 状态"></a>Ingress 状态</h2><p>因为NodePort服务不能获得定义中分配的LoadBalancerIP，NGINX Ingress控制器不能更新它管理的Ingress对象的状态。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get ingress</span><br><span class="line">NAME           HOSTS               ADDRESS   PORTS</span><br><span class="line">test-ingress   myapp.example.com             80</span><br></pre></td></tr></table></figure>
-<p>尽管事实上没有为NGINX ingress提供公共IP地址的负载均衡器，仍然能够强制更新所有被管理的Ingress对象，方法是设置ingress-nginx服务中的externalIPs字段。</p>
-<h3 id="Warning-1"><a href="#Warning-1" class="headerlink" title="Warning"></a>Warning</h3><p>设置externalIPs并不仅仅使NGINX ingress控制器更新ingress对象的状态。请在官方Kubernetes文档的Service页面阅读这个选项，以及关于ExternalIPs的章节获取更多信息。</p>
-<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>在Kubernetes集群中包括3个节点（external IP作为示例显示，大部分裸机环境中这个字段指一般为&lt; Node &gt;）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node</span><br><span class="line">NAME     STATUS   ROLES    EXTERNAL-IP</span><br><span class="line">host-1   Ready    master   203.0.113.1</span><br><span class="line">host-2   Ready    node     203.0.113.2</span><br><span class="line">host-3   Ready    node     203.0.113.3</span><br></pre></td></tr></table></figure>
-<p>可以编辑ingress-nginx服务并添加一下的字段至spec对象：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spec:</span><br><span class="line">  externalIPs:</span><br><span class="line">  - 203.0.113.1</span><br><span class="line">  - 203.0.113.2</span><br><span class="line">  - 203.0.113.3</span><br></pre></td></tr></table></figure>
-<p>设置完毕后Ingress对象可以显示出以下属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get ingress -o wide</span><br><span class="line">NAME           HOSTS               ADDRESS                               PORTS</span><br><span class="line">test-ingress   myapp.example.com   203.0.113.1,203.0.113.2,203.0.113.3   80</span><br></pre></td></tr></table></figure>
-</li>
-<li><h2 id="Redirects"><a href="#Redirects" class="headerlink" title="Redirects"></a>Redirects</h2><p>因为NGINX不知道NodePort Service执行的端口转发，后端应用程序应当负责生成重定向URLs，并将外部客户端使用的URL和端口考虑进去。</p>
-<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><p>在不使用NodePort的情况下，通过NGINX生成重定向，例如HTTP到HTTPS的重定向或者domain到<a href="http://www.domain" target="_blank" rel="noopener">www.domain</a> 。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -D- http://myapp.example.com:30100`</span><br><span class="line">HTTP/1.1 308 Permanent Redirect</span><br><span class="line">Server: nginx/1.15.2</span><br><span class="line">Location: https://myapp.example.com/  #-&gt; missing NodePort in HTTPS redirect</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
     
     </div>
     

@@ -92,6 +92,64 @@
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
+            <a href="/2019/07/23/Oracle备份的概念和术语/" itemprop="url">Oracle备份的概念和术语</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-07-23T04:25:37.000Z" itemprop="datePublished">1 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            4 分钟 读完 (约 584 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Oracle备份是Oracle运维工作中非常重要的一个环节。Oracle备份的概念比较多，容易引起混淆。下面就具体概念和术语进行一个简单的辨析。</p>
+<h1 id="概念辨析"><a href="#概念辨析" class="headerlink" title="概念辨析"></a>概念辨析</h1><ol>
+<li>用操作系统命令执行的备份被称为<strong>用户管理备份</strong>。使用RMAN执行的备份被称为<strong>服务器管理的备份</strong>。</li>
+<li>关闭状态的备份在数据库关闭期间执行，也称为<strong>冷备份、一致备份或脱机备份</strong>。打开状态的备份在数据库使用期间执行，也称为<strong>热备份、非一致备份或联机备份</strong>。</li>
+<li>打开状态的备份只能在数据库处于<strong>归档日志模式</strong>下才能进行。</li>
+<li><strong>全部备份</strong>指的是备份所有数据文件和控制文件。<strong>局部备份</strong>只备份其子集。在大部分情况下，局部备份只能在数据库处于<strong>归档日志模式</strong>下才能进行。</li>
+<li><strong>完整备份</strong>备份所有使用的文件块。<strong>增量备份</strong>只包括自上次备份以来更改的块。</li>
+<li>增量备份可以是累积增量备份或差异增量备份。<strong>累积增量备份</strong>指自上一次完整备份以来更改的所有块。<strong>差异增量备份</strong>指自上一次增量备份以来更改的所有块。</li>
+</ol>
+<h1 id="使用RMAN-Backup命令创建备份"><a href="#使用RMAN-Backup命令创建备份" class="headerlink" title="使用RMAN Backup命令创建备份"></a>使用RMAN Backup命令创建备份</h1><h2 id="1-服务器管理的一致备份"><a href="#1-服务器管理的一致备份" class="headerlink" title="1.服务器管理的一致备份"></a>1.服务器管理的一致备份</h2><p>RMAN备份脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">run &#123;                                                                                 </span><br><span class="line">shutdown immediate;                                                                   </span><br><span class="line">startup mount;                                                                       </span><br><span class="line">allocate channel d1 type disk;                                                      </span><br><span class="line">backup as backupset database format &apos;/home/oracle/Documents/offline_full_whole%U.bus&apos;;</span><br><span class="line">alter database open;                                                     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用RMAN运行一致性备份：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rman target sys/密码@orcl @/home/oracle/Documents/offline_all.rman</span><br></pre></td></tr></table></figure>
+<p>如果遇到报错，可以按照如下方式进行处理：</p>
+<p>[linuxidc@rhel55 ~]$rman target sys/<a href="http://www.linuxidc.com/topicnews.aspx?tid=12" target="_blank" rel="noopener">Oracle</a>@orcl</p>
+<p>ORA-12514: TNS:listener does not currently know of service requested in connect descriptor<br>[linuxidc@rhel55 ~]$lsnrctl stop</p>
+<p>[linuxidc@rhel55 ~]$cd $ORACLE_HOME</p>
+<p>[linuxidc@rhel55 db_1]$vim listener.ora</p>
+<p>修改/u01/app/oracle/product/11.2.0/db_1/network/admin/listener.ora文件<br>加上<br>SID_LIST_LISTENER =<br>  (SID_LIST =<br>    (SID_DESC =<br>      (SID_NAME = orcl)<br>      (ORACLE_HOME = /u01/app/oracle/product/11.2.0/db_1)<br>    )<br>  )<br>然后重启lisener服务，就ok了</p>
+<p>[linuxidc@rhel55 ~]$lsnrctl start</p>
+<h2 id="2-服务器管理的打开状态的备份"><a href="#2-服务器管理的打开状态的备份" class="headerlink" title="2. 服务器管理的打开状态的备份"></a>2. 服务器管理的打开状态的备份</h2><p>使用BACKUP命令执行绝对可靠的打开备份。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
             <a href="/2019/07/15/数据湖架构的核心原则/" itemprop="url">数据湖架构的核心原则</a>
         
     </h1>
@@ -628,57 +686,6 @@
 <p>这些新的线上处理系统强调利用云原生地理空间架构。这种系统能同时地在上百个甚至几千个计算机中处理影像，在几秒内就能返回原来需要几天甚至数周的分析结果。尽管有这些现代化的有点，因为核心的标准是GeoTIFF，任何软件都可以读取数据，甚至是旧的桌面应用程序。</p>
 <p>尽管核心概念十分简单——将图像移至线上并通过流式传输，这却是构建云原生空间系统的基础。数据在云中，许多软件系统更接近数据端运行，已达到获取数据价值的目的，不需要额外的下载和存储成本。对此生态系统更全面的研究将在后续中介绍，但是核心的COG格式和原理是根本，用户可以将他们的精力花在接近实时的工作来探寻数据价值，而不用依靠少数具备空间分析专业能力的专家。</p>
 <p>尽管云优化的GeoTIFF是一种相对新的格式，但是向后兼容性和相对容易的实现使得这种格式引人注意，这些组织的目的是鼓励更多的软件和数据提供商接收它。如果你感兴趣想了解更多的东西，请访问cogeo.org。</p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/" itemprop="url">Cloud Native Geospatial之一: 基本假设和工作过程</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2019-03-08T06:18:42.000Z" itemprop="datePublished">2 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            9 分钟 读完 (约 1403 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>假设所有数据和计算都在云中，从开发人员的角度探讨其对工作流的影响是有意义的。结论意义重大，并且引发了一系列创新，例如容器编配和微服务架构不仅是纯技术性的工作，更是过程和方法论。</p>
-<p>以上4原则的含义外延十分广阔，引领我们创新出难以想象的工作流程。但是在Cloud Native Geospatial不长的历史过程中，已经开始出现了进展：</p>
-<h2 id="不需要复制数据"><a href="#不需要复制数据" class="headerlink" title="不需要复制数据"></a>不需要复制数据</h2><p>当数据所处的云环境中，各种各样的软件能够直接工作，所以不需要维护任何数据的拷贝。数据提供商为数据存储付费，并且按数据访问进行收费。数据用户根据需要访问数据，进行可视化或生产数据产品等处理。</p>
-<h2 id="发送算法到数据"><a href="#发送算法到数据" class="headerlink" title="发送算法到数据"></a>发送算法到数据</h2><p>数据存储在云中的某个位置，导致了一种发送算法到数据的范式，而不是其他的方式。如果所有的数据都在云中的某处，并且数据太大不能够在本地下载和处理，所以用户必须打包他们的算法，在云中运行。这会形成一个容器，像完整的Docker处理实例一样。但是更高级的云GIS系统，例如RasterFoundry 和Google Earth Engine，用户只是发送一个脚本和操作描述来运行。</p>
-<img src="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/send_algorithm_to_data.png" title="RasterFoundry algorithms live on the cloud and can be customized by anyone.">
-<h2 id="算法缓冲"><a href="#算法缓冲" class="headerlink" title="算法缓冲"></a>算法缓冲</h2><p>随着数据在一处访问和云提供一系列可用的算法，与桌面范式相比，处理工具变得的越来越可共享。事实上提高协作性可能是Web和云带来的最重要的意义。未来大多数用户只需要从最流行的算法中进行挑选，而不需要自己做大气辐射转换、去云、大气校正、表面反射率计算等专业性的算法区实现一个常态化差值植生指标(Normalized Difference Vegetation Index)的计算。只需要进行预处理，并选择一个最流行的NDVI算法。Web分层映射将帮助这种分析协作变为可能，因为处理的每个步骤都可以随时进行可视化和验证。</p>
-<h2 id="实时GIS"><a href="#实时GIS" class="headerlink" title="实时GIS"></a>实时GIS</h2><p>新IoT传感器、手机和卫星影像实时产生更多的数据流，并持续更新数据库。计算机视觉和深度学习的结合的最新算法（目标识别、变化检测等）会被添加到地理信息工具箱，用户必须访问持续更新的一系列地图。局限在于数据收集频率。</p>
-<p>随着在云中处理这些更新数据，这开启了一个新的过程，产生更高级的分析产品，例如在机场中发现新的飞机、发现农田健康的显著变化，以及发现新的油井。</p>
-<img src="/2019/03/08/Cloud-Native-Geospatial之一-基本假设和工作过程/Planet.png" title="New Oil Well Pads are identified weekly in an app built by Planet">
-<h2 id="地图核实"><a href="#地图核实" class="headerlink" title="地图核实"></a>地图核实</h2><p>当前GIS和遥感工作的成果一般以地图的形式输出，并经常被嵌入在PPT中。但是地图中的点会带来信息和知识，例如在这个机场上出现10架新飞机。关心这类信息的用户希望直接订阅这个信息，他们希望在所关心的信息到达阀值的时候得到提醒，而不需要查看检查每个图像。这类地理信息智能处理过程中的任何步骤都应该进行可视化，但是大多数用户应该在得到信息结果后使用地图进行核实，而不是以地图作为主要的信息界面。</p>
-<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1><p>本文介绍了可访问性、集中数据和工作流程的显著不同，Cloud Native Geospatial能够为新的非专业用户提供地理信息的强大能力，这种能力被GIS从业者使用了几十年。当前空间智能的受益人是那些构建GIS生态系统的参与者，他们依靠数据进行工作，手工生成信息，借助Web地图印制地图、报告。当这些生态系统本身真正实现云原生，开发信息价值的工作不再只由从业者承担。地理信息专家能够协作创造分析和成果，但是任何非专业的用户也能够选择和应用这些技术在他们关心的地理领域。</p>
-<p>有了正确的云架构，随着越来越多的新的、有创造性的用户从地理空间数据中创造价值，我们有潜力发现GIS技术的新应用。</p>
-<p>目前实现Cloud Native Geospatial仍有很多工作，但是各类组织和个人正在一起进行着努力。请继续关注本系列文章，我们将深入研究Cloud Native Geospatial如何工作，并探索当前运行的一些先进的Cloud Native Geospatial架构。</p>
-<p>下面，我们将研究Cloud Optimized GeoTIFFs——一个基于Cloud Native Geospatial之上构建的地理数据格式。</p>
 
     
     </div>

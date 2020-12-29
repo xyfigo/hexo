@@ -1,6 +1,6 @@
 http://www.gisup.cn/2020/12/29/精通Pandas探索性分析（二）：数据选择/
-http://www.gisup.cn/2020/12/28/使用Raml构建Restful-API/
 http://www.gisup.cn/2020/12/28/精通Pandas探索性分析（一）：处理不同种类的数据集/
+http://www.gisup.cn/2020/12/02/使用Raml构建Restful-API/
 http://www.gisup.cn/2020/11/23/榨菜指数-中国城镇化的缩影/
 http://www.gisup.cn/2020/03/04/使用Debezium和Kafka为MySQL数据库设置变化数据捕捉CDC/
 http://www.gisup.cn/2020/02/26/加速使用Docker镜像构建Maven项目的速度/
