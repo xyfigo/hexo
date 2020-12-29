@@ -92,12 +92,116 @@
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
+            <a href="/2020/12/29/精通Pandas探索性分析（二）：数据选择/" itemprop="url">精通Pandas探索性分析（二）：数据选择</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-12-29T12:22:42.000Z" itemprop="datePublished">2 小时前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            19 分钟 读完 (约 2919 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>在本章中，我们将学习使用 Pandas 进行数据选择的高级技术，如何选择数据子集，如何从数据集中选择多个行和列，如何对 Pandas 数据帧或一序列数据进行排序，如何过滤 Pandas 数据帧的角色，还学习如何将多个过滤器应用于 Pandas 数据帧。 我们还将研究如何在 Pandas 中使用<code>axis</code>参数以及在 Pandas 中使用字符串方法。 最后，我们将学习如何更改 Pandas 序列的数据类型。</p>
+<p>首先，我们将学习如何从 Pandas 数据帧中选择数据子集并创建序列对象。 我们将从导入真实数据集开始。 我们将介绍一些 Pandas 数据选择方法，并将这些方法应用于实际数据集，以演示数据子集的选择。</p>
+<p>在本章中，我们将讨论以下主题：</p>
+<ul>
+<li>从数据集中选择数据</li>
+<li>排序数据集</li>
+<li>使用 Pandas 数据帧过滤行</li>
+<li>使用多个条件（例如 AND，OR 和 ISIN）过滤数据</li>
+<li>在 Pandas 中使用<code>axis</code>参数</li>
+<li>更改 Pandas 序列的数据类型</li>
+</ul>
+<h2 id="数据集简介"><a href="#数据集简介" class="headerlink" title="数据集简介"></a>数据集简介</h2><p>我们将使用 <a href="https://www.zillow.com/" target="_blank" rel="noopener">zillow.com</a> 的真实数据集，这是一个在线房地产市场，其发布房价数据集是他们研究工作的一部分。 这些数据集可在公共领域获得，并在归属于 <a href="https://www.zillow.com/" target="_blank" rel="noopener">zillow.com</a> 后可免费使用。 我们将使用<a href="https://www.zillow.com/research/data/" target="_blank" rel="noopener">有关美国地区平均房价的最新数据</a>。 它是 CSV 数据集，或带有 CSV 的文本文件。 让我们首先将 pandas 模块导入到 Jupyter 笔记本中，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(<span class="string">'data-zillow.csv'</span>, sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="从数据集中选择数据"><a href="#从数据集中选择数据" class="headerlink" title="从数据集中选择数据"></a>从数据集中选择数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">regions = data[<span class="string">'RegionName'</span>] <span class="comment">#根据列名选择</span></span><br><span class="line">type(regions) <span class="comment">#series对象</span></span><br></pre></td></tr></table></figure>
+<h2 id="多列选择"><a href="#多列选择" class="headerlink" title="多列选择"></a>多列选择</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">region_n_state = data[[<span class="string">'RegionName'</span>, <span class="string">'State'</span>]] <span class="comment">#传递列名数组，选择多个列</span></span><br><span class="line">region_n_state.head() </span><br><span class="line">type(region_n_state)<span class="comment">#DataFrame对象</span></span><br></pre></td></tr></table></figure>
+<h2 id="点表示法"><a href="#点表示法" class="headerlink" title="点表示法"></a>点表示法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data.State<span class="comment">#选择单列</span></span><br><span class="line">data[<span class="string">'Address'</span>] = data.County + <span class="string">', '</span> + data.Metro + <span class="string">', '</span> + data.State<span class="comment">#生成新列</span></span><br></pre></td></tr></table></figure>
+<h2 id="从-Pandas-数据帧中选择多个行和列"><a href="#从-Pandas-数据帧中选择多个行和列" class="headerlink" title="从 Pandas 数据帧中选择多个行和列"></a>从 Pandas 数据帧中选择多个行和列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zillow.loc[<span class="number">7</span>, <span class="string">'Metro'</span>] <span class="comment">#行索引7，列名为Metro</span></span><br><span class="line">zillow.iloc[<span class="number">7</span>,<span class="number">4</span>]<span class="comment">#行索引7，列索引4</span></span><br></pre></td></tr></table></figure>
+<h2 id="选择单行和多列"><a href="#选择单行和多列" class="headerlink" title="选择单行和多列"></a>选择单行和多列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zillow.loc[<span class="number">7</span>, [<span class="string">'Metro'</span>, <span class="string">'County'</span>]] </span><br><span class="line">zillow.iloc[<span class="number">7</span>,[<span class="number">4</span>,<span class="number">5</span>]]</span><br><span class="line">zillow.loc[<span class="number">11</span>,:]</span><br></pre></td></tr></table></figure>
+<h2 id="选择多行和单列"><a href="#选择多行和单列" class="headerlink" title="选择多行和单列"></a>选择多行和单列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zillow.loc[<span class="number">101</span>:<span class="number">105</span>, <span class="string">'Metro'</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="选择多行和多列"><a href="#选择多行和多列" class="headerlink" title="选择多行和多列"></a>选择多行和多列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zillow.loc[<span class="number">201</span>:<span class="number">204</span>, <span class="string">"State"</span>:<span class="string">"County"</span>] </span><br><span class="line">zillow.iloc[<span class="number">201</span>:<span class="number">205</span>, <span class="number">3</span>:<span class="number">6</span>] </span><br><span class="line">zillow.loc[<span class="number">201</span>:<span class="number">205</span>, [<span class="string">'RegionName'</span>, <span class="string">'State'</span>]]</span><br></pre></td></tr></table></figure>
+<h2 id="从行和所有列的范围中选择值"><a href="#从行和所有列的范围中选择值" class="headerlink" title="从行和所有列的范围中选择值"></a>从行和所有列的范围中选择值</h2><p>在这里，我们将使用<code>loc</code>方法查看行和列序列中的值。 为此，<code>loc</code>方法的第一个参数是要选择的行的范围索引。 由于我们需要所有列中的值，因此我们将冒号（<code>:</code>）作为第二个参数，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zillow.loc[<span class="number">201</span>:<span class="number">205</span>, :] </span><br><span class="line">zillow.loc[[<span class="number">0</span>,<span class="number">5</span>,<span class="number">10</span>], :]  <span class="comment">#选择不连续的行</span></span><br><span class="line">zillow.loc[zillow.County==<span class="string">"Queens"</span>] <span class="comment">#选择County列的值为Queens的行</span></span><br><span class="line">zillow.loc[zillow.Metro==<span class="string">"New York"</span>, <span class="string">"County"</span>] <span class="comment">#从County列中选择Metro列为New York的行</span></span><br></pre></td></tr></table></figure>
+<h2 id="对pandas数据帧排序"><a href="#对pandas数据帧排序" class="headerlink" title="对pandas数据帧排序"></a>对pandas数据帧排序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">zillow.sort_values(<span class="string">'Metro'</span>) <span class="comment">#对Metro列排序（默认升序）</span></span><br><span class="line">sorted = zillow.sort_values(<span class="string">'Metro'</span>, ascending=<span class="literal">False</span>) <span class="comment">#降序排序</span></span><br><span class="line">sorted = zillow.sort_values(by=[<span class="string">'Metro'</span>,<span class="string">'County'</span>]) <span class="comment">#按Metro首先对数据进行排序，然后按County列进行排</span></span><br><span class="line">sorted = zillow.sort_values(by=[<span class="string">'Metro'</span>,<span class="string">'County'</span>, <span class="string">'Zhvi'</span>], ascending=[<span class="literal">True</span>, <span class="literal">True</span>, <span class="literal">False</span>]) </span><br><span class="line">regions = zillow.RegionID</span><br><span class="line">regions.sort_values() <span class="comment">#对Series对象排序</span></span><br></pre></td></tr></table></figure>
+<h2 id="过滤-Pandas-数据帧的行"><a href="#过滤-Pandas-数据帧的行" class="headerlink" title="过滤 Pandas 数据帧的行"></a>过滤 Pandas 数据帧的行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">filtered_data = data.filter(items=[<span class="string">'State'</span>, <span class="string">'Metro'</span>]) <span class="comment">#使用filter方法过滤列</span></span><br><span class="line">filtered_data = data.filter(regex=<span class="string">'Region'</span>, axis=<span class="number">1</span>) <span class="comment">#使用正则表达式过滤列名称</span></span><br><span class="line">price_filter_series = data[<span class="string">'Zhvi'</span>] &gt; <span class="number">500000</span> </span><br><span class="line">data[price_filter_series]</span><br><span class="line">data[data.Zhvi &gt;= <span class="number">1000000</span>]  <span class="comment">#过滤Zhvi列大于1000000的行</span></span><br></pre></td></tr></table></figure>
+<h2 id="将多个过滤条件应用于-Pandas-数据帧"><a href="#将多个过滤条件应用于-Pandas-数据帧" class="headerlink" title="将多个过滤条件应用于 Pandas 数据帧"></a>将多个过滤条件应用于 Pandas 数据帧</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data[(data[<span class="string">'Zhvi'</span>] &gt; <span class="number">1000000</span>) &amp; (data[<span class="string">'State'</span>] == <span class="string">'NY'</span>)]  <span class="comment">#选择价格值大于 1,000,000 且State为New York的行</span></span><br><span class="line">data[((data[<span class="string">'State'</span>] == <span class="string">'CA'</span>) | (data[<span class="string">'State'</span>] == <span class="string">'NY'</span>))]</span><br></pre></td></tr></table></figure>
+<h2 id="使用isin方法进行过滤"><a href="#使用isin方法进行过滤" class="headerlink" title="使用isin方法进行过滤"></a>使用<code>isin</code>方法进行过滤</h2><p>筛选数据的另一种方法是使用<code>isin</code>方法。 我们可以使用<code>isin</code>方法通过一个或多个特定列的值列表来过滤数据集。 在这里，我们仅从<code>Metro</code>列中选择值<code>New York</code>或<code>San Francisco</code>的那些记录。</p>
+<p>我们在<code>Metro</code>列上调用<code>isin</code>方法，并将其传递给包含我们要选择的城市的列表。 这将创建一个布尔序列。 然后，我们将布尔序列传递给数据集数据帧进行必要的过滤和选择，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filter = data[<span class="string">'Metro'</span>].isin([<span class="string">'New York'</span>, <span class="string">'San Francisco'</span>]) </span><br><span class="line">data[filter].head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7b51ee0f-ccbe-4363-a616-5a693a8e4b30.png" alt="img"></p>
+<h2 id="在多个条件下使用isin方法"><a href="#在多个条件下使用isin方法" class="headerlink" title="在多个条件下使用isin方法"></a>在多个条件下使用<code>isin</code>方法</h2><p>我们还可以使用<code>isin</code>方法根据来自多列的值过滤行。 为了执行此操作，我们传递了一个字典对象，其中的键是列名，而值是我们要从中选择记录的那些列的值的列表。</p>
+<p>举个例子，让我们选择<code>State</code>参数为<code>California</code>和<code>Metro</code>参数为<code>San Francisco</code>的值。 我们使用包含要选择的值的这两列创建一个字典对象，然后将该字典项传递给<code>isin</code>方法，并在数据集上调用<code>isin</code>方法。 然后，将过滤器传递给数据帧并选择我们的记录，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filter = data.isin(&#123;<span class="string">'State'</span>: [<span class="string">'CA'</span>], <span class="string">'Metro'</span>: [<span class="string">'San Francisco'</span>]&#125;) </span><br><span class="line">data[filter].head()</span><br></pre></td></tr></table></figure>
+<h2 id="在-Pandas-中使用axis参数"><a href="#在-Pandas-中使用axis参数" class="headerlink" title="在 Pandas 中使用axis参数"></a>在 Pandas 中使用<code>axis</code>参数</h2><p>在本节中，我们将学习在 Pandas 中进行数据分析时何时何地使用<code>axis</code>参数或关键字。 我们将介绍<code>axis</code>参数，并逐步介绍可以将<code>axis</code>关键字设置为的各种值。 我们将演示如何将<code>axis</code>设置为行或列来改变方法的行为。 我们还将展示一些使用<code>axis</code>关键字的代码示例。</p>
+<h2 id="axis参数的用法"><a href="#axis参数的用法" class="headerlink" title="axis参数的用法"></a><code>axis</code>参数的用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.axes</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/25d4ab25-5e9f-4de6-a627-76f9c2d5b2d4.png" alt="img"></p>
+<p>在<code>axis</code>用法示例中，我们计算数据集中值的平均值。 我们已将<code>axis</code>传递为<code>0</code>。 这意味着将沿着行<code>axis</code>计算平均值，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.mean(axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/a764a72c-d397-4f59-bcac-229a1a5924ef.png" alt="img"></p>
+<p>接下来，我们将<code>axis</code>设置为<code>1</code>。 我们在同一数据集上使用完全相同的方法； 但是，我们正在将<code>axis</code>从<code>0</code>更改为<code>1</code>。 由于我们将<code>axis</code>设置为<code>1</code>，因此<code>mean</code>的计算如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.mean(axis=<span class="number">1</span>).head()</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/193b4742-a7e8-4868-9053-147075cb3dbf.png" alt="img"></p>
+<p>有时很难记住<code>0</code>或<code>1</code>是用于行还是用于列。 因此，您可以将<code>axis</code>设置为<code>rows</code>而不是使用<code>axis0</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.mean(axis=<span class="string">'rows'</span>)</span><br></pre></td></tr></table></figure>
+<p>输出为以下内容：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7f4de7ab-7c2c-48c0-8603-8e931992a1d5.png" alt="img"></p>
+<p>对于列，您可以将<code>axis</code>设置为<code>columns</code>。 与使用<code>0</code>或<code>1</code>具有相同的效果：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.mean(axis=<span class="string">'columns'</span>).head()</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/e1672cd1-4c1d-4905-a005-1360a6a3b98e.png" alt="img"></p>
+<h2 id="axis关键字的更多示例"><a href="#axis关键字的更多示例" class="headerlink" title="axis关键字的更多示例"></a><code>axis</code>关键字的更多示例</h2><p>在这里，我们使用<code>drop</code>方法删除行或记录。 我们通过将关键字<code>axis</code>传递为<code>0</code>来告诉<code>drop</code>方法将记录删除到<code>0</code>的索引处：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data.drop(<span class="number">0</span>, axis=<span class="number">0</span>) <span class="comment">#删除第0行</span></span><br><span class="line">data.drop(<span class="string">'Date'</span>, axis=<span class="number">1</span>).head <span class="comment">#删除带有Date标签的列</span></span><br></pre></td></tr></table></figure>
+<h2 id="axis关键字"><a href="#axis关键字" class="headerlink" title="axis关键字"></a><code>axis</code>关键字</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.filter(regex=<span class="string">'Region'</span>, axis=<span class="number">1</span>) <span class="comment">#过滤列名为正则表达式'Region'的列</span></span><br></pre></td></tr></table></figure>
+<h2 id="在-Pandas-中使用字符串方法"><a href="#在-Pandas-中使用字符串方法" class="headerlink" title="在 Pandas 中使用字符串方法"></a>在 Pandas 中使用字符串方法</h2><p>在本节中，我们将学习在 Pandas 序列中使用各种字符串方法。 我们将把真实的数据集读入 Pandas。 我们将探索一些字符串方法，并将使用这些字符串方法从数据集中选择和更改值。</p>
+<h2 id="检查子串"><a href="#检查子串" class="headerlink" title="检查子串"></a>检查子串</h2><p>为了学习如何使用字符串方法检查 Pandas 序列的子字符串，我们使用<code>str</code>包中的<code>contains</code>方法。</p>
+<p>在这里，我们从数据集中调用<code>RegionName</code>序列上的<code>str.contains</code>方法。 我们正在寻找包含<code>New</code>子字符串的记录。 它打印出一个布尔序列，打印<code>True</code>找到一个子字符串，而<code>False</code>找到一个子字符串：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data[data.RegionName.str.contains(<span class="string">'New'</span>)] <span class="comment">#过滤RegionName列中包含New字符串的行</span></span><br></pre></td></tr></table></figure>
+<h2 id="将序列或列值更改为大写"><a href="#将序列或列值更改为大写" class="headerlink" title="将序列或列值更改为大写"></a>将序列或列值更改为大写</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.RegionName.str.upper()</span><br></pre></td></tr></table></figure>
+<h2 id="将值更改为小写"><a href="#将值更改为小写" class="headerlink" title="将值更改为小写"></a>将值更改为小写</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data.County.str.lower()</span><br><span class="line">data.County.str.len()<span class="comment">#查找列中每个值的长度</span></span><br><span class="line">data.RegionName.str.lstrip()<span class="comment">#删除空格</span></span><br><span class="line">data.RegionName.str.replace(<span class="string">' '</span>,<span class="string">''</span>)<span class="comment">#空格替换为无空格</span></span><br></pre></td></tr></table></figure>
+<h2 id="更改-Pandas-序列的数据类型"><a href="#更改-Pandas-序列的数据类型" class="headerlink" title="更改 Pandas 序列的数据类型"></a>更改 Pandas 序列的数据类型</h2><p>在本节中，我们将学习如何更改 Pandas 序列的数据类型。 我们将看到读取其中的数据后如何更改数据类型。 我们还将学习在读取 Pandas 数据时如何更改数据类型。 我们将通过一个示例将<code>int</code>列更改为<code>float</code>。 我们还将看到如何将字符串值列转换为<code>datetime</code>数据类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data[<span class="string">'Zhvi'</span>] = data.Zhvi.astype(float) <span class="comment">#将int数据类型列更改为float</span></span><br></pre></td></tr></table></figure>
+<h2 id="读取数据时更改数据类型"><a href="#读取数据时更改数据类型" class="headerlink" title="读取数据时更改数据类型"></a>读取数据时更改数据类型</h2><p>在将数据读入 pandas 之后，我们只是更改了列的数据类型。 另外，我们可以在读取数据时更改数据类型。 为此，我们将列名和数据类型传递到要更改为<code>read</code>数据方法的列中。 我们想要的<code>float</code>列已导入为<code>float64</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data2 = pd.read_csv(<span class="string">'data-zillow.csv'</span>, sep=<span class="string">','</span>, dtype=&#123;<span class="string">'Zhvi'</span>:float&#125;) </span><br><span class="line">data2.dtypes</span><br></pre></td></tr></table></figure>
+<h2 id="将字符串转换为日期时间"><a href="#将字符串转换为日期时间" class="headerlink" title="将字符串转换为日期时间"></a>将字符串转换为日期时间</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.to_datetime(data2.Date,infer_datetime_format=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/2?id=总结" target="_blank" rel="noopener">总结</a></h1><p>在本章中，我们学习了从 Pandas 数据帧中选择数据子集的方法。 我们还了解了如何将这些方法应用于真实数据集。 我们还了解了从已读入 Pandas 的数据集中选择多个行和列的方法，并将这些方法应用于实际数据集以演示选择数据子集的方法。 我们了解了 Pandas <code>sort_values</code>方法。 我们看到了使用<code>sort_values</code>方法对 Pandas 数据帧中的数据进行排序的各种方法。 我们还学习了如何对 Pandas 序列对象进行排序。 我们了解了用于从 Pandas 数据帧过滤行和列的方法。 我们介绍了几种方法来实现此目的。 我们了解了 Pandas 的<code>filter</code>方法以及如何在实际数据集中使用它。 我们还学习了根据从数据创建的布尔序列过滤数据的方法，并且学习了如何将过滤数据的条件直接传递给数据帧。 我们学习了 Pandas 数据选择的各种技术，以及如何选择数据子集。 我们还学习了如何从数据集中选择多个角色和列。 我们学习了如何对 Pandas 数据帧或序列进行排序。 我们逐步介绍了如何过滤 Pandas 数据帧的行，如何对此类数据帧应用多个过滤器以及如何在 Pandas 中使用<code>axis</code>参数。 我们还研究了字符串方法在 Pandas 中的使用，最后，我们学习了如何更改 Pandas 序列的数据类型。</p>
+<p>在下一章中，我们将学习处理，转换和重塑数据的技术。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
             <a href="/2020/12/28/精通 Pandas 探索性分析（一）/" itemprop="url">精通Pandas探索性分析</a>
         
     </h1>
     <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
         <span class="column is-narrow">
-            <time datetime="2020-12-28T15:19:36.000Z" itemprop="datePublished">44 分钟前</time>
+            <time datetime="2020-12-28T15:19:36.000Z" itemprop="datePublished">1 天前</time>
         </span>
         
         <span class="column is-narrow article-category">
@@ -1474,61 +1578,6 @@
 <p>修改/u01/app/oracle/product/11.2.0/db_1/network/admin/listener.ora文件<br>加上<br>SID_LIST_LISTENER =<br>  (SID_LIST =<br>    (SID_DESC =<br>      (SID_NAME = orcl)<br>      (ORACLE_HOME = /u01/app/oracle/product/11.2.0/db_1)<br>    )<br>  )<br>然后重启lisener服务，就ok了</p>
 <p>[linuxidc@rhel55 ~]$lsnrctl start</p>
 <h2 id="2-服务器管理的打开状态的备份"><a href="#2-服务器管理的打开状态的备份" class="headerlink" title="2. 服务器管理的打开状态的备份"></a>2. 服务器管理的打开状态的备份</h2><p>使用BACKUP命令执行绝对可靠的打开备份。</p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2019/07/15/数据湖架构的核心原则/" itemprop="url">数据湖架构的核心原则</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2019-07-15T03:12:25.000Z" itemprop="datePublished">1 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            3 分钟 读完 (约 460 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>以下 内容摘自《企业数据湖》第三章</p>
-<ul>
-<li>数据以原始格式（不可变数据）进入数据湖。企业中的所有数据都有价值。不要试图在第一时间获得价值，而只是摄取数据，然后再尝试从中挖掘价值。</li>
-<li>在数据摄取期间，不用急于挖掘价值。</li>
-<li>准备好接受多种类型的数据（结构化和非结构化的数据）</li>
-<li>准备好接受各种数量级的数据。</li>
-<li>不要限制数据存储，这样用户可以在数据湖中查询数据。根据需求引入各种技术，来进行各种分析。</li>
-<li>为企业应用程序访问数据提供简单的方法。最终这些数据没有太大意义，但一段时间后，这些数据便能够与数据湖中的其他数据元素协作，并为企业带来价值。</li>
-<li>存储时无须对数据进行标准化处理。</li>
-<li>能够快速、简单且低成本（高度可伸缩）地添加数据源。</li>
-<li>能够根据消费需求提供各种格式的企业数据给应用程序使用。</li>
-<li>能够通过数据聚合和大规模数据处理来支持数据智能需求。</li>
-<li>能够在系统运行或空闲时清理数据。</li>
-<li>能够支持各种安全机制。</li>
-<li>由于需要提供重要的企业数据，因而必须高度可用。</li>
-<li>不要强制改变进入数据的格式，而是以传入数据的格式来接收数据。</li>
-<li>尽可能减少数据量和网络带宽需求。通过使用多种压缩方法来实现这一点。</li>
-</ul>
 
     
     </div>

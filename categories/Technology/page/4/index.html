@@ -92,6 +92,48 @@
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
+            <a href="/2018/12/17/Kubectl-常用命令/" itemprop="url">Kubectl 常用命令</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-12-17T05:26:24.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            几秒 读完 (约 51 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="1-进入某个pod"><a href="#1-进入某个pod" class="headerlink" title="1.进入某个pod"></a>1.进入某个pod</h1><p>如何进入kubernetes的一个pod呢，其实和进入docker的一个容器相似：</p>
+<p>进入docker容器 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -ti  &lt;your-container-name&gt;   /bin/sh</span><br></pre></td></tr></table></figure>
+<p>进入pod：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl exec -ti &lt;your-pod-name&gt;  -n &lt;your-namespace&gt;  -- /bin/sh</span><br></pre></td></tr></table></figure>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
             <a href="/2018/12/14/Kubernetes-V1-9-6-安装Dashboard/" itemprop="url">Kubernetes V1.9.6 安装Dashboard</a>
         
     </h1>
@@ -594,44 +636,6 @@
     <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
         <p>空间索引在某些方面是基于某些已有的点索引，例如kd树和B+树。这些通过扩展点索引来应用于空间对象的技术一般可以分为三类：<strong>对象映射、对象复制和对象约束</strong>。对象映射方法将n个顶点定义的对象从k维空间映射到n*k维空间的点或者映射到原来k维空间的单值对象。对象复制方法将同一个对象存储在与此对象重叠的多个数据空间，而对象约束方法通过层级分组将数据对象划分为不同的组，每个分组代表一个数据空间。每种方法都有其优点和缺点，并直接影响索引性能。</p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2018/06/20/Jeffrey-Dean论文：基于学习的索引结构/" itemprop="url">Jeffrey Dean论文：基于学习的索引结构</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2018-06-20T00:41:50.000Z" itemprop="datePublished">3 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            2 分钟 读完 (约 327 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>索引即是模型：B树索引是一个在排序数组中用键映射记录位置的模型，哈希索引是一个在非排序数组中用键映射记录位置的模型，位图索引是一个指示记录是否存在的模型。本文假设现有的索引结构都可以被替换为其他的模型，包括深度学习模型，我们称此<em>学习索引</em>。其核心思想是，模型可以学习查找键的顺序或结构，并使用这个信息有效地预测记录的位置或是否存在。我们从理论上分析了在何种情况下学习索引优于传统索引，并且概况了设计学习索引的诀窍和调整。初步结果表明，通过神经网络，学习索引比高速缓存优化的B树速度快70%，并且在多个真实的结果集上节省一个数量级的内存。更重要的是，我们相信通过深度学习模型取代数据管理系统的核心组件对未来系统设计有着深远的影响，并且这只是未来应用的冰山一角。</p>
 
     
     </div>

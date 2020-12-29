@@ -85,6 +85,49 @@
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
+            <a href="/2019/01/28/挂载NFS时提示：mount-文件系统类型错误、选项错误、10-10-18-20-data-上有坏超级块/" itemprop="url">挂载NFS时提示：mount: 文件系统类型错误、选项错误、10.10.18.20:/data 上有坏超级块</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-28T01:27:12.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 分钟 读完 (约 212 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>最近购买力华为OceanStor系列存储，获得了存储级NAS能力。可以由存储直接提供NFS服务。</p>
+<p>在将NFS挂载到Linux时，提示了如下错误：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">  mount -t nfs 10.10.18.20:/data /mnt/nfs</span></span><br><span class="line">mount: 文件系统类型错误、选项错误、10.10.18.20:/data 上有坏超级块、</span><br><span class="line">       缺少代码页或助手程序，或其他错误</span><br><span class="line">       (对某些文件系统(如 nfs、cifs) 您可能需要</span><br><span class="line">       一款 /sbin/mount.&lt;类型&gt; 助手程序)</span><br><span class="line"></span><br><span class="line">       有些情况下在 syslog 中可以找到一些有用信息- 请尝试</span><br><span class="line">       dmesg | tail  这样的命令看看。</span><br></pre></td></tr></table></figure>
+<p>主要原因是由于没有安装nfs的客户端，所以需要使用yum进行安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum -y install nfs-utils</span><br><span class="line">systemctl start nfs-utils</span><br><span class="line">systemctl enable nfs-utils</span><br><span class="line">rpcinfo -p</span><br><span class="line">mount -t nfs 10.10.18.20:/data /home/ddsc/data/</span><br></pre></td></tr></table></figure>
+<p>挂载成功。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
             <a href="/2019/01/28/使用Minio为NAS设置S3兼容的对象存储接口/" itemprop="url">使用Minio为NAS设置S3兼容的对象存储接口</a>
         
     </h1>
@@ -592,80 +635,6 @@
 <p>当使用管理员本地登录数据库进行管理的时候，出现了报错：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;sqlplus / as sysdba</span><br><span class="line">ORA-12560: TNS: 协议适配器错误的解决方法</span><br></pre></td></tr></table></figure>
 <p>貌似是由于监听连接数过高，无法进行连接响应了。故重启了服务器后故障恢复。</p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2018/11/09/基于Gitlab和Kubernetes的持续部署（三）——将镜像部署到Kubernetes集群/" itemprop="url">基于Gitlab和Kubernetes的持续部署（三）——将镜像部署到Kubernetes集群</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2018-11-09T01:37:54.000Z" itemprop="datePublished">2 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            7 分钟 读完 (约 1031 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>本文将使用Gitlab CI的Kubenetes集群特性将前面构建的容器镜像部署到Kubernetes。</p>
-<h1 id="基本环境"><a href="#基本环境" class="headerlink" title="基本环境"></a>基本环境</h1><ul>
-<li>kubernetes集群</li>
-<li>Gitlab实例<ul>
-<li>开启Gitlab Container Registry</li>
-<li>配置并启用Gitlab runner：CI runner必须可与Kubernetes APIserver通信。</li>
-</ul>
-</li>
-<li>Kubectl配置Kubernetes集群访问</li>
-<li>Kubernetes ServiceAccount<ul>
-<li>有特殊的权限。</li>
-</ul>
-</li>
-</ul>
-<h1 id="Setp1-从Kubernetes获取ServiceAccount-Token"><a href="#Setp1-从Kubernetes获取ServiceAccount-Token" class="headerlink" title="Setp1. 从Kubernetes获取ServiceAccount Token"></a>Setp1. 从Kubernetes获取ServiceAccount Token</h1><p>Kubernetes1.6及以上版本增加了基于角色的访问控制（RBAC），ServiceAccount需要正确的权限来部署你想要的名称空间。使用kubeadm初始化的1.6及以上版本的Kubernetes集群，已经默认为API Server开启了RBAC，可以查看Master Node上API Server的静态Pod定义文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Kubernetes ~]# cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep RBAC</span><br><span class="line">    - --authorization-mode=Node,RBAC</span><br></pre></td></tr></table></figure>
-<p>Kubernetes1.5及以下版本只需要创建一个ServiceAccount或者使用一个选定名称空间中已存在的ServiceAccount。</p>
-<ol>
-<li><p>首先考虑为部署到kubernetes里的Gitlab项目创建一个专门的名称空间：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@Kubernetes ~]# kubectl get namespace</span><br><span class="line">NAME          STATUS    AGE</span><br><span class="line">default       Active    164d</span><br><span class="line">kube-public   Active    164d</span><br><span class="line">kube-system   Active    164d</span><br><span class="line">[root@Kubernetes ~]# kubectl create namespace devops</span><br><span class="line">namespace "devops" created</span><br><span class="line">[root@Kubernetes pki]# kubectl get namespaces</span><br><span class="line">NAME          STATUS    AGE</span><br><span class="line">default       Active    161d</span><br><span class="line">devops        Active    14s</span><br><span class="line">kube-public   Active    161d</span><br><span class="line">kube-system   Active    161d</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取DevOps名称空间下默认的ServiceAccount Token</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@Kubernetes pki]# kubectl get -n devops secret</span><br><span class="line">NAME                  TYPE                                  DATA      AGE</span><br><span class="line">default-token-ph7sj   kubernetes.io/service-account-token   3         2m</span><br><span class="line">[root@Kubernetes pki]# kubectl get -n devops secret default-token-ph7sj -o yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  ca.crt: [REDACATED]</span><br><span class="line">  namespace: [REDACATED]</span><br><span class="line">  token: [THIS IS YOUR TOKEN BASE64 ENCODED]</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    kubernetes.io/service-account.name: default</span><br><span class="line">  [...]</span><br><span class="line">  name: default-token-nmx1q</span><br><span class="line">  namespace: presentation-gitlab-k8s</span><br><span class="line">  [...]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>因为Token是进行了base64编码的，索引需要对Token进行base64解码</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> YOUR_TOKEN_HERE | base64 -d</span></span><br><span class="line">YOUR_DECODED_TOKEN</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Setp2-获取Kubernetes的CA授权"><a href="#Setp2-获取Kubernetes的CA授权" class="headerlink" title="Setp2. 获取Kubernetes的CA授权"></a>Setp2. 获取Kubernetes的CA授权</h1><p>Kubernetes的授权在文件夹/etc/kubernetes/pki目录（我的是V1.9版本）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /etc/kubernetes/pki/ca.crt</span></span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">[REDACATED]</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure>
-<h1 id="Step3-在Gitlab-CI里创建Kubernetes集群"><a href="#Step3-在Gitlab-CI里创建Kubernetes集群" class="headerlink" title="Step3. 在Gitlab CI里创建Kubernetes集群"></a>Step3. 在Gitlab CI里创建Kubernetes集群</h1><p>需要ServiceAccount Token（step1.）、CA 授权（step2.）、Kubernetes API地址和需要运行应用的名称空间。在Gitlab中选择CI/CD-&gt;Kubernetes，进入如下页面进行设置：</p>
-<img src="/2018/11/09/基于Gitlab和Kubernetes的持续部署（三）——将镜像部署到Kubernetes集群/gitlab-ci-kubernetes-cluster-add-existing-cluster.png">
-<p>其中Kubernetes Cluster name可以任意设置，Project namespace是可选项，此处设置为你需要创建应用的Kubernetes名称空间，我使用的名称空间是DevOps。</p>
-<h1 id="Step4-为项目添加-gitlab-ci-yml"><a href="#Step4-为项目添加-gitlab-ci-yml" class="headerlink" title="Step4. 为项目添加.gitlab-ci.yml"></a>Step4. 为项目添加.gitlab-ci.yml</h1><p>我的项目是一个简单的Spring-boot Java项目，使用Maven进行构建，比较简单。此处贴出.gitlab-ci.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">image:</span> <span class="attr">docker:latest</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  - docker:</span><span class="string">dind</span></span><br><span class="line"></span><br><span class="line"><span class="attr">variables:</span></span><br><span class="line"><span class="attr">  DOCKER_DRIVER:</span> <span class="string">overlay</span></span><br><span class="line"><span class="attr">  SPRING_PROFILES_ACTIVE:</span> <span class="string">gitlab-ci</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">build</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">package</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">maven-build:</span></span><br><span class="line"><span class="attr">  image:</span> <span class="attr">maven:3-jdk-8</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">build</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">"mvn clean package -B -Dmaven.test.skip=true"</span></span><br><span class="line"><span class="attr">  artifacts:</span></span><br><span class="line"><span class="attr">    paths:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">target/*.jar</span></span><br><span class="line"></span><br><span class="line"><span class="attr">docker-build:</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">package</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">info</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">build</span> <span class="bullet">-t</span> <span class="string">registry.gitlab.nasg.gov.cn/$&#123;CI_PROJECT_PATH&#125;:latest</span> <span class="string">.</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">tag</span> <span class="string">registry.gitlab.nasg.gov.cn/$&#123;CI_PROJECT_PATH&#125;:latest</span> <span class="string">registry.gitlab.nasg.gov.cn/$&#123;CI_PROJECT_PATH&#125;:$&#123;CI_COMMIT_REF_NAME&#125;</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">login</span> <span class="bullet">-u</span> <span class="string">gitlab-ci-token</span> <span class="bullet">-p</span> <span class="string">$CI_BUILD_TOKEN</span> <span class="string">registry.gitlab.nasg.gov.cn</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">test</span> <span class="string">!</span> <span class="bullet">-z</span> <span class="string">"$&#123;CI_COMMIT_TAG&#125;"</span> <span class="string">&amp;&amp;</span> <span class="string">docker</span> <span class="string">push</span> <span class="string">registry.zerbytes.net/$&#123;CI_PROJECT_PATH&#125;:latest</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">docker</span> <span class="string">push</span> <span class="string">registry.gitlab.nasg.gov.cn/$&#123;CI_PROJECT_PATH&#125;:$&#123;CI_COMMIT_REF_NAME&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">k8s-deploy:</span></span><br><span class="line"><span class="attr">  image:</span> <span class="string">lachlanevenson/k8s-kubectl:latest</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">  environment:</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">live</span></span><br><span class="line"><span class="attr">      url:</span> <span class="attr">https://live-presentation-gitlab-k8s.edenmal.net</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">kubectl</span> <span class="string">version</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">echo</span> <span class="string">"$&#123;KUBE_CA_PEM&#125;"</span> <span class="string">&gt; kube_ca.pem</span></span><br><span class="line"><span class="string">  - kubectl config set-cluster kubernetes --server=$&#123;KUBE_URL&#125; --certificate-authority=kube_ca.pem</span></span><br><span class="line"><span class="string">  - kubectl config set-credentials kube-admin --token=$&#123;KUBE_TOKEN&#125;</span></span><br><span class="line"><span class="string">  - kubectl config set-context kubernetes-system --cluster=kubernetes --user=kube-admin</span></span><br><span class="line"><span class="string">  - kubectl config use-context kubernetes-system</span></span><br><span class="line"><span class="string">  - kubectl cluster-info</span></span><br><span class="line"><span class="string">  - kubectl create -f deployment.yml -n devops</span></span><br><span class="line"><span class="string">#  - gcloud auth activate-service-account --key-file key.json</span></span><br><span class="line"><span class="string">#  - gcloud config set compute/zone europe-west1-c</span></span><br><span class="line"><span class="string">#  - gcloud config set project actuator-sample</span></span><br><span class="line"><span class="string">#  - gcloud config set container/use_client_certificate True</span></span><br><span class="line"><span class="string">#  - gcloud container clusters get-credentials actuator-sample</span></span><br><span class="line"><span class="string">#  - kubectl delete secret registry.gitlab.com</span></span><br><span class="line"><span class="string">#  - kubectl create secret docker-registry registry.gitlab.com --docker-server=https://registry.gitlab.com --docker-username=marcolenzo --docker-password=$REGISTRY_PASSWD --docker-email=lenzo.marco@gmail.com</span></span><br><span class="line"><span class="string">#  - kubectl apply -f deployment.yml</span></span><br></pre></td></tr></table></figure>
-<h1 id="Step-5-在Kubernetes中增加Docker-login-信息"><a href="#Step-5-在Kubernetes中增加Docker-login-信息" class="headerlink" title="Step 5. 在Kubernetes中增加Docker login 信息"></a>Step 5. 在Kubernetes中增加Docker login 信息</h1><p>为了能够从GitLab registry（GitLab自带的私有镜像仓库功能）下载部署所需的镜像，必须在Kubernetes中增加一个Secret元素，用它访问GitLab Registry的Docker login信息。下面的命令必须在安装有Kubectl的节点中运行。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> YOUR_SECRET_NAME <span class="keyword">for</span> example <span class="string">"registry-example-gitlab-key"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> kubectl create \</span></span><br><span class="line">    -n devops \</span><br><span class="line">    secret docker-registry regsecret \</span><br><span class="line">    --docker-server=registry.gitlab.nasg.gov.cn \</span><br><span class="line">    --docker-username=xiaof \</span><br><span class="line">    --docker-password=******* \</span><br><span class="line">    --docker-email=xiaof@sbsm.gov.cn</span><br></pre></td></tr></table></figure>
 
     
     </div>

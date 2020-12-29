@@ -1,3 +1,4 @@
+http://www.gisup.cn/2020/12/29/精通Pandas探索性分析（二）：数据选择/
 http://www.gisup.cn/2020/12/28/使用Raml构建Restful-API/
 http://www.gisup.cn/2020/12/28/精通 Pandas 探索性分析（一）/
 http://www.gisup.cn/2020/11/23/榨菜指数-中国城镇化的缩影/
@@ -7,4 +8,3 @@ http://www.gisup.cn/2020/02/23/spark读取和处理Excel数据/
 http://www.gisup.cn/2020/02/16/表批量读取和写入/
 http://www.gisup.cn/2020/02/16/基于Spark的新一代数据湖产品：DELTA-LAKE/
 http://www.gisup.cn/2019/10/21/Presto-Thrift-Connector/
-http://www.gisup.cn/2019/08/22/Presto（一）用例指南/
