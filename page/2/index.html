@@ -2,7 +2,7 @@
 <html class="has-navbar-fixed-top">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<title>自然资源大数据分析——肖飞的博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
@@ -81,6 +81,158 @@
 
     <section class="section">
     <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2020/02/16/基于Spark的新一代数据湖产品：DELTA-LAKE/" itemprop="url">基于Spark的新一代数据湖产品：DELTA LAKE</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-02-16T12:36:09.000Z" itemprop="datePublished">10 个月前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 366 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><a href="https://delta.io/" target="_blank" rel="noopener">Delta Lake</a>是一个<a href="https://github.com/delta-io/delta" target="_blank" rel="noopener">开源存储层</a>，可为数据湖带来可靠性。Delta Lake提供ACID事务，可伸缩的元数据处理，并统一流和批处理数据处理。Delta Lake在您现有的数据湖之上运行，并且与Apache Spark API完全兼容。</p>
+<img src="/2020/02/16/基于Spark的新一代数据湖产品：DELTA-LAKE/Delta-Lake.png" title="Delta-Lake">
+<p>具体来说，Delta Lake提供：</p>
+<ul>
+<li>Spark上的ACID事务：可序列化的隔离级别确保读者永远不会看到不一致的数据。</li>
+<li>可扩展的元数据处理：利用Spark的分布式处理能力，可以轻松处理数十亿个文件的PB级表的所有元数据。</li>
+<li>流和批处理的统一：Delta Lake中的表既是批处理表，又是流的源和接收器。流数据提取，批处理历史回填，交互式查询都可以直接使用。</li>
+<li>模式实施：自动处理模式变化，以防止在摄取过程中插入不良记录。</li>
+<li>时间旅行：数据版本控制支持回滚，完整的历史审核跟踪以及可重复的机器学习实验。</li>
+<li>Upserts和Deletes：支持合并（Merge），更新和删除操作，以启用复杂的用例，例如更改数据捕获，缓慢维度变化（SCD）操作，流化Upserts等。</li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/10/21/Presto-Thrift-Connector/" itemprop="url">Presto Thrift Connector</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-10-21T03:02:56.000Z" itemprop="datePublished">1 年前</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            3 分钟 读完 (约 429 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Thrift 连接器使得无需自定义Presto连接器实现即可与外部存储系统相连。</p>
+<p>为了使用Thrift连接器与外部系统连接，需要实现PrestoThriftService接口。接下来需要配置Thrift连接器指向一组实现了该接口的服务器——被称为Thrift servers。作为接口实现的一部分，Thrift servers提供元数据，分片方法和数据本身。连接器会随机选择一个可用的服务器用于调取元数据，或者调取分片和数据。假设所有请求都是幂等的，并且可在任何服务器之中随意重试。</p>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><p>配置Thrift 连接器需要创建一个catalog配置文件etc/catalog/thrift.properties，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">connector.name=presto-thrift</span><br><span class="line">presto.thrift.client.addresses=host:port,host:port</span><br></pre></td></tr></table></figure>
+<h1 id="Multiple-Thrift-Systems"><a href="#Multiple-Thrift-Systems" class="headerlink" title="Multiple Thrift Systems"></a>Multiple Thrift Systems</h1><p>可以定义多个与外部Thrift系统连接的catalog，只需要定义多个不重名的properties文件即可。</p>
+<h1 id="配置说明Configuration-Properties"><a href="#配置说明Configuration-Properties" class="headerlink" title="配置说明Configuration Properties"></a>配置说明Configuration Properties</h1><table>
+<thead>
+<tr>
+<th style="text-align:left">Property Name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.addresses</code></td>
+<td style="text-align:left">服务地址Location of Thrift servers</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto-thrift.max-response-size</code></td>
+<td style="text-align:left">最大返回数量Maximum size of data returned from Thrift server</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto-thrift.metadata-refresh-threads</code></td>
+<td style="text-align:left">Number of refresh threads for metadata cache</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.max-retries</code></td>
+<td style="text-align:left">Maximum number of retries for failed Thrift requests</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.max-backoff-delay</code></td>
+<td style="text-align:left">Maximum interval between retry attempts</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.min-backoff-delay</code></td>
+<td style="text-align:left">Minimum interval between retry attempts</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.max-retry-time</code></td>
+<td style="text-align:left">Maximum duration across all attempts of a Thrift request</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.backoff-scale-factor</code></td>
+<td style="text-align:left">Scale factor for exponential back off</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.connect-timeout</code></td>
+<td style="text-align:left">Connect timeout</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.request-timeout</code></td>
+<td style="text-align:left">Request timeout</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.socks-proxy</code></td>
+<td style="text-align:left">SOCKS proxy address</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.max-frame-size</code></td>
+<td style="text-align:left">Maximum size of a raw Thrift response</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.transport</code></td>
+<td style="text-align:left">Thrift transport type (<code>UNFRAMED</code>, <code>FRAMED</code>, <code>HEADER</code>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>presto.thrift.client.protocol</code></td>
+<td style="text-align:left">Thrift protocol type (<code>BINARY</code>, <code>COMPACT</code>, <code>FB_COMPACT</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><code>presto.thrift.client.addresses</code></p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
     
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
@@ -633,85 +785,6 @@
 
 
     
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2019/04/16/关闭mysql的表名库名大小写敏感开关/" itemprop="url">关闭mysql的表名库名大小写敏感开关</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2019-04-16T06:51:23.000Z" itemprop="datePublished">2 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            1 分钟 读完 (约 173 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>原来Linux下的MySQL默认是区分表名大小写的，通过如下设置，可以让MySQL不区分表名大小写：<br>1、用root登录，修改 /etc/my.cnf；<br>2、在[mysqld]节点下，加入一行： lower_case_table_names=1<br>3、重启MySQL即可；<br>其中 lower_case_table_names=1 参数缺省地在 Windows 中这个选项为 1 ，在 Unix 中为 0，因此在window中不会遇到的问题，一旦一直到linux就会出问题的原因（尤其在mysql对表起名时是无法用大写字母的，而查询用了大写字母却会出查不到的错误，真是弄的莫名其妙）</p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2019/04/10/开发常用中间件、数据库的docker快速启动/" itemprop="url">开发常用中间件、数据库的docker快速启动</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2019-04-10T13:18:55.000Z" itemprop="datePublished">2 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            几秒 读完 (约 71 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>[TOC]</p>
-<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name=orders-mysqldb -d -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=orders -e MYSQL_PASSWORD=orders -e MYSQL_DATABASE=orders mysql/mysql-server:5.7.24</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Redis</span><br><span class="line"></span><br><span class="line">无密码：</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">docker run --name some-redis -p 6379:6379 -d redis redis-server --appendonly yes</span><br></pre></td></tr></table></figure>
-<p>带密码：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name some-redis -p 6379:6379 -d redis redis-server --appendonly yes --requirepass "mypassword"</span><br></pre></td></tr></table></figure></p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
     
         
 <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
@@ -729,9 +802,9 @@
         
         <li><a class="pagination-link" href="/page/3/">3</a></li>
         
-        <li><a class="pagination-link" href="/page/4/">4</a></li>
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
         
-        <li><a class="pagination-link" href="/page/5/">5</a></li>
+        <li><a class="pagination-link" href="/page/6/">6</a></li>
         
     </ul>
 </nav>

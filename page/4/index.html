@@ -2,7 +2,7 @@
 <html class="has-navbar-fixed-top">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<title>自然资源大数据分析——肖飞的博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
@@ -81,6 +81,188 @@
 
     <section class="section">
     <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/01/29/漫谈数据库二：文件中记录的组织/" itemprop="url">漫谈数据库二：文件中记录的组织</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-29T01:42:19.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 369 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>众所周知关系是记录的集合，本文着重讨论在给定一个记录的集合后，如何在文件系统中组织他们。</p>
+<p>主要的方法有以下三种：</p>
+<ul>
+<li>堆文件（heap file）：先来看看heap file的定义：<code>A heap file is an unordered set of records. The following operationsare supported: Heap files can be created and destroyed. Existingheapfiles can be opened and closed. Records can be inserted anddeleted. Records are uniquely identified by a record id (rid).</code>  一条记录可以放在文件的任何地方，只要那个地方有空间存放这条记录。记录是没有顺序的。通常每个关系使用一个单独的文件。</li>
+<li>顺序文件（sequential file）：记录根据“搜索码”的值顺序存储。</li>
+<li>散列文件（hashing file）：每条记录的某些属性上计算一个散列函数。散列函数的结果确定了记录应当放到文件的哪个块中。</li>
+</ul>
+<p>通常每个关系的记录用一个单独的文件存储。但是在多表聚簇文件组织中，几个不同关系的记录存储在同一个文件中。而且不同关系的相关记录存储在相同的块中，于是一个IO操作可以从所有关系中取到相关的记录。例如，两个关系做连接运算时相匹配的记录被认为是相关的。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2019/01/28/Minio-Java-SDK-for-Amazon-S3-Compatible-Cloud-Storage/" itemprop="url">Minio Java SDK for Amazon S3 Compatible Cloud Storage</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-28T01:34:15.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分钟 读完 (约 962 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>Minio Java客户端SDK提供了访问任何Amazon S3兼容对象存储服务的简单API接口。</p>
+<h1 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h1><p>Java1.8以上版本</p>
+<h2 id="Maven配置"><a href="#Maven配置" class="headerlink" title="Maven配置"></a>Maven配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.minio<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>minio<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="gradle配置"><a href="#gradle配置" class="headerlink" title="gradle配置"></a>gradle配置</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'io.minio:minio:6.0.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="API接口使用例子"><a href="#API接口使用例子" class="headerlink" title="API接口使用例子"></a>API接口使用例子</h1><h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>这个例子连接到对象存储服务，在服务器上创建一个bucket，并且上传一个文件到bucket。</p>
+<p>连接服务器需要3个参数：</p>
+<table>
+<thead>
+<tr>
+<th>Params</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Endpoint</td>
+<td>URL to object storage service.</td>
+</tr>
+<tr>
+<td>Access Key</td>
+<td>Access key is like user ID that uniquely identifies your account.</td>
+</tr>
+<tr>
+<td>Secret Key</td>
+<td>Secret key is the password to your account.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="FileUploader-java"><a href="#FileUploader-java" class="headerlink" title="FileUploader.java"></a>FileUploader.java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> java.security.InvalidKeyException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.xmlpull.v1.XmlPullParserException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.minio.MinioClient;</span><br><span class="line"><span class="keyword">import</span> io.minio.errors.MinioException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploader</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchAlgorithmException, IOException, InvalidKeyException, XmlPullParserException </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// Create a minioClient with the Minio Server name, Port, Access key and Secret key.</span></span><br><span class="line">      MinioClient minioClient = <span class="keyword">new</span> MinioClient(<span class="string">"https://play.minio.io:9000"</span>, <span class="string">"Q3AM3UQ867SPQQA43P2F"</span>, <span class="string">"zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Check if the bucket already exists.</span></span><br><span class="line">      <span class="keyword">boolean</span> isExist = minioClient.bucketExists(<span class="string">"asiatrip"</span>);</span><br><span class="line">      <span class="keyword">if</span>(isExist) &#123;</span><br><span class="line">        System.out.println(<span class="string">"Bucket already exists."</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Make a new bucket called asiatrip to hold a zip file of photos.</span></span><br><span class="line">        minioClient.makeBucket(<span class="string">"asiatrip"</span>);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Upload the zip file to the bucket with putObject</span></span><br><span class="line">      minioClient.putObject(<span class="string">"asiatrip"</span>,<span class="string">"asiaphotos.zip"</span>, <span class="string">"/home/user/Photos/asiaphotos.zip"</span>);</span><br><span class="line">      System.out.println(<span class="string">"/home/user/Photos/asiaphotos.zip is successfully uploaded as asiaphotos.zip to `asiatrip` bucket."</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span>(MinioException e) &#123;</span><br><span class="line">      System.out.println(<span class="string">"Error occurred: "</span> + e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="编译FileUploader"><a href="#编译FileUploader" class="headerlink" title="编译FileUploader"></a>编译FileUploader</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac -cp "minio-6.0.0-all.jar"  FileUploader.java</span><br></pre></td></tr></table></figure>
+<h2 id="运行FileUploader"><a href="#运行FileUploader" class="headerlink" title="运行FileUploader"></a>运行FileUploader</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java -cp "minio-6.0.0-all.jar:." FileUploader</span><br><span class="line">/home/user/Photos/asiaphotos.zip is successfully uploaded as asiaphotos.zip to `asiatrip` bucket.</span><br><span class="line"></span><br><span class="line">mc ls play/asiatrip/</span><br><span class="line">[2016-06-02 18:10:29 PDT]  82KiB asiaphotos.zip</span><br></pre></td></tr></table></figure>
+<h1 id="API参考"><a href="#API参考" class="headerlink" title="API参考"></a>API参考</h1><p>The full API Reference is available here.</p>
+<ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference" target="_blank" rel="noopener">Complete API Reference</a></li>
+</ul>
+<h3 id="API-Reference-Bucket-Operations"><a href="#API-Reference-Bucket-Operations" class="headerlink" title="API Reference: Bucket Operations"></a>API Reference: Bucket Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#makeBucket" target="_blank" rel="noopener"><code>makeBucket</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listBuckets" target="_blank" rel="noopener"><code>listBuckets</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#bucketExists" target="_blank" rel="noopener"><code>bucketExists</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeBucket" target="_blank" rel="noopener"><code>removeBucket</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listObjects" target="_blank" rel="noopener"><code>listObjects</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#listIncompleteUploads" target="_blank" rel="noopener"><code>listIncompleteUploads</code></a></li>
+</ul>
+<h3 id="API-Reference-Object-Operations"><a href="#API-Reference-Object-Operations" class="headerlink" title="API Reference: Object Operations"></a>API Reference: Object Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#getObject" target="_blank" rel="noopener"><code>getObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#putObject" target="_blank" rel="noopener"><code>putObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#copyObject" target="_blank" rel="noopener"><code>copyObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#statObject" target="_blank" rel="noopener"><code>statObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeObject" target="_blank" rel="noopener"><code>removeObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#removeIncompleteUpload" target="_blank" rel="noopener"><code>removeIncompleteUpload</code></a></li>
+</ul>
+<h3 id="API-Reference-Presigned-Operations"><a href="#API-Reference-Presigned-Operations" class="headerlink" title="API Reference: Presigned Operations"></a>API Reference: Presigned Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedGetObject" target="_blank" rel="noopener"><code>presignedGetObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedPutObject" target="_blank" rel="noopener"><code>presignedPutObject</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#presignedPostPolicy" target="_blank" rel="noopener"><code>presignedPostPolicy</code></a></li>
+</ul>
+<h3 id="API-Reference-Bucket-Policy-Operations"><a href="#API-Reference-Bucket-Policy-Operations" class="headerlink" title="API Reference: Bucket Policy Operations"></a>API Reference: Bucket Policy Operations</h3><ul>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#getBucketPolicy" target="_blank" rel="noopener"><code>getBucketPolicy</code></a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference#setBucketPolicy" target="_blank" rel="noopener"><code>setBucketPolicy</code></a></li>
+</ul>
+<h2 id="Full-Examples"><a href="#Full-Examples" class="headerlink" title="Full Examples"></a>Full Examples</h2><h4 id="Full-Examples-Bucket-Operations"><a href="#Full-Examples-Bucket-Operations" class="headerlink" title="Full Examples: Bucket Operations"></a>Full Examples: Bucket Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListBuckets.java" target="_blank" rel="noopener">ListBuckets.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListObjects.java" target="_blank" rel="noopener">ListObjects.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/BucketExists.java" target="_blank" rel="noopener">BucketExists.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/MakeBucket.java" target="_blank" rel="noopener">MakeBucket.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveBucket.java" target="_blank" rel="noopener">RemoveBucket.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/ListIncompleteUploads.java" target="_blank" rel="noopener">ListIncompleteUploads.java</a></li>
+</ul>
+<h4 id="Full-Examples-Object-Operations"><a href="#Full-Examples-Object-Operations" class="headerlink" title="Full Examples: Object Operations"></a>Full Examples: Object Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObject.java" target="_blank" rel="noopener">PutObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncrypted.java" target="_blank" rel="noopener">PutObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetObject.java" target="_blank" rel="noopener">GetObject.Java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetObjectEncrypted.java" target="_blank" rel="noopener">GetObjectEncrypted.Java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetPartialObject.java" target="_blank" rel="noopener">GetPartialObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveObject.java" target="_blank" rel="noopener">RemoveObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/RemoveObjects.java" target="_blank" rel="noopener">RemoveObjects.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/StatObject.java" target="_blank" rel="noopener">StatObject.java</a></li>
+</ul>
+<h4 id="Full-Examples-Presigned-Operations"><a href="#Full-Examples-Presigned-Operations" class="headerlink" title="Full Examples: Presigned Operations"></a>Full Examples: Presigned Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedGetObject.java" target="_blank" rel="noopener">PresignedGetObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedPutObject.java" target="_blank" rel="noopener">PresignedPutObject.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PresignedPostPolicy.java" target="_blank" rel="noopener">PresignedPostPolicy.java</a></li>
+</ul>
+<h4 id="Full-Examples-Bucket-Policy-Operations"><a href="#Full-Examples-Bucket-Policy-Operations" class="headerlink" title="Full Examples: Bucket Policy Operations"></a>Full Examples: Bucket Policy Operations</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/SetBucketPolicy.java" target="_blank" rel="noopener">SetBucketPolicy.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/GetBucketPolicy.java" target="_blank" rel="noopener">GetBucketPolicy.Java</a></li>
+</ul>
+<h4 id="Full-Examples-Server-Side-Encryption"><a href="#Full-Examples-Server-Side-Encryption" class="headerlink" title="Full Examples: Server Side Encryption"></a>Full Examples: Server Side Encryption</h4><ul>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncrypted.java" target="_blank" rel="noopener">CopyObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncryptedKms.java" target="_blank" rel="noopener">CopyObjectEncryptedKms.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/CopyObjectEncryptedS3.java" target="_blank" rel="noopener">CopyObjectEncryptedS3.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutGetObjectEncrypted.java" target="_blank" rel="noopener">PutGetObjectEncrypted.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncryptedKms.java" target="_blank" rel="noopener">PutObjectEncryptedKms.java</a></li>
+<li><a href="https://github.com/minio/minio-java/tree/master/examples/PutObjectEncryptedS3.java" target="_blank" rel="noopener">PutObjectEncryptedS3.java</a></li>
+</ul>
+<h2 id="Explore-Further"><a href="#Explore-Further" class="headerlink" title="Explore Further"></a>Explore Further</h2><ul>
+<li><a href="https://docs.minio.io/" target="_blank" rel="noopener">Complete Documentation</a></li>
+<li><a href="https://docs.minio.io/docs/java-client-api-reference" target="_blank" rel="noopener">Minio Java Client SDK API Reference</a></li>
+<li><a href="https://docs.minio.io/docs/java-photo-api-service" target="_blank" rel="noopener">Build your own Photo API Service - Full Application Example</a></li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
     
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
@@ -562,90 +744,6 @@
 
 
     
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2018/12/14/摄影作品赏析/" itemprop="url">摄影作品赏析</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2018-12-14T02:51:25.000Z" itemprop="datePublished">2 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Lifestyle/">Lifestyle</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            几秒 读完 (约 69 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <h1 id="向日葵与蜜蜂"><a href="#向日葵与蜜蜂" class="headerlink" title="向日葵与蜜蜂"></a>向日葵与蜜蜂</h1><img src="/2018/12/14/摄影作品赏析/向日葵与蜜蜂.jpg">
-<h1 id="夏荷"><a href="#夏荷" class="headerlink" title="夏荷"></a>夏荷</h1><img src="/2018/12/14/摄影作品赏析/夏荷.jpg">
-<h1 id="岁月静好"><a href="#岁月静好" class="headerlink" title="岁月静好"></a>岁月静好</h1><img src="/2018/12/14/摄影作品赏析/岁月静好.jpg">
-<h1 id="瓜藤"><a href="#瓜藤" class="headerlink" title="瓜藤"></a>瓜藤</h1><img src="/2018/12/14/摄影作品赏析/瓜藤.jpg">
-<h1 id="睡莲"><a href="#睡莲" class="headerlink" title="睡莲"></a>睡莲</h1><img src="/2018/12/14/摄影作品赏析/睡莲.jpg">
-<h1 id="玉渊映塔"><a href="#玉渊映塔" class="headerlink" title="玉渊映塔"></a>玉渊映塔</h1><img src="/2018/12/14/摄影作品赏析/玉渊映塔.jpg">
-<h1 id="生态祁连"><a href="#生态祁连" class="headerlink" title="生态祁连"></a>生态祁连</h1><img src="/2018/12/14/摄影作品赏析/生态祁连.jpg">
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2018/12/13/管理员无法本地登录Oracle数据库，报错ORA-12560-TNS-协议适配器错误的解决方法/" itemprop="url">管理员无法本地登录Oracle数据库，报错ORA-12560: TNS: 协议适配器错误的解决方法</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2018-12-13T07:55:31.000Z" itemprop="datePublished">2 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            1 分钟 读完 (约 116 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>今日财务报销平台出现了数据源连接不上，查找问题后发现数据库故障。</p>
-<p>当使用管理员本地登录数据库进行管理的时候，出现了报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;sqlplus / as sysdba</span><br><span class="line">ORA-12560: TNS: 协议适配器错误的解决方法</span><br></pre></td></tr></table></figure>
-<p>貌似是由于监听连接数过高，无法进行连接响应了。故重启了服务器后故障恢复。</p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
     
         
 <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
@@ -666,6 +764,8 @@
         <li><a class="pagination-link is-current" href="/page/4/">4</a></li>
         
         <li><a class="pagination-link" href="/page/5/">5</a></li>
+        
+        <li><a class="pagination-link" href="/page/6/">6</a></li>
         
     </ul>
 </nav>

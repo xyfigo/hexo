@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>精通Pandas探索性分析（四）：像专业人士一样可视化数据 - 自然资源大数据分析——肖飞的博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            精通Pandas探索性分析（四）：像专业人士一样可视化数据
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-12-30T16:38:53.000Z" itemprop="datePublished">19 分钟前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            37 分钟 读完 (约 5491 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>在本章中，我们将学习使用 seaborn 数据可视化库的数据可视化的高级技术。</p>
+<p>特别是，我们将涵盖以下主题：</p>
+<ul>
+<li>如何启用 Seaborn</li>
+<li>Seaborn 的特性</li>
+<li>绘制不同类型的绘图</li>
+<li>用 seaborn 绘制分类图</li>
+<li>使用数据感知网格进行绘图</li>
+</ul>
+<h1 id="控制绘图美学"><a href="#控制绘图美学" class="headerlink" title="控制绘图美学"></a>控制绘图美学</h1><p>在本节中，我们将学习如何使用 seaborn 绘图库来控制绘图美学。 我们将学习如何安装 seaborn 并开始使用 seaborn，以及我们需要导入的模型。 我们将探索一些海洋绘图方法来绘制几种不同类型的绘图。 我们还将看到如何使用各种 seaborn 方法和属性来控制和更改绘图美观性。</p>
+<p>在开始用 seaborn 创建绘图之前，我们需要先安装它。 在本书中，我们一直在使用 Anaconda 来安装各种 Python 库，因此我们将继续进行下去。 要安装 seaborn，请执行以下命令：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install seaborn复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>执行命令之前，请确保在管理员模式下运行命令行程序。 现在，我们需要导入本节所需的 Python 模块，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>我们需要导入 Pandas 的 Matplotlib 和 seaborn 模块。 我们正在使用 Matplotlib 的 inline magic 命令来确保我们的绘图连同代码一起正确显示在 Jupyter 笔记本中。</p>
+<p>接下来，我们使用 pandas 和以下命令读取数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data-alcohol.csv'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>我们的数据集是 CSV 文件。 它由各个国家的酒精消费数据组成。 <a href="https://github.com/fivethirtyeight/data/tree/master/alcohol-consumption" target="_blank" rel="noopener">该数据可通过这里获得</a>。</p>
+<h1 id="我们的第一个-seaborn-绘图"><a href="#我们的第一个-seaborn-绘图" class="headerlink" title="我们的第一个 seaborn 绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=我们的第一个-seaborn-绘图" target="_blank" rel="noopener">我们的第一个 seaborn 绘图</a></h1><p>在本节中，我们将仅使用一个变量来创建分布图，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.distplot(df.beer_servings)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在这里，<code>sns</code>指的是 seaborn，我们之前将其导入为<code>sns</code>。 现在我们需要将 seaborn 方法称为<code>distplot</code>，并从我们之前阅读的数据中传入列名。 如下面的屏幕快照所示，这应该可以使我们通过一行代码就能得到一个不错的分布图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/b0d2ef7c-aee8-49ea-9796-a0a088d6674e.png" alt="img"></p>
+<p>此单行显示了 seaborn 库的强大功能和简单性。</p>
+<h1 id="使用set-style更改绘图样式"><a href="#使用set-style更改绘图样式" class="headerlink" title="使用set_style更改绘图样式"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用set_style更改绘图样式" target="_blank" rel="noopener">使用<code>set_style</code>更改绘图样式</a></h1><p>现在是时候让 Seaborn 改变绘图美学了。 在此过程中，我们还将探索许多不同的绘图类型，可以使用 seaborn 进行绘制。</p>
+<h1 id="将绘图背景设置为白色网格"><a href="#将绘图背景设置为白色网格" class="headerlink" title="将绘图背景设置为白色网格"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=将绘图背景设置为白色网格" target="_blank" rel="noopener">将绘图背景设置为白色网格</a></h1><p>默认的打印样式是蓝色网格。 我们可以使用以下命令将其更改为<code>whitegrid</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"whitegrid"</span>)</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>Seaborn 提供了一种称为<code>set_style</code>的方法，我们将其称为<code>whitegrid</code>作为参数。 然后，我们调用绘图方法来绘制散点图。 我们正在使用 seaborn 的<code>lmplot</code>方法。 然后，我们从数据集中传递两个列名称为<code>x</code>和<code>y</code>，并将 data 参数设置为我们的 Pandas 数据帧。 现在，我们应该有一个带有白色网格背景的散点图，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2be5dce7-fead-49cb-8a24-3b4d67d0e26f.png" alt="img"></p>
+<h1 id="将绘图背景设置为黑色"><a href="#将绘图背景设置为黑色" class="headerlink" title="将绘图背景设置为黑色"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=将绘图背景设置为黑色" target="_blank" rel="noopener">将绘图背景设置为黑色</a></h1><p>现在我们将研究如何将绘图背景设置为<code>dark</code>并且没有网格。 为此，我们使用以下命令将样式设置为<code>dark</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"dark"</span>)</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df, fit_reg=<span class="literal">False</span>);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>您可能已经注意到，我们在开始时还有另一行代码<code>sns.set()</code>。 通过调用此命令，我们在进行任何更改之前将绘图美感重置为默认值。 我们这样做是为了确保我们之前所做的更改不会影响我们的总体规划，如下所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/be86bd8c-0185-4aca-aecc-f8d634c11527.png" alt="img"></p>
+<h1 id="将背景设置为白色"><a href="#将背景设置为白色" class="headerlink" title="将背景设置为白色"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=将背景设置为白色" target="_blank" rel="noopener">将背景设置为白色</a></h1><p>我们还可以使用以下代码将图的背景设置为实心<code>white</code>且没有网格。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"white"</span>)</span><br><span class="line">sns.swarmplot(x=<span class="string">'country'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/0e71d677-a461-4fed-9a30-e55a93f3040c.png" alt="img"></p>
+<h1 id="添加刻度"><a href="#添加刻度" class="headerlink" title="添加刻度"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=添加刻度" target="_blank" rel="noopener">添加刻度</a></h1><p>我们可以通过将<code>style</code>设置为<code>ticks</code>来添加刻度线，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"ticks"</span>)</span><br><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面的代码应为我们提供以下输出：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/6e4bce65-cb38-4b77-983d-595408f9ce57.png" alt="img"></p>
+<h1 id="自定义样式"><a href="#自定义样式" class="headerlink" title="自定义样式"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=自定义样式" target="_blank" rel="noopener">自定义样式</a></h1><p>在 seaborn 中，我们可以自定义预设样式，甚至比以前讨论的更多。 让我们向您展示我们可以做什么！</p>
+<h1 id="样式参数"><a href="#样式参数" class="headerlink" title="样式参数"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=样式参数" target="_blank" rel="noopener">样式参数</a></h1><p>首先让我们看一下这些样式组成的所有参数。 我们可以通过在 seaborn 上调用<code>axes_style</code>方法来获取参数，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.axes_style()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/b3f25f42-b193-4150-960f-89706c491673.png" alt="img"></p>
+<p>可以进一步自定义上述每个参数。 让我们尝试自定义其中之一，如以下代码片段所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"ticks"</span>, &#123;<span class="string">"axes.facecolor"</span>: <span class="string">".1"</span>&#125;)</span><br><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在前面的代码中，我们将<code>style</code>设置为<code>ticks</code>，背景为纯白色，但是我们可以通过分别设置<code>facecolor</code>来进一步自定义。 对于前面的代码，我们将获得以下输出：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2fb4ce29-9976-4776-a0cc-54fa85f0d18d.png" alt="img"></p>
+<p>请注意，我们可以向此字典添加更多参数，然后继续自定义绘图。</p>
+<h1 id="绘图的预定的上下文"><a href="#绘图的预定的上下文" class="headerlink" title="绘图的预定的上下文"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=绘图的预定的上下文" target="_blank" rel="noopener">绘图的预定的上下文</a></h1><p>Seaborn 还提供了一些预设样式上下文。 例如，到目前为止，我们一直在使用的默认样式上下文称为<code>notebook</code>。 但是，还有更多，包括一个叫做<code>paper</code>的。 使用称为<code>set_context</code>的方法设置此上下文，我们将<code>paper</code>作为参数传递，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_context(<span class="string">"paper"</span>)</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>先前代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/6300181e-ff24-41ef-b2c9-d37611f9b055.png" alt="img"></p>
+<p>还有更多可用的上下文。 例如，称为<code>talk</code>的一个。 我们可以使用<code>talk</code>设置该上下文，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_context(<span class="string">"talk"</span>)</span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5221647e-fd80-4d8d-a585-9eefd791c824.png" alt="img"></p>
+<p>我们可以使用的另一个上下文称为<code>poster</code>，它使用以下代码设置：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_context(<span class="string">"poster"</span>)</span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/9d69bf21-08fc-49fd-a377-fd0d19f6afe4.png" alt="img"></p>
+<h1 id="选择绘图的颜色"><a href="#选择绘图的颜色" class="headerlink" title="选择绘图的颜色"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=选择绘图的颜色" target="_blank" rel="noopener">选择绘图的颜色</a></h1><p>在本节中，我们将学习使用调色板自定义 seaborn 中的绘图颜色。 我们将探索 seaborn 和 Matplotlib 提供的一些调色板。 我们将学习如何通过设置不同的调色板来更改绘图的颜色，并且还将学习如何使用自定义颜色创建自己的调色板。</p>
+<p>首先，使用以下代码导入 Jupyter 笔记本中所需的模块：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>我们需要导入 Pandas，Matplotlib 和 seaborn。 然后，我们需要读取 CSV 数据集； 我们使用<code>read_csv</code>方法执行此操作，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data-alcohol.csv'</span>)</span><br><span class="line">df.head()</span><br><span class="line">复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/98b18755-a40a-43ca-9624-8ecde7786e22.png" alt="img"></p>
+<p>现在我们需要使用 seaborn 来调用<code>color_palette</code>方法来获取当前的调色板，该调色板是默认设置的。 然后我们使用<code>palplot</code>方法显示这些颜色，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.palplot(sns.color_palette())复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/9d461c2b-6706-4a46-bfa7-a115da2b89e7.png" alt="img"></p>
+<p>现在让我们看一下该调色板在绘图中的外观：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/1dc4aba2-9a88-4b12-a479-5b51d0a3fccd.png" alt="img"></p>
+<p>在这里，我们在数据集上绘制了箱形图。 您可能会注意到，配色方案看上去与我们在打印默认调色板时看到的相似。</p>
+<h1 id="更改调色板"><a href="#更改调色板" class="headerlink" title="更改调色板"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=更改调色板" target="_blank" rel="noopener">更改调色板</a></h1><p>让我们继续并更改调色板，以了解它如何影响绘图的颜色。 以下代码将调色板设置为<code>bright</code>（seaborn 的预定义调色板之一）：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.set_palette(<span class="string">"bright"</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>让我们看看如何使用以下命令来改变绘图的颜色：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>现在，输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/4ff23533-1998-4789-b9c9-0a94efe7a80d.png" alt="img"></p>
+<p>如您所见，由于我们设置了新的调色板，我们图的配色方案已经完全改变。<code>bright</code>不是 seaborn 中唯一的预定义调色板； 还有其他一些，包括<code>deep</code>，<code>muted</code>，<code>pastel</code>，<code>bright</code>，<code>dark</code>和<code>colorblind</code>，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sns.palplot(sns.color_palette(<span class="string">"deep"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"muted"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"pastel"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"bright"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"dark"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"colorblind"</span>, <span class="number">7</span>))复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>每个调色板的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5270c402-8780-4e51-b734-008f68522c1e.png" alt="img"></p>
+<p>Seaborn 还可以将 Matplotlib 的颜色图设置为调色板。 例如：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.palplot(sns.color_palette(<span class="string">"RdBu"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"Blues_d"</span>, <span class="number">7</span>))复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>上一条命令的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/29fe0163-bde3-4693-8b4b-aeaca56a2678.png" alt="img"></p>
+<p>现在让我们使用 Matplotlib 颜色图之一作为调色板。 我们使用以下命令执行此操作：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.set_palette(<span class="string">"Blues_d"</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在这里，我们将调色板设置为<code>Blues_d</code>，这是 Matplotlib 颜色图。 现在，让我们使用以下代码重绘图以查看其影响：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面命令的输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7cc9c7ea-7c91-4ec4-9992-dbdc86dcc15d.png" alt="img"></p>
+<p>如您所见，我们的绘图现在具有来自蓝色色图的调色板。</p>
+<h1 id="建立自定义调色板"><a href="#建立自定义调色板" class="headerlink" title="建立自定义调色板"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=建立自定义调色板" target="_blank" rel="noopener">建立自定义调色板</a></h1><p>要构建自定义调色板，我们首先需要创建一个列表并为其分配所需的颜色，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my_palette = [<span class="string">'#4B0082'</span>, <span class="string">'#0000FF'</span>, <span class="string">'#00FF00'</span>, <span class="string">'#FFFF00'</span>, <span class="string">'#FF7F00'</span>, </span><br><span class="line">  <span class="string">'#FF0000'</span>]</span><br><span class="line">sns.set_palette(my_palette)</span><br><span class="line">sns.palplot(sns.color_palette())复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/f9d916a8-d1c6-41a2-b2b2-2fca38e86f57.png" alt="img"></p>
+<p>在前面的屏幕截图中，我们创建了一个名为<code>my_palette</code>的新调色板，具有七种颜色。 然后，我们将调色板设置为新创建的调色板，该调色板向我们展示颜色的外观。</p>
+<p>让我们使用以下命令，通过新的自定义调色板查看绘图的外观：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面命令的输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/92e431d6-8ef1-4a05-9d70-66c442ca9b00.png" alt="img"></p>
+<h1 id="绘制分类数据"><a href="#绘制分类数据" class="headerlink" title="绘制分类数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=绘制分类数据" target="_blank" rel="noopener">绘制分类数据</a></h1><p>在本节中，我们将了解 seaborn 支持的各种分类图以及如何绘制它们。 我们将演示如何绘制包括散点图，实线图，箱形图，条形图等的图。 我们还将学习如何绘制宽形的分类图。</p>
+<p>让我们开始使用以下代码在 Jupyter 笔记本中导入我们的 pandas 模块：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>除了 Pandas，我们还需要导入 Matplotlib 和 Seaborn Python 库。 然后，我们读取 CSV 数据集，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data_simpsons_episodes.csv'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>本节中的数据集用于著名的动画电视连续剧《辛普森一家》：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/03f9d858-76e1-4341-826c-319fa7ffebe1.png" alt="img"></p>
+<p>前面的数据集包含每个《辛普森一家》绘图的发行日期，收视率数字，评分以及其他观察结果的序列。</p>
+<h1 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=散点图" target="_blank" rel="noopener">散点图</a></h1><p>让我们从绘制散点图开始； 我们使用以下命令执行此操作：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.stripplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出应如下所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2674856c-cac5-4a03-a251-4a593d215195.png" alt="img"></p>
+<p>在这里，我们使用了 Seaborn 的<code>stripplot</code>方法。 我们在 <em>x</em> 轴上绘制了季节编号，并在 <em>y</em> 轴上绘制了以百万计的美国观众。 我们还指定了使用的数据帧的名称。</p>
+<h1 id="群图"><a href="#群图" class="headerlink" title="群图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=群图" target="_blank" rel="noopener">群图</a></h1><p>现在让我们绘制<code>swarmplot</code>。 为此，我们使用 seaborn 的<code>swarmplot</code>方法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.swarmplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/4a6c8120-148d-4896-b712-258e29deab1e.png" alt="img"></p>
+<p>在这里，我们还通过了 <em>x</em> 轴上的季节编号，并在 <em>y</em> 轴上使用了数百万的观众。</p>
+<h1 id="箱形图"><a href="#箱形图" class="headerlink" title="箱形图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=箱形图" target="_blank" rel="noopener">箱形图</a></h1><p>现在，我们使用相同的数据并使用<code>boxplot</code>方法创建箱形图，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>上一条命令的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/184e947e-d097-4f38-bd17-ac28855b2b81.png" alt="img"></p>
+<h1 id="提琴图"><a href="#提琴图" class="headerlink" title="提琴图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=提琴图" target="_blank" rel="noopener">提琴图</a></h1><p>使用<code>violinplot()</code>方法创建小提琴图，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.violinplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5f0100a2-ea47-491d-8af6-873fef4d1e3e.png" alt="img"></p>
+<h1 id="条形图"><a href="#条形图" class="headerlink" title="条形图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=条形图" target="_blank" rel="noopener">条形图</a></h1><p>要绘制条形图，我们使用以下<code>barplot</code>方法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.barplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/f790e027-d61f-435d-8ad3-7128816cd263.png" alt="img"></p>
+<p>请注意，还有另一种条形图可用，这些条形图是使用<code>countplot</code>方法绘制的，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.countplot(x=<span class="string">"season"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7ea2484a-7d1d-48c2-ac21-89d0fd6deda9.png" alt="img"></p>
+<p>当您要显示每个类别中的观察次数而不是计算第二个变量的状态时，可以使用这种样式的图。</p>
+<h1 id="宽形图"><a href="#宽形图" class="headerlink" title="宽形图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=宽形图" target="_blank" rel="noopener">宽形图</a></h1><p>Seaborn 还支持宽格式的数据图。 让我们阅读以下数据集来演示一个：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data-alcohol.csv'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/37b39dd4-7b5e-4af1-b22c-894456c56974.png" alt="img"></p>
+<p>我们可以使用以下命令创建宽形箱形图：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=df, orient=<span class="string">"h"</span>);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/994c67a1-d2e6-4d9b-98b1-d2c098e7b34d.png" alt="img"></p>
+<p>在这里，我们通过传入数据集并将方向作为<code>h</code>来创建宽幅箱形图。</p>
+<h1 id="使用数据感知网格进行绘图"><a href="#使用数据感知网格进行绘图" class="headerlink" title="使用数据感知网格进行绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用数据感知网格进行绘图" target="_blank" rel="noopener">使用数据感知网格进行绘图</a></h1><p>在本节中，我们将学习在数据集的不同子集上绘制同一图的多个实例。 我们将学习使用 seaborn 的<code>FacetGrid</code>方法进行网格绘图。 我们还将探索 seaborn 的<code>PairGrid</code>和<code>PairPlot</code>方法进行网格绘图。</p>
+<p>让我们从下面的代码在 Jupyter 笔记本中导入 Python 模块开始：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>现在，我们需要使用以下代码读取第一个 CSV 数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data-titanic.csv'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>The output from the preceding command is as follows:</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/70f9e628-bf1d-40d4-9502-a4ae4a9e9915.png" alt="img"></p>
+<h1 id="使用FacetGrid-方法进行绘图"><a href="#使用FacetGrid-方法进行绘图" class="headerlink" title="使用FacetGrid()方法进行绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用facetgrid方法进行绘图" target="_blank" rel="noopener">使用<code>FacetGrid()</code>方法进行绘图</a></h1><p>让我们开始研究如何使用<code>FacetGrid</code>方法绘制多维图，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g = sns.FacetGrid(df, col=<span class="string">"Sex"</span>, hue=<span class="string">'Survived'</span>)</span><br><span class="line">g.map(plt.hist, <span class="string">"Age"</span>);</span><br><span class="line">g.add_legend();复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/d8dd3a1e-bc48-44b1-bbd7-749484b4852e.png" alt="img"></p>
+<p>在这里，我们已经使用<code>FacetGrid</code>方法绘制了男性和女性乘客的两个并排直方图。 这种并排显示有助于我们比较按年龄划分的男女乘客的存活率。 为了进行绘制，我们首先使用<code>FacetGrid</code>方法创建了一个网格。 然后，我们将数据集的数据帧列传递为<code>Sex</code>，将<code>hue</code>传递为<code>Survived</code>。 <strong>色相</strong>代表绘图的深度。 然后，这创建了带有两个分别用于男性和女性乘客的绘图的网格。 然后我们在网格上调用<code>map</code>方法并传递了<code>plt.hist</code>和<code>Age</code>参数，它们绘制了我们的两个直方图。 最后，我们使用<code>add_legend</code>方法添加了图例。</p>
+<h1 id="使用PairGrid-方法进行绘图"><a href="#使用PairGrid-方法进行绘图" class="headerlink" title="使用PairGrid()方法进行绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用pairgrid方法进行绘图" target="_blank" rel="noopener">使用<code>PairGrid()</code>方法进行绘图</a></h1><p>现在让我们看看如何使用<code>PairGrid</code>方法绘制可识别网格的图。 我们正在为此使用 MLB 球员数据集，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mlb = pd.read_csv(<span class="string">'data-mlb-players.csv'</span>)</span><br><span class="line">mlb.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/ff10718c-542e-4f2b-9365-0441ab9e9775.png" alt="img"></p>
+<p>(Source: <a href="http://wiki.stat.ucla.edu/socr/index.php/SOCR_Data_MLB_HeightsWeights" target="_blank" rel="noopener">http://wiki.stat.ucla.edu/socr/index.php/SOCR_Data_MLB_HeightsWeights</a>)</p>
+<p>让我们用以下代码创建一个图：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g = sns.PairGrid(mlb, vars=[<span class="string">"Height"</span>, <span class="string">"Weight"</span>], hue=<span class="string">"Position"</span>)</span><br><span class="line">g.map(plt.scatter);</span><br><span class="line">g.add_legend();复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在这里，我们已经传递了 MLB 球员的数据集，并将<code>vars</code>设置为包含球员的<code>Height</code>和<code>Weight</code>的列表。 然后我们将<code>hue</code>设置为<code>Position</code>。 然后我们在此网格上使用<code>scatterplot</code>方法调用<code>map</code>。 最后，我们添加了图例，该图例提供了一个<code>2 x 2</code>网格，其中包括身高和体重曲线的所有组合，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/71249b13-c74e-429e-b3a2-1e6e08dbbfeb.png" alt="img"></p>
+<p>这些位置的深度由玩家位置列提供。</p>
+<h1 id="使用PairPlot-方法进行绘图"><a href="#使用PairPlot-方法进行绘图" class="headerlink" title="使用PairPlot()方法进行绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用pairplot方法进行绘图" target="_blank" rel="noopener">使用<code>PairPlot()</code>方法进行绘图</a></h1><p>通过传递数据集可以直接调用<code>PairPlot</code>，如下所示。 深度由<code>hue</code>和<code>size</code>参数组成：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.pairplot(mlb, hue=<span class="string">"Position"</span>, size=<span class="number">2.5</span>);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面的命令为我们提供了<code>3 x 3</code>网格中的多图。 这是因为我们对每个位置都有三个观察值或列，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/8a95ca98-79fa-4bc7-a54a-0f00a453ab12.png" alt="img"></p>
+<p>当前观察到的是<code>Height</code>，<code>Weight</code>和<code>Age</code>。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=总结" target="_blank" rel="noopener">总结</a></h1><p>在本章中，我们了解了使用 Seaborn 的数据可视化库进行数据可视化的高级技术。 我们学习了如何开始 seaborn，然后探索了其中的一些功能，包括如何控制绘图的美感，如何选择绘图的颜色等等。 我们学习了如何绘制几种不同类型的图，以及如何使用 seaborn 绘制分类数据。 最后，我们学习了如何使用数据感知网格来创建图。</p>
+
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Pandas/">#Pandas</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-prev">
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2020/12/29/精通Pandas探索性分析（三）：处理，转换和重塑数据/">精通Pandas探索性分析（三）：处理，转换和重塑数据</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bca03367b9b8c57"></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'dFKWAKQMOWFegpmxBmcPAKYs-gzGzoHsz',
+        app_key: '8GcXGC2fPHu8puRWbgX1zSS4',
+        placeholder: ''
+    });
+</script>
+
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>

@@ -1,3 +1,5 @@
+http://www.gisup.cn/2020/12/31/精通Pandas探索性分析（四）：像专业人士一样可视化数据/
+http://www.gisup.cn/2020/12/29/精通Pandas探索性分析（三）：处理，转换和重塑数据/
 http://www.gisup.cn/2020/12/29/精通Pandas探索性分析（二）：数据选择/
 http://www.gisup.cn/2020/12/28/精通Pandas探索性分析（一）：处理不同种类的数据集/
 http://www.gisup.cn/2020/12/02/使用Raml构建Restful-API/
@@ -6,5 +8,3 @@ http://www.gisup.cn/2020/03/04/使用Debezium和Kafka为MySQL数据库设置变�
 http://www.gisup.cn/2020/02/26/加速使用Docker镜像构建Maven项目的速度/
 http://www.gisup.cn/2020/02/23/spark读取和处理Excel数据/
 http://www.gisup.cn/2020/02/16/表批量读取和写入/
-http://www.gisup.cn/2020/02/16/基于Spark的新一代数据湖产品：DELTA-LAKE/
-http://www.gisup.cn/2019/10/21/Presto-Thrift-Connector/

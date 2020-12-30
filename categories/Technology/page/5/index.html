@@ -2,7 +2,7 @@
 <html class="has-navbar-fixed-top">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>分类: Technology - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<title>分类: Technology - 自然资源大数据分析——肖飞的博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
@@ -88,6 +88,155 @@
 </section>
 <section class="section">
     <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/25/ORA-00604-递归-SQL-级别-1-出现错误-ORA-01653-表-SYS-AUD-无法通过-8192-在表空间-SYSTEM-中-扩展/" itemprop="url"> ORA-00604: 递归 SQL 级别 1 出现错误 ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-25T08:35:58.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 721 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>今日遇到OA数据库报错，报错内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ORA-00604: 递归 SQL 级别 1 出现错误</span><br><span class="line">ORA-01653: 表 SYS.AUD$ 无法通过 8192 (在表空间 SYSTEM 中) 扩展</span><br><span class="line">ORA-02002: 写入审计线索时出错</span><br><span class="line">ORA-00604: 递归 SQL 级别 1 出现错误</span><br></pre></td></tr></table></figure>
+<p>这种情况是遇到了表空间已满的情况，由于Windows版32位的Oracle限制每个表空间存储文件最大32G，所以必须手动增加表空间存储文件进行扩容。步骤如下：</p>
+<ol>
+<li><p>本地模式登录数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;sqlplus / as sysdba</span><br><span class="line"></span><br><span class="line">SQL*Plus: Release 11.2.0.1.0 Production on Thu Oct 25 16:16:49 2018</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2010, Oracle.  All rights reserved.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connected to:</span><br><span class="line">Oracle Database 11g Enterprise Edition <span class="keyword">Release</span> <span class="number">11.2</span><span class="number">.0</span><span class="number">.1</span><span class="number">.0</span> - Production</span><br><span class="line"><span class="keyword">With</span> the Partitioning, OLAP, <span class="keyword">Data</span> <span class="keyword">Mining</span> <span class="keyword">and</span> <span class="built_in">Real</span> Application Testing options</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li><p>查看表空间情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)</span><br><span class="line">&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTT</span><br><span class="line">E_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BY</span><br><span class="line">TES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(S</span><br><span class="line">UM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024), 2)</span><br><span class="line">MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLES</span><br><span class="line">PACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_D</span><br><span class="line">ATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPA</span><br><span class="line">CE_NAME ORDER BY 4 DESC;</span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">SYSTEM                                 65482      65409.19   99.89       72.81</span><br><span class="line">        47</span><br><span class="line"></span><br><span class="line">OA                                      1248       1184.94   94.95       63.06</span><br><span class="line">        63</span><br><span class="line"></span><br><span class="line">SYSAUX                                   920        852.06   92.62       67.94</span><br><span class="line">        59</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">UNDOTBS1                                1000         420.5   42.05       579.5</span><br><span class="line">       353</span><br><span class="line"></span><br><span class="line">USERS                                      5          1.31   26.20        3.69</span><br><span class="line">      3.69</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>查看表空间文件名和是否自动增长</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT FILE_NAME,TABLESPACE_NAME,AUTOEXTENSIBLE FROM dba_data_files;</span><br><span class="line"></span><br><span class="line">FILE_NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TABLESPACE_NAME                AUT</span><br><span class="line">------------------------------ ---</span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\USERS01.DBF</span><br><span class="line">USERS                          YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\UNDOTBS01.DBF</span><br><span class="line">UNDOTBS1                       YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSAUX01.DBF</span><br><span class="line">SYSAUX                         YES</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FILE_NAME</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TABLESPACE_NAME                AUT</span><br><span class="line">------------------------------ ---</span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSTEM01.DBF</span><br><span class="line">SYSTEM                         YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\OA.DBF</span><br><span class="line">OA                             YES</span><br><span class="line"></span><br><span class="line">D:\APP\ADMINISTRATOR\ORADATA\ORCL\SYSTEM02.DBF</span><br><span class="line">SYSTEM                         NO</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">6 rows selected.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>增加表空间的存储文件，system03.dbf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; ALTER TABLESPACE SYSTEM ADD DATAFILE &apos;D:\app\Administrator\oradata\orcl\SYS</span><br><span class="line">TEM03.DBF&apos; SIZE 32752M;</span><br><span class="line"></span><br><span class="line">Tablespace altered.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="5">
+<li><p>执行完成后查看表空间的使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;, D.TOT_GROOTTE_MB &quot;表空间大小(M)</span><br><span class="line">&quot;, D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;, TO_CHAR(ROUND((D.TOT_GROOTT</span><br><span class="line">E_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&apos;990.99&apos;) &quot;使用比&quot;, F.TOTAL_BY</span><br><span class="line">TES &quot;空闲空间(M)&quot;, F.MAX_BYTES &quot;最大块(M)&quot; FROM (SELECT TABLESPACE_NAME, ROUND(S</span><br><span class="line">UM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES, ROUND(MAX(BYTES) / (1024 * 1024), 2)</span><br><span class="line">MAX_BYTES FROM SYS.DBA_FREE_SPACE GROUP BY TABLESPACE_NAME) F, (SELECT DD.TABLES</span><br><span class="line">PACE_NAME, ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB FROM SYS.DBA_D</span><br><span class="line">ATA_FILES DD GROUP BY DD.TABLESPACE_NAME) D WHERE D.TABLESPACE_NAME = F.TABLESPA</span><br><span class="line">CE_NAME ORDER BY 4 DESC;</span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">OA                                      1248       1184.94   94.95       63.06</span><br><span class="line">        63</span><br><span class="line"></span><br><span class="line">SYSAUX                                   920        852.06   92.62       67.94</span><br><span class="line">        59</span><br><span class="line"></span><br><span class="line">SYSTEM                                 98234      65474.19   66.65    32759.81</span><br><span class="line">      3968</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表空间名                       表空间大小(M) 已使用空间(M) 使用比  空闲空间(M)</span><br><span class="line">------------------------------ ------------- ------------- ------- -----------</span><br><span class="line"> 最大块(M)</span><br><span class="line">----------</span><br><span class="line">UNDOTBS1                                1000         460.5   46.05       539.5</span><br><span class="line">       353</span><br><span class="line"></span><br><span class="line">USERS                                      5          1.31   26.20        3.69</span><br><span class="line">      3.69</span><br></pre></td></tr></table></figure>
+<p>可见SYSTEM表空间已经扩大了，任务完成。</p>
+</li>
+</ol>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/10/22/LVM简单介绍/" itemprop="url">LVM简单介绍</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-10-22T05:22:23.000Z" itemprop="datePublished">2 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            10 分钟 读完 (约 1543 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>原文见：<a href="http://www.debian-administration.org/articles/410" target="_blank" rel="noopener">http://www.debian-administration.org/articles/410</a></p>
+<p>LVM允许你用一种有效地方法创建和管理服务器上的存储，按照意愿增加、移除、改变分区大小。刚开始接触LVM会使初学者感到疑惑，而这篇文字就用简单的方式讲述LVM的基本知识。</p>
+<p>以下术语对你学习使用LVM很重要，是你必须知道的：</p>
+<ul>
+<li><p>物理卷（physical volumes）</p>
+<p>这是你的物理硬盘或磁盘分区，例如/dev/hda或/dev/hdb1.这是你在mounting/unmounting时经常使用的。利用LVM能够合并多个物理卷成为卷群（volume groups）</p>
+</li>
+<li><p>卷群（volume groups）</p>
+<p>卷群由真实的物理卷组成，它能够用来创建逻辑卷（logical volumes）。你能够创建、改变大小、移除、使用逻辑卷。可以认为卷群是一个由任意数量的物理卷组成的虚拟分区。</p>
+</li>
+<li><p>逻辑卷（logical volumes）</p>
+<p>逻辑卷是你最终在系统上挂载的，它们能够快速的添加、移除、改变大小。因为逻辑卷由卷群组成，所有它的空间能大于组成它的单一物理卷的空间。例如由4个5G大小的硬盘（逻辑卷）能够组合成20G的卷群，所有你能在此基础上创建两个10G的逻辑卷。</p>
+</li>
+</ul>
+<p>在逻辑层面上，他们的概念层次自上而下如图所示。</p>
+<img src="/2018/10/22/LVM简单介绍/LVM_hierarchy.png" title="LVM的概念层次">
+<h1 id="创建卷群（Volume-Group）"><a href="#创建卷群（Volume-Group）" class="headerlink" title="创建卷群（Volume Group）"></a>创建卷群（Volume Group）</h1><p>使用LVM你至少需要一个分区，并使用LVM进行初始化。然后把它加入一个卷群。怎样操作呢？</p>
+<p>在我的例子中，我的笔记本有如下设置：</p>
+<h3 id="Name-Flags-Part-Type-FS-Type-Label-Size-MB"><a href="#Name-Flags-Part-Type-FS-Type-Label-Size-MB" class="headerlink" title="Name        Flags    Part Type   FS Type          [Label]        Size (MB)"></a>Name        Flags    Part Type   FS Type          [Label]        Size (MB)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hda1        Boot        Primary   		Linux ext3       [/]             8000.01 </span><br><span class="line">hda2                    Primary   		Linux swap 		/ Solaris        1000.20</span><br><span class="line">hda3                    Primary   		Linux                            31007.57</span><br></pre></td></tr></table></figure>
+<p>这里我有一个7GB的根分区，用来存储我的Debian GNU/Linux安装。我有一个28GB的分区用来给LVM使用。按照我的设置，我能用LVM创建一个专用的/home分区，而且我能够在空间不足时扩展/home分区增大空间。</p>
+<p>在这个例子中hda1、hda2、hda3是物理卷。我对hda3进行物理卷初始化：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~<span class="comment"># pvcreate /dev/hda3</span></span><br></pre></td></tr></table></figure>
+<p>如果你想合并硬盘或者分区，你可以像这样操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# pvcreate /dev/hdb</span><br><span class="line">root@lappy:~# pvcreate /dev/hdc</span><br></pre></td></tr></table></figure>
+<p>一旦你初始化好了分区或磁盘驱动器，我们用这些物理卷来创建卷群：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# vgcreate skx-vol /dev/hda3</span><br></pre></td></tr></table></figure></p>
+<p>这里skx-vol是卷群的名称。如果你想跨两个磁盘创建卷群，你可以使用“vgcreate skx-vol /dev/hdb /dev/hdc”的方式。</p>
+<p>如果你操作正确，你可以通过vgscan命令查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# vgscan</span><br><span class="line">  Reading all physical volumes.  This may take a while...</span><br><span class="line">  Found volume group "skx-vol" using metadata type lvm2</span><br></pre></td></tr></table></figure>
+<p>这样我们就创建好了一个名为skx-vol的卷群，我们下面开始使用他。</p>
+<h1 id="创建和使用逻辑卷（Working-with-logical-volumes）"><a href="#创建和使用逻辑卷（Working-with-logical-volumes）" class="headerlink" title="创建和使用逻辑卷（Working with logical volumes）"></a>创建和使用逻辑卷（Working with logical volumes）</h1><p>我们真正想要的是创建一个能够挂载和使用的逻辑卷。如果以后我们的逻辑卷空间不足，可以对其空间进行重新分配，增加新的存储空间。当然这取决于你算则的文件系统类型。</p>
+<p>我们将创建一个名为test的卷：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvcreate -n test --size 1g skx-vol</span><br><span class="line">Logical volume "test" created</span><br></pre></td></tr></table></figure>
+<p>这个命令创建了一个大小为1G名为test的逻辑卷，它在LVM卷群skx-vol之上。</p>
+<p>现在这个逻辑卷可以通过/dev/skx-vol/test进行操作，它能像其他分区一样进行格式化和挂载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# mkfs.ext3 /dev/skx-vol/test</span><br><span class="line">root@lappy:~# mkdir /home/test</span><br><span class="line">root@lappy:~# mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure>
+<p>很酷是吧？</p>
+<p>下面的操作将更有意思！我们假设这个test分区空间已满，我们要对这个分区进行扩大。首先，我们可以通过lvdisplay命令查看当前硬盘的状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvdisplay </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                /dev/skx-vol/test</span><br><span class="line">  VG Name                skx-vol</span><br><span class="line">  LV UUID                J5XlaT-e0Zj-4mHz-wtET-P6MQ-wsDV-Lk2o5A</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Status              available</span><br><span class="line"><span class="meta">  #</span><span class="bash"> open                 0</span></span><br><span class="line">  LV Size                1.00 GB</span><br><span class="line">  Current LE             256</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     0</span><br><span class="line">  Block device           254:0</span><br></pre></td></tr></table></figure>
+<p>我们能看到test分区大小为1G。在我们对它重新分配空间时记得要先卸载这个卷（unmount）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# umount  /home/test/</span><br><span class="line">root@lappy:~# lvextend -L+1g /dev/skx-vol/test </span><br><span class="line">Extending logical volume test to 2.00 GB</span><br><span class="line">Logical volume test successfully resized</span><br></pre></td></tr></table></figure></p>
+<p>(注意：ext3文件系统可以在挂载状态重划大小，但是我建议还是先把它卸载掉，这样可以免除不必要的担心)</p>
+<p>在此通过lvdisplay命令查看，test卷已经重新分配了大小：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvdisplay </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                /dev/skx-vol/test</span><br><span class="line">  VG Name                skx-vg</span><br><span class="line">  LV UUID                uh7umg-7DqT-G2Ve-nNSX-03rs-KzFA-4fEwPX</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Status              available</span><br><span class="line"><span class="meta">  #</span><span class="bash"> open                 0</span></span><br><span class="line">  LV Size                2.00 GB</span><br><span class="line">  Current LE             512</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     0</span><br><span class="line">  Block device           254:0</span><br></pre></td></tr></table></figure></p>
+<p>需要着重提醒的是，即使这个卷的空间重新分配，但是它上面的ext3文件系统却没有改变，我们需要对文件系统重划大小满足扩大了的卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# e2fsck -f /dev/skx-vol/test </span><br><span class="line">root@lappy:~# resize2fs /dev/skx-vol/test</span><br></pre></td></tr></table></figure></p>
+<p>然后对test卷重新挂载后你会发现它的空间变成了2G。</p>
+<p>当然你也可以通过lvremove操纵移除这个卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@lappy:~# lvremove /dev/skx-vol/test</span><br><span class="line">Do you really want to remove active logical volume "test"? [y/n]: y</span><br><span class="line">Logical volume "test" successfully removed</span><br></pre></td></tr></table></figure></p>
+<h1 id="挂载逻辑卷（Mounting-Logical-Volumes）"><a href="#挂载逻辑卷（Mounting-Logical-Volumes）" class="headerlink" title="挂载逻辑卷（Mounting Logical Volumes）"></a>挂载逻辑卷（Mounting Logical Volumes）</h1><p>在之前的章节，我们使用如下的命令来挂载一个逻辑卷：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/skx-vol/test  /home/test</span><br></pre></td></tr></table></figure></p>
+<p>如果你想在开机引导的时候就挂载你的分区，你可以编辑/etc/fstab文件，增加如下内容：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/dev/skx-vol/home    /home       ext3  noatime  0 2</span><br><span class="line">/dev/skx-vol/backups /backups    ext3  noatime  0 2</span><br></pre></td></tr></table></figure></p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
     
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">

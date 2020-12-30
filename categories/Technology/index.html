@@ -2,7 +2,7 @@
 <html class="has-navbar-fixed-top">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>分类: Technology - 自然资源部一线码农——肖飞的博客：带你走进政务系统云原生的世界</title>
+<title>分类: Technology - 自然资源大数据分析——肖飞的博客</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
@@ -92,12 +92,536 @@
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
+            <a href="/2020/12/31/精通Pandas探索性分析（四）：像专业人士一样可视化数据/" itemprop="url">精通Pandas探索性分析（四）：像专业人士一样可视化数据</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-12-30T16:38:53.000Z" itemprop="datePublished">19 分钟前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            37 分钟 读完 (约 5491 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>在本章中，我们将学习使用 seaborn 数据可视化库的数据可视化的高级技术。</p>
+<p>特别是，我们将涵盖以下主题：</p>
+<ul>
+<li>如何启用 Seaborn</li>
+<li>Seaborn 的特性</li>
+<li>绘制不同类型的绘图</li>
+<li>用 seaborn 绘制分类图</li>
+<li>使用数据感知网格进行绘图</li>
+</ul>
+<h1 id="控制绘图美学"><a href="#控制绘图美学" class="headerlink" title="控制绘图美学"></a>控制绘图美学</h1><p>在本节中，我们将学习如何使用 seaborn 绘图库来控制绘图美学。 我们将学习如何安装 seaborn 并开始使用 seaborn，以及我们需要导入的模型。 我们将探索一些海洋绘图方法来绘制几种不同类型的绘图。 我们还将看到如何使用各种 seaborn 方法和属性来控制和更改绘图美观性。</p>
+<p>在开始用 seaborn 创建绘图之前，我们需要先安装它。 在本书中，我们一直在使用 Anaconda 来安装各种 Python 库，因此我们将继续进行下去。 要安装 seaborn，请执行以下命令：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install seaborn复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>执行命令之前，请确保在管理员模式下运行命令行程序。 现在，我们需要导入本节所需的 Python 模块，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>我们需要导入 Pandas 的 Matplotlib 和 seaborn 模块。 我们正在使用 Matplotlib 的 inline magic 命令来确保我们的绘图连同代码一起正确显示在 Jupyter 笔记本中。</p>
+<p>接下来，我们使用 pandas 和以下命令读取数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data-alcohol.csv'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>我们的数据集是 CSV 文件。 它由各个国家的酒精消费数据组成。 <a href="https://github.com/fivethirtyeight/data/tree/master/alcohol-consumption" target="_blank" rel="noopener">该数据可通过这里获得</a>。</p>
+<h1 id="我们的第一个-seaborn-绘图"><a href="#我们的第一个-seaborn-绘图" class="headerlink" title="我们的第一个 seaborn 绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=我们的第一个-seaborn-绘图" target="_blank" rel="noopener">我们的第一个 seaborn 绘图</a></h1><p>在本节中，我们将仅使用一个变量来创建分布图，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.distplot(df.beer_servings)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在这里，<code>sns</code>指的是 seaborn，我们之前将其导入为<code>sns</code>。 现在我们需要将 seaborn 方法称为<code>distplot</code>，并从我们之前阅读的数据中传入列名。 如下面的屏幕快照所示，这应该可以使我们通过一行代码就能得到一个不错的分布图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/b0d2ef7c-aee8-49ea-9796-a0a088d6674e.png" alt="img"></p>
+<p>此单行显示了 seaborn 库的强大功能和简单性。</p>
+<h1 id="使用set-style更改绘图样式"><a href="#使用set-style更改绘图样式" class="headerlink" title="使用set_style更改绘图样式"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用set_style更改绘图样式" target="_blank" rel="noopener">使用<code>set_style</code>更改绘图样式</a></h1><p>现在是时候让 Seaborn 改变绘图美学了。 在此过程中，我们还将探索许多不同的绘图类型，可以使用 seaborn 进行绘制。</p>
+<h1 id="将绘图背景设置为白色网格"><a href="#将绘图背景设置为白色网格" class="headerlink" title="将绘图背景设置为白色网格"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=将绘图背景设置为白色网格" target="_blank" rel="noopener">将绘图背景设置为白色网格</a></h1><p>默认的打印样式是蓝色网格。 我们可以使用以下命令将其更改为<code>whitegrid</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"whitegrid"</span>)</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>Seaborn 提供了一种称为<code>set_style</code>的方法，我们将其称为<code>whitegrid</code>作为参数。 然后，我们调用绘图方法来绘制散点图。 我们正在使用 seaborn 的<code>lmplot</code>方法。 然后，我们从数据集中传递两个列名称为<code>x</code>和<code>y</code>，并将 data 参数设置为我们的 Pandas 数据帧。 现在，我们应该有一个带有白色网格背景的散点图，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2be5dce7-fead-49cb-8a24-3b4d67d0e26f.png" alt="img"></p>
+<h1 id="将绘图背景设置为黑色"><a href="#将绘图背景设置为黑色" class="headerlink" title="将绘图背景设置为黑色"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=将绘图背景设置为黑色" target="_blank" rel="noopener">将绘图背景设置为黑色</a></h1><p>现在我们将研究如何将绘图背景设置为<code>dark</code>并且没有网格。 为此，我们使用以下命令将样式设置为<code>dark</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"dark"</span>)</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df, fit_reg=<span class="literal">False</span>);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>您可能已经注意到，我们在开始时还有另一行代码<code>sns.set()</code>。 通过调用此命令，我们在进行任何更改之前将绘图美感重置为默认值。 我们这样做是为了确保我们之前所做的更改不会影响我们的总体规划，如下所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/be86bd8c-0185-4aca-aecc-f8d634c11527.png" alt="img"></p>
+<h1 id="将背景设置为白色"><a href="#将背景设置为白色" class="headerlink" title="将背景设置为白色"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=将背景设置为白色" target="_blank" rel="noopener">将背景设置为白色</a></h1><p>我们还可以使用以下代码将图的背景设置为实心<code>white</code>且没有网格。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"white"</span>)</span><br><span class="line">sns.swarmplot(x=<span class="string">'country'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/0e71d677-a461-4fed-9a30-e55a93f3040c.png" alt="img"></p>
+<h1 id="添加刻度"><a href="#添加刻度" class="headerlink" title="添加刻度"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=添加刻度" target="_blank" rel="noopener">添加刻度</a></h1><p>我们可以通过将<code>style</code>设置为<code>ticks</code>来添加刻度线，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"ticks"</span>)</span><br><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面的代码应为我们提供以下输出：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/6e4bce65-cb38-4b77-983d-595408f9ce57.png" alt="img"></p>
+<h1 id="自定义样式"><a href="#自定义样式" class="headerlink" title="自定义样式"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=自定义样式" target="_blank" rel="noopener">自定义样式</a></h1><p>在 seaborn 中，我们可以自定义预设样式，甚至比以前讨论的更多。 让我们向您展示我们可以做什么！</p>
+<h1 id="样式参数"><a href="#样式参数" class="headerlink" title="样式参数"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=样式参数" target="_blank" rel="noopener">样式参数</a></h1><p>首先让我们看一下这些样式组成的所有参数。 我们可以通过在 seaborn 上调用<code>axes_style</code>方法来获取参数，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.axes_style()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/b3f25f42-b193-4150-960f-89706c491673.png" alt="img"></p>
+<p>可以进一步自定义上述每个参数。 让我们尝试自定义其中之一，如以下代码片段所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_style(<span class="string">"ticks"</span>, &#123;<span class="string">"axes.facecolor"</span>: <span class="string">".1"</span>&#125;)</span><br><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在前面的代码中，我们将<code>style</code>设置为<code>ticks</code>，背景为纯白色，但是我们可以通过分别设置<code>facecolor</code>来进一步自定义。 对于前面的代码，我们将获得以下输出：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2fb4ce29-9976-4776-a0cc-54fa85f0d18d.png" alt="img"></p>
+<p>请注意，我们可以向此字典添加更多参数，然后继续自定义绘图。</p>
+<h1 id="绘图的预定的上下文"><a href="#绘图的预定的上下文" class="headerlink" title="绘图的预定的上下文"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=绘图的预定的上下文" target="_blank" rel="noopener">绘图的预定的上下文</a></h1><p>Seaborn 还提供了一些预设样式上下文。 例如，到目前为止，我们一直在使用的默认样式上下文称为<code>notebook</code>。 但是，还有更多，包括一个叫做<code>paper</code>的。 使用称为<code>set_context</code>的方法设置此上下文，我们将<code>paper</code>作为参数传递，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_context(<span class="string">"paper"</span>)</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>先前代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/6300181e-ff24-41ef-b2c9-d37611f9b055.png" alt="img"></p>
+<p>还有更多可用的上下文。 例如，称为<code>talk</code>的一个。 我们可以使用<code>talk</code>设置该上下文，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_context(<span class="string">"talk"</span>)</span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5221647e-fd80-4d8d-a585-9eefd791c824.png" alt="img"></p>
+<p>我们可以使用的另一个上下文称为<code>poster</code>，它使用以下代码设置：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.set_context(<span class="string">"poster"</span>)</span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">sns.lmplot(x=<span class="string">'beer_servings'</span>, y=<span class="string">'wine_servings'</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/9d69bf21-08fc-49fd-a377-fd0d19f6afe4.png" alt="img"></p>
+<h1 id="选择绘图的颜色"><a href="#选择绘图的颜色" class="headerlink" title="选择绘图的颜色"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=选择绘图的颜色" target="_blank" rel="noopener">选择绘图的颜色</a></h1><p>在本节中，我们将学习使用调色板自定义 seaborn 中的绘图颜色。 我们将探索 seaborn 和 Matplotlib 提供的一些调色板。 我们将学习如何通过设置不同的调色板来更改绘图的颜色，并且还将学习如何使用自定义颜色创建自己的调色板。</p>
+<p>首先，使用以下代码导入 Jupyter 笔记本中所需的模块：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>我们需要导入 Pandas，Matplotlib 和 seaborn。 然后，我们需要读取 CSV 数据集； 我们使用<code>read_csv</code>方法执行此操作，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data-alcohol.csv'</span>)</span><br><span class="line">df.head()</span><br><span class="line">复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/98b18755-a40a-43ca-9624-8ecde7786e22.png" alt="img"></p>
+<p>现在我们需要使用 seaborn 来调用<code>color_palette</code>方法来获取当前的调色板，该调色板是默认设置的。 然后我们使用<code>palplot</code>方法显示这些颜色，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.palplot(sns.color_palette())复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/9d461c2b-6706-4a46-bfa7-a115da2b89e7.png" alt="img"></p>
+<p>现在让我们看一下该调色板在绘图中的外观：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.set()</span><br><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/1dc4aba2-9a88-4b12-a479-5b51d0a3fccd.png" alt="img"></p>
+<p>在这里，我们在数据集上绘制了箱形图。 您可能会注意到，配色方案看上去与我们在打印默认调色板时看到的相似。</p>
+<h1 id="更改调色板"><a href="#更改调色板" class="headerlink" title="更改调色板"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=更改调色板" target="_blank" rel="noopener">更改调色板</a></h1><p>让我们继续并更改调色板，以了解它如何影响绘图的颜色。 以下代码将调色板设置为<code>bright</code>（seaborn 的预定义调色板之一）：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.set_palette(<span class="string">"bright"</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>让我们看看如何使用以下命令来改变绘图的颜色：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>现在，输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/4ff23533-1998-4789-b9c9-0a94efe7a80d.png" alt="img"></p>
+<p>如您所见，由于我们设置了新的调色板，我们图的配色方案已经完全改变。<code>bright</code>不是 seaborn 中唯一的预定义调色板； 还有其他一些，包括<code>deep</code>，<code>muted</code>，<code>pastel</code>，<code>bright</code>，<code>dark</code>和<code>colorblind</code>，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sns.palplot(sns.color_palette(<span class="string">"deep"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"muted"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"pastel"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"bright"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"dark"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"colorblind"</span>, <span class="number">7</span>))复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>每个调色板的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5270c402-8780-4e51-b734-008f68522c1e.png" alt="img"></p>
+<p>Seaborn 还可以将 Matplotlib 的颜色图设置为调色板。 例如：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.palplot(sns.color_palette(<span class="string">"RdBu"</span>, <span class="number">7</span>))</span><br><span class="line">sns.palplot(sns.color_palette(<span class="string">"Blues_d"</span>, <span class="number">7</span>))复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>上一条命令的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/29fe0163-bde3-4693-8b4b-aeaca56a2678.png" alt="img"></p>
+<p>现在让我们使用 Matplotlib 颜色图之一作为调色板。 我们使用以下命令执行此操作：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.set_palette(<span class="string">"Blues_d"</span>)复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在这里，我们将调色板设置为<code>Blues_d</code>，这是 Matplotlib 颜色图。 现在，让我们使用以下代码重绘图以查看其影响：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面命令的输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7cc9c7ea-7c91-4ec4-9992-dbdc86dcc15d.png" alt="img"></p>
+<p>如您所见，我们的绘图现在具有来自蓝色色图的调色板。</p>
+<h1 id="建立自定义调色板"><a href="#建立自定义调色板" class="headerlink" title="建立自定义调色板"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=建立自定义调色板" target="_blank" rel="noopener">建立自定义调色板</a></h1><p>要构建自定义调色板，我们首先需要创建一个列表并为其分配所需的颜色，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my_palette = [<span class="string">'#4B0082'</span>, <span class="string">'#0000FF'</span>, <span class="string">'#00FF00'</span>, <span class="string">'#FFFF00'</span>, <span class="string">'#FF7F00'</span>, </span><br><span class="line">  <span class="string">'#FF0000'</span>]</span><br><span class="line">sns.set_palette(my_palette)</span><br><span class="line">sns.palplot(sns.color_palette())复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/f9d916a8-d1c6-41a2-b2b2-2fca38e86f57.png" alt="img"></p>
+<p>在前面的屏幕截图中，我们创建了一个名为<code>my_palette</code>的新调色板，具有七种颜色。 然后，我们将调色板设置为新创建的调色板，该调色板向我们展示颜色的外观。</p>
+<p>让我们使用以下命令，通过新的自定义调色板查看绘图的外观：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面命令的输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/92e431d6-8ef1-4a05-9d70-66c442ca9b00.png" alt="img"></p>
+<h1 id="绘制分类数据"><a href="#绘制分类数据" class="headerlink" title="绘制分类数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=绘制分类数据" target="_blank" rel="noopener">绘制分类数据</a></h1><p>在本节中，我们将了解 seaborn 支持的各种分类图以及如何绘制它们。 我们将演示如何绘制包括散点图，实线图，箱形图，条形图等的图。 我们还将学习如何绘制宽形的分类图。</p>
+<p>让我们开始使用以下代码在 Jupyter 笔记本中导入我们的 pandas 模块：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>除了 Pandas，我们还需要导入 Matplotlib 和 Seaborn Python 库。 然后，我们读取 CSV 数据集，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data_simpsons_episodes.csv'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>本节中的数据集用于著名的动画电视连续剧《辛普森一家》：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/03f9d858-76e1-4341-826c-319fa7ffebe1.png" alt="img"></p>
+<p>前面的数据集包含每个《辛普森一家》绘图的发行日期，收视率数字，评分以及其他观察结果的序列。</p>
+<h1 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=散点图" target="_blank" rel="noopener">散点图</a></h1><p>让我们从绘制散点图开始； 我们使用以下命令执行此操作：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.stripplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出应如下所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2674856c-cac5-4a03-a251-4a593d215195.png" alt="img"></p>
+<p>在这里，我们使用了 Seaborn 的<code>stripplot</code>方法。 我们在 <em>x</em> 轴上绘制了季节编号，并在 <em>y</em> 轴上绘制了以百万计的美国观众。 我们还指定了使用的数据帧的名称。</p>
+<h1 id="群图"><a href="#群图" class="headerlink" title="群图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=群图" target="_blank" rel="noopener">群图</a></h1><p>现在让我们绘制<code>swarmplot</code>。 为此，我们使用 seaborn 的<code>swarmplot</code>方法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.swarmplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/4a6c8120-148d-4896-b712-258e29deab1e.png" alt="img"></p>
+<p>在这里，我们还通过了 <em>x</em> 轴上的季节编号，并在 <em>y</em> 轴上使用了数百万的观众。</p>
+<h1 id="箱形图"><a href="#箱形图" class="headerlink" title="箱形图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=箱形图" target="_blank" rel="noopener">箱形图</a></h1><p>现在，我们使用相同的数据并使用<code>boxplot</code>方法创建箱形图，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>上一条命令的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/184e947e-d097-4f38-bd17-ac28855b2b81.png" alt="img"></p>
+<h1 id="提琴图"><a href="#提琴图" class="headerlink" title="提琴图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=提琴图" target="_blank" rel="noopener">提琴图</a></h1><p>使用<code>violinplot()</code>方法创建小提琴图，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.violinplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5f0100a2-ea47-491d-8af6-873fef4d1e3e.png" alt="img"></p>
+<h1 id="条形图"><a href="#条形图" class="headerlink" title="条形图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=条形图" target="_blank" rel="noopener">条形图</a></h1><p>要绘制条形图，我们使用以下<code>barplot</code>方法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.barplot(x=<span class="string">"season"</span>, y=<span class="string">"us_viewers_in_millions"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/f790e027-d61f-435d-8ad3-7128816cd263.png" alt="img"></p>
+<p>请注意，还有另一种条形图可用，这些条形图是使用<code>countplot</code>方法绘制的，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.countplot(x=<span class="string">"season"</span>, data=df);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7ea2484a-7d1d-48c2-ac21-89d0fd6deda9.png" alt="img"></p>
+<p>当您要显示每个类别中的观察次数而不是计算第二个变量的状态时，可以使用这种样式的图。</p>
+<h1 id="宽形图"><a href="#宽形图" class="headerlink" title="宽形图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=宽形图" target="_blank" rel="noopener">宽形图</a></h1><p>Seaborn 还支持宽格式的数据图。 让我们阅读以下数据集来演示一个：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data-alcohol.csv'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/37b39dd4-7b5e-4af1-b22c-894456c56974.png" alt="img"></p>
+<p>我们可以使用以下命令创建宽形箱形图：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=df, orient=<span class="string">"h"</span>);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/994c67a1-d2e6-4d9b-98b1-d2c098e7b34d.png" alt="img"></p>
+<p>在这里，我们通过传入数据集并将方向作为<code>h</code>来创建宽幅箱形图。</p>
+<h1 id="使用数据感知网格进行绘图"><a href="#使用数据感知网格进行绘图" class="headerlink" title="使用数据感知网格进行绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用数据感知网格进行绘图" target="_blank" rel="noopener">使用数据感知网格进行绘图</a></h1><p>在本节中，我们将学习在数据集的不同子集上绘制同一图的多个实例。 我们将学习使用 seaborn 的<code>FacetGrid</code>方法进行网格绘图。 我们还将探索 seaborn 的<code>PairGrid</code>和<code>PairPlot</code>方法进行网格绘图。</p>
+<p>让我们从下面的代码在 Jupyter 笔记本中导入 Python 模块开始：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>现在，我们需要使用以下代码读取第一个 CSV 数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">'data-titanic.csv'</span>)</span><br><span class="line">df.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>The output from the preceding command is as follows:</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/70f9e628-bf1d-40d4-9502-a4ae4a9e9915.png" alt="img"></p>
+<h1 id="使用FacetGrid-方法进行绘图"><a href="#使用FacetGrid-方法进行绘图" class="headerlink" title="使用FacetGrid()方法进行绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用facetgrid方法进行绘图" target="_blank" rel="noopener">使用<code>FacetGrid()</code>方法进行绘图</a></h1><p>让我们开始研究如何使用<code>FacetGrid</code>方法绘制多维图，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g = sns.FacetGrid(df, col=<span class="string">"Sex"</span>, hue=<span class="string">'Survived'</span>)</span><br><span class="line">g.map(plt.hist, <span class="string">"Age"</span>);</span><br><span class="line">g.add_legend();复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面代码的输出应类似于以下屏幕截图：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/d8dd3a1e-bc48-44b1-bbd7-749484b4852e.png" alt="img"></p>
+<p>在这里，我们已经使用<code>FacetGrid</code>方法绘制了男性和女性乘客的两个并排直方图。 这种并排显示有助于我们比较按年龄划分的男女乘客的存活率。 为了进行绘制，我们首先使用<code>FacetGrid</code>方法创建了一个网格。 然后，我们将数据集的数据帧列传递为<code>Sex</code>，将<code>hue</code>传递为<code>Survived</code>。 <strong>色相</strong>代表绘图的深度。 然后，这创建了带有两个分别用于男性和女性乘客的绘图的网格。 然后我们在网格上调用<code>map</code>方法并传递了<code>plt.hist</code>和<code>Age</code>参数，它们绘制了我们的两个直方图。 最后，我们使用<code>add_legend</code>方法添加了图例。</p>
+<h1 id="使用PairGrid-方法进行绘图"><a href="#使用PairGrid-方法进行绘图" class="headerlink" title="使用PairGrid()方法进行绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用pairgrid方法进行绘图" target="_blank" rel="noopener">使用<code>PairGrid()</code>方法进行绘图</a></h1><p>现在让我们看看如何使用<code>PairGrid</code>方法绘制可识别网格的图。 我们正在为此使用 MLB 球员数据集，如以下代码所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mlb = pd.read_csv(<span class="string">'data-mlb-players.csv'</span>)</span><br><span class="line">mlb.head()复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/ff10718c-542e-4f2b-9365-0441ab9e9775.png" alt="img"></p>
+<p>(Source: <a href="http://wiki.stat.ucla.edu/socr/index.php/SOCR_Data_MLB_HeightsWeights" target="_blank" rel="noopener">http://wiki.stat.ucla.edu/socr/index.php/SOCR_Data_MLB_HeightsWeights</a>)</p>
+<p>让我们用以下代码创建一个图：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g = sns.PairGrid(mlb, vars=[<span class="string">"Height"</span>, <span class="string">"Weight"</span>], hue=<span class="string">"Position"</span>)</span><br><span class="line">g.map(plt.scatter);</span><br><span class="line">g.add_legend();复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>在这里，我们已经传递了 MLB 球员的数据集，并将<code>vars</code>设置为包含球员的<code>Height</code>和<code>Weight</code>的列表。 然后我们将<code>hue</code>设置为<code>Position</code>。 然后我们在此网格上使用<code>scatterplot</code>方法调用<code>map</code>。 最后，我们添加了图例，该图例提供了一个<code>2 x 2</code>网格，其中包括身高和体重曲线的所有组合，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/71249b13-c74e-429e-b3a2-1e6e08dbbfeb.png" alt="img"></p>
+<p>这些位置的深度由玩家位置列提供。</p>
+<h1 id="使用PairPlot-方法进行绘图"><a href="#使用PairPlot-方法进行绘图" class="headerlink" title="使用PairPlot()方法进行绘图"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=使用pairplot方法进行绘图" target="_blank" rel="noopener">使用<code>PairPlot()</code>方法进行绘图</a></h1><p>通过传递数据集可以直接调用<code>PairPlot</code>，如下所示。 深度由<code>hue</code>和<code>size</code>参数组成：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.pairplot(mlb, hue=<span class="string">"Position"</span>, size=<span class="number">2.5</span>);复制ErrorOK!</span><br></pre></td></tr></table></figure>
+<p>前面的命令为我们提供了<code>3 x 3</code>网格中的多图。 这是因为我们对每个位置都有三个观察值或列，如以下屏幕截图所示：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/8a95ca98-79fa-4bc7-a54a-0f00a453ab12.png" alt="img"></p>
+<p>当前观察到的是<code>Height</code>，<code>Weight</code>和<code>Age</code>。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/4?id=总结" target="_blank" rel="noopener">总结</a></h1><p>在本章中，我们了解了使用 Seaborn 的数据可视化库进行数据可视化的高级技术。 我们学习了如何开始 seaborn，然后探索了其中的一些功能，包括如何控制绘图的美感，如何选择绘图的颜色等等。 我们学习了如何绘制几种不同类型的图，以及如何使用 seaborn 绘制分类数据。 最后，我们学习了如何使用数据感知网格来创建图。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2020/12/29/精通Pandas探索性分析（三）：处理，转换和重塑数据/" itemprop="url">精通Pandas探索性分析（三）：处理，转换和重塑数据</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-12-29T14:43:17.000Z" itemprop="datePublished">1 天前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            1 小时 读完 (约 8280 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p>在本章中，我们将学习以下主题：</p>
+<ul>
+<li>使用<code>inplace</code>参数修改 Pandas 数据帧</li>
+<li>使用<code>groupby</code>方法的场景</li>
+<li>如何处理 Pandas 中的缺失值</li>
+<li>探索 Pandas 数据帧中的索引</li>
+<li>重命名和删除 Pandas 数据帧中的列</li>
+<li>处理和转换日期和时间数据</li>
+<li>处理<code>SettingWithCopyWarning</code></li>
+<li>将函数应用于 Pandas 序列或数据帧</li>
+<li>将多个数据帧合并并连接成一个</li>
+</ul>
+<h1 id="使用-inplace-参数修改-Pandas-数据帧"><a href="#使用-inplace-参数修改-Pandas-数据帧" class="headerlink" title="使用 inplace 参数修改 Pandas 数据帧"></a>使用 inplace 参数修改 Pandas 数据帧</h1><p>在本节中，我们将学习如何使用<code>inplace</code>参数修改数据帧。 我们首先将一个真实的数据集读入 Pandas。 然后我们将介绍 pandas 的<code>inplace</code>参数，并查看它如何影响方法的执行最终结果。 我们还将执行带有和不带有<code>inplace</code>参数的方法，以演示<code>inplace</code>的效果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">top_movies = pd.read_table(<span class="string">'data-movies-top-grossing.csv'</span>, sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<p>由于它是 CSV 文件，因此我们正在使用 Pandas 的<code>read_csv</code>函数。 现在我们已经将数据集读入了数据帧中，让我们看一些记录：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top_movies</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2b57a793-76e7-4bb3-8722-99ee9379fc20.png" alt="img"></p>
+<p>我们正在使用的数据来自维基百科； 这是迄今为止全球顶级电影的交叉附件数据。 大多数 Pandas 数据帧方法都返回一个新的数据帧。 但是，您可能想使用一种方法来修改原始数据帧本身。 这是<code>inplace</code>参数有用的地方。 让我们在不带<code>inplace</code>参数的数据帧上调用方法以查看其在代码中的工作方式：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top_movies.set_index(<span class="string">'Rank'</span>).head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2250367b-1ad4-45f4-8dca-c0412ea2c22e.png" alt="img"></p>
+<p>在这里，我们将其中一列设置为数据帧的索引。 我们可以看到索引已在内存中设置。 现在，让我们检查一下它是否已修改原始数据帧：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top_movies.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/3f43c24f-abbc-43df-bad9-437bfc5c1758.png" alt="img"></p>
+<p>我们可以看到在原始数据帧中没有任何变化。<code>set_index</code>方法仅在内存中全新的数据帧中创建了更改，我们可以将其保存在新的数据帧中。 现在让我们看看如果传递<code>inplace</code>参数，它将如何工作：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top_movies.set_index(<span class="string">'Rank'</span>, inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>我们将<code>inplace=True</code>传递给该方法。 现在让我们检查原始的数据帧：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top_movies.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/71e7b6bd-5548-49ac-9737-07003f8af8e6.png" alt="img"></p>
+<p>我们可以看到传递<code>inplace=True</code>确实修改了原始数据帧。 并非所有方法都需要使用<code>inplace</code>参数来修改原始数据帧。 例如，<code>rename(columns)</code>方法修改原始的数据帧，而不需要<code>inplace</code>参数：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top_movies.rename(columns = &#123;<span class="string">'Year'</span>: <span class="string">'Release Year'</span>&#125;).head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/efb5daf0-637e-491f-a173-53603813802c.png" alt="img"></p>
+<p>熟悉哪些方法需要<code>inplace</code>，哪些不需要<code>inplace</code>，这是一个好主意。 在本节中，我们学习了如何使用<code>inplace</code>参数修改数据帧。 我们介绍了 Pandas <code>inplace</code>参数，以及它如何影响方法的执行最终结果。 我们探讨了带有<code>inplace</code>参数和不带有<code>inplace</code>参数的方法的执行情况，以证明结果的差异。 在下一节中，我们将学习如何使用<code>groupby</code>方法。</p>
+<h1 id="使用groupby方法"><a href="#使用groupby方法" class="headerlink" title="使用groupby方法"></a>使用<code>groupby</code>方法</h1><p>在本节中，我们将学习如何使用<code>groupby</code>方法将数据拆分和聚合为组。 我们将通过分成几部分来探讨<code>groupby</code>方法的工作方式。 我们将用统计方法和其他方法演示<code>groupby</code>。 我们还将学习<code>groupby</code>方法迭代组数据的能力如何做有趣的事情。</p>
+<p>我们将像上一节中一样将<code>pandas</code>模块导入 Jupyter 笔记本中：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<p>然后，我们将读取 CSV 数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_table(<span class="string">'data-zillow.csv'</span>, sep=<span class="string">','</span>)</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/daa11ec1-af5d-4dc8-aca7-5a6d1a9b2277.png" alt="img"></p>
+<p>让我们先问一个问题，看看 Pandas 的<code>groupby</code>方法是否可以帮助我们获得答案。 我们想要获取每个<code>State</code>的平均值<code>Price</code>值：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grouped_data = data[[<span class="string">'State'</span>, <span class="string">'Price'</span>]].groupby(<span class="string">'State'</span>).mean()</span><br><span class="line">grouped_data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/3b48a2f4-2580-49f1-9803-f5cd2ddfb04f.png" alt="img"></p>
+<p>在这里，我们使用<code>groupby</code>方法按状态汇总数据，并获得每个<code>State</code>的平均值<code>Price</code>。 在后台，<code>groupby</code>方法将数据分成几组，然后我们然后将函数应用于拆分后的数据，然后将结果放在一起并显示出来。</p>
+<p>让我们将这段代码分成几部分，看看它是如何发生的。 首先，按以下步骤进行分组：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grouped_data = data[[<span class="string">'State'</span>, <span class="string">'Price'</span>]].groupby(<span class="string">'State'</span>)</span><br></pre></td></tr></table></figure>
+<p>我们选择了仅具有<code>State</code>和<code>Price</code>列的数据子集。 然后，我们对该数据调用<code>groupby</code>方法，并将其传递到<code>State</code>列中，因为这是我们希望对数据进行分组的列。 然后，我们将数据存储在一个对象中。 让我们使用<code>list</code>方法打印出这些数据：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list(grouped_data)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/e32fc39c-048e-4d07-a3d5-fbb768d98908.png" alt="img"></p>
+<p>我们还可以遍历拆分组，并对其进行有趣的操作，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> state, grouped_data <span class="keyword">in</span> data.groupby(<span class="string">'State'</span>):</span><br><span class="line">    print(state, <span class="string">'\n'</span>, grouped_data)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/9910d97f-112b-4cad-b88c-2fbba51637e2.png" alt="img"></p>
+<p>在这里，我们通过<code>State</code>迭代组数据，并以<code>State</code>作为标题发布结果，然后是该<code>State</code>的所有记录的表。</p>
+<p>在本节中，我们学习了如何使用<code>groupby</code>方法将数据拆分和聚合为组。 我们将<code>groupby</code>方法分解为多个部分，以探讨其工作方式。 我们用统计方法和其他方法演示了<code>groupby</code>，并且还通过遍历组数据学习了如何通过<code>groupby</code>做有趣的事情。 在下一节中，我们将学习如何使用 Pandas 处理数据中的缺失值。</p>
+<h1 id="处理-Pandas-中的缺失值"><a href="#处理-Pandas-中的缺失值" class="headerlink" title="处理 Pandas 中的缺失值"></a>处理 Pandas 中的缺失值</h1><p>在本节中，我们将探索如何使用各种 Pandas 技术来处理数据集中的缺失数据。 我们将学习如何找出缺少的数据以及从哪些列中找出数据。 我们将看到如何删除所有或大量记录丢失数据的行或列。 我们还将学习如何（而不是删除数据）如何用零或剩余值的平均值填充丢失的记录。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(<span class="string">'data-titanic.csv'</span>)</span><br><span class="line">data.head()</span><br><span class="line">data.shape</span><br><span class="line">data.count()<span class="comment">#每一列中的记录数</span></span><br></pre></td></tr></table></figure>
+<p>总记录与每列计数之间的差表示该列中缺少的记录数。 在<code>12</code>列中，我们有 3 列缺少值。 例如，<code>Age</code>的<code>891</code>行总数中只有<code>714</code>值；<code>Cabin</code>仅具有<code>204</code>记录的值；<code>Embarked</code>具有<code>889</code>记录的值。 我们可以使用不同的方法来处理这些缺失的值。 一种方法是删除缺少值的任何行，即使是单列也是如此，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data_missing_dropped = data.dropna()<span class="comment">#删除只要有空值的行</span></span><br><span class="line">data_missing_dropped.shape</span><br></pre></td></tr></table></figure>
+<p>当运行此放置行方法时，我们将结果分配回新的数据帧中。 在<code>891.</code>总数中，仅剩下<code>183</code>记录，但是，这可能会导致丢失大量数据，并且可能无法接受。</p>
+<p>另一种方法是只删除那些缺少所有值的行。 这是一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data_all_missing_dropped = data.dropna(how=<span class="string">"all"</span>)<span class="comment">#删除所有行为空的行</span></span><br><span class="line">data_all_missing_dropped.shape</span><br></pre></td></tr></table></figure>
+<p>为此，我们将<code>dropna</code>方法的<code>how</code>参数设置为<code>all</code>。</p>
+<p>代替删除行，另一种方法是用一些数据填充缺少的值。 例如，我们可以使用<code>0</code>填写缺失值，如以下屏幕截图所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data_filled_zeros = data.fillna(<span class="number">0</span>)</span><br><span class="line">data_filled_zeros.count()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/2a5371d6-9d72-42b0-a39c-07f5598f5416.png" alt="img"></p>
+<p>在这里，我们使用 pandas 的<code>fillna</code>方法，并将<code>0</code>的数值传递到应填充数据的列。您可以看到，现在我们已经用<code>0</code>填充了所有缺少的值，并且因此，所有列的计数已增加到数据集中记录总数。</p>
+<p>另外，除了用<code>0</code>填充缺失值外，我们还可以用剩余的现有值的平均值填充它们。 为此，我们在要填充值的列上调用<code>fillna</code>方法，然后将列的平均值作为参数传递：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data_filled_in_mean = data.copy()</span><br><span class="line">data_filled_in_mean.Age.fillna(data.Age.mean(), inplace=<span class="literal">True</span>) data_filled_in_mean.count()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/1cca3e52-b596-42bf-b62c-7890457146f6.png" alt="img"></p>
+<p>例如，在这里，我们用现有值的平均值填充<code>Age</code>的缺失值。</p>
+<p>在本节中，我们探讨了如何使用各种 Pandas 技术来处理数据集中的缺失数据。 我们学习了如何找出丢失的数据量以及从哪几列中查找。 我们看到了如何删除所有或很多记录丢失数据的行或列。 我们还看到了如何代替删除，也可以用<code>0</code>或剩余值的平均值来填写缺失的记录。 在下一节中，我们将学习如何在 Pandas 数据帧中进行数据集索引。</p>
+<h1 id="在-Pandas-数据帧中建立索引"><a href="#在-Pandas-数据帧中建立索引" class="headerlink" title="在 Pandas 数据帧中建立索引"></a>在 Pandas 数据帧中建立索引</h1><p>在本节中，我们将探讨如何设置索引并将其用于 Pandas 中的数据分析。 我们将学习如何在读取数据后以及读取数据时在<code>DataFrame</code>上设置索引。 我们还将看到如何使用该索引进行数据选择。</p>
+<p>与往常一样，我们首先将<code>pandas</code>模块导入 Jupyter 笔记本：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<p>然后，我们读取数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">'data-titanic.csv'</span>)</span><br></pre></td></tr></table></figure>
+<p>以下是我们的默认索引现在的样子，它是一个从<code>0</code>开始的数字索引：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7d027993-f97d-416e-8622-379b53312ea5.png" alt="img"></p>
+<p>让我们将其设置为我们选择的列。 在这里，我们使用<code>set_index</code>方法根据我们的数据将索引设置为乘客的姓名：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.set_index(<span class="string">'Name'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/968d10dc-3dca-49ae-bac1-c15bc0f4250f.png" alt="img"></p>
+<p>如您所见，索引已从<code>0</code>的简单数值更改为数据集中乘客的姓名。</p>
+<p>接下来，我们将看到在读取数据时如何设置索引。 为此，我们将一个额外的参数<code>index_col</code>传递给<code>read</code>方法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_table(<span class="string">'data-titanic.csv'</span>, sep=<span class="string">','</span>, index_col=<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/bcba9d47-28a9-4d40-b9f8-15bfd8913ebe.png" alt="img"></p>
+<p><code>index_col</code>参数采用单个数字值或值的序列。 在这里，我们传递<code>Name</code>列的索引。</p>
+<p>接下来，让我们看看如何使用索引进行数据选择。 在以下屏幕截图中，我们在数据帧上调用<code>loc</code>方法，并传入我们要选择的记录的索引级别：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dta.loc[<span class="string">'Braund, Mr.Owen Harris'</span>,:]</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/fd5a5afa-b8d4-4943-a8a2-e9264f74ab55.png" alt="img"></p>
+<p>在这种情况下，它是数据集中一位乘客的名字。 之所以可以这样做，是因为我们先前将名称设置为数据集的索引。</p>
+<p>最后，我们可以将索引重置为更改之前的值。 我们为此使用<code>reset_index</code>方法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.reset_index(inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>我们正在传递<code>inplace=True</code>，因为我们想在原始数据帧本身中将其重置。</p>
+<p>在本节中，我们探讨了如何设置索引并将其用于 Pandas 中的数据分析。 我们还学习了在读取数据后如何在数据帧上设置索引。 我们还看到了如何在从 CSV 文件读取数据时设置索引。 最后，我们看到了一些使我们可以使用索引进行数据选择的方法。 在下一节中，我们将学习如何重命名 Pandas 数据帧中的列。</p>
+<h1 id="重命名-Pandas-数据帧中的列"><a href="#重命名-Pandas-数据帧中的列" class="headerlink" title="重命名 Pandas 数据帧中的列"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/3?id=重命名-pandas-数据帧中的列" target="_blank" rel="noopener">重命名 Pandas 数据帧中的列</a></h1><p>在本节中，我们将学习在 Pandas 中重命名列标签的各种方法。 我们将学习如何在读取数据后和读取数据时重命名列，并且还将看到如何重命名所有列或特定列。 首先，将<code>pandas</code>模块导入 Jupyter 笔记本：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<p>我们可以通过几种方法来重命名 Pandas 数据帧中的列。 一种方法是在从数据集中读取数据时重命名列。 为此，我们需要将列名作为列表传递给<code>read_csv</code>方法的<code>names</code>参数：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list_columns= [<span class="string">'Date'</span>, <span class="string">'Region ID'</span>, Region Name<span class="string">', '</span>State<span class="string">', '</span>City<span class="string">', '</span>County<span class="string">', '</span>Size Rank<span class="string">', '</span>Price<span class="string">']</span></span><br><span class="line"><span class="string">data = pd.read_csv('</span>data-zillow.csv<span class="string">', names = list_columns)</span></span><br><span class="line"><span class="string">data.head()</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7bf99171-513b-44da-b65c-285f46dc494a.png" alt="img"></p>
+<p>在前面的示例中，我们首先创建了所需列名称的列表； 此数字应与实际数据集中的列数相同。 然后，将列表传递给<code>read_csv</code>方法中的<code>names</code>参数。 然后，我们看到我们拥有所需的列名，因此<code>read_csv</code>方法已将列名从默认情况下的文本文件更改为我们提供的名称。</p>
+<p>读取数据后，我们还可以重命名列名称。 让我们再次从 CSV 文件中读取数据集，但是这次不提供任何列名。 我们可以使用<code>rename</code>方法重命名列。 让我们首先看一下数据集中的列：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.columns</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/dc94d700-3bad-474a-8854-c18c41b9e5bf.png" alt="img"></p>
+<p>现在，我们在数据帧上调用<code>rename</code>方法，并将列名（旧值和新值）传递给<code>columns</code>参数：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.rename(columns=&#123;<span class="string">'RegionName'</span>:<span class="string">'Region'</span>, <span class="string">'Metro'</span>:<span class="string">'City'</span>&#125;, inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>在前面的代码块中，我们仅更改了一些列名，而不是全部。 让我们再次调用<code>columns</code>属性，以查看是否确实更改了列名 ， ：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.columns</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/d44bbd71-03ce-466a-86aa-48cd8c2db99c.png" alt="img"></p>
+<p>现在，我们在数据集中有了新的列名。</p>
+<p>读取数据后，我们还可以重命名所有列，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.columns = [<span class="string">'Date'</span>, <span class="string">'Region ID'</span>, <span class="string">'Region Name'</span>, <span class="string">'State'</span>, <span class="string">'City'</span>, <span class="string">'County'</span>, <span class="string">'Size Rank'</span>,<span class="string">'Price'</span>]</span><br></pre></td></tr></table></figure>
+<p>我们已经将<code>columns</code>属性设置为一个名称列表，我们希望将所有列都重命名为该名称。</p>
+<p>在本节中，我们了解了重命名 Pandas 中列级别的各种方法。 我们学习了在读取数据后如何重命名列，并学习了在从 CSV 文件读取数据时如何重命名列。 我们还看到了如何重命名所有列或特定列。</p>
+<h1 id="从-Pandas-数据帧中删除列"><a href="#从-Pandas-数据帧中删除列" class="headerlink" title="从 Pandas 数据帧中删除列"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/3?id=从-pandas-数据帧中删除列" target="_blank" rel="noopener">从 Pandas 数据帧中删除列</a></h1><p>在本节中，我们将研究如何从 Pandas 的数据集中删除列或行。 我们将详细了解<code>drop()</code>方法及其参数的功能。</p>
+<p>首先，我们首先将<code>pandas</code>模块导入 Jupyter 笔记本：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<p>之后，我们使用以下代码读取 CSV 数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">'data-titanic.csv'</span>, index_col=<span class="number">3</span>)</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p>数据集应类似于以下内容：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/b94fa784-3caf-4a62-9513-afd0af6c9d69.png" alt="img"></p>
+<p>要从我们的数据集中删除单个列，请使用 pandas <code>drop()</code>方法。<code>drop()</code>方法由两个参数组成。 第一个参数是需要删除的列的名称； 第二个参数是<code>axis</code>。 此参数告诉<code>drop</code>方法是否应该删除行或列，并将<code>inplace</code>设置为<code>True</code>，这告诉该方法将其从原始数据帧本身删除。</p>
+<p>在此示例中，我们考虑删除<code>Ticket</code>或列。 的代码如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.drop(<span class="string">'Ticket'</span>, axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>执行此操作后，我们的数据集应类似于以下内容：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/357347cb-1dd3-47b1-8bc5-a7cb7c741f89.png" alt="img"></p>
+<p>如果我们仔细观察，很明显<code>Ticket</code>列已从我们的数据集中删除或删除。</p>
+<p>要删除多个列，我们将需要删除的列作为列表传递给<code>drop()</code>方法。<code>drop()</code>方法的所有其他参数将保持不变。</p>
+<p>让我们看一个如何使用<code>drop()</code>方法消除行的示例。</p>
+<p>在此示例中，我们将删除多行。 因此，与其传递列名，不如传递一个列表形式的行索引标签。 以下代码将用于执行此操作：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data.drop([<span class="string">'Parch'</span>, <span class="string">'Fare'</span>], axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/6ae81b44-5a53-478c-849f-7e14f851f251.png" alt="img"></p>
+<p>结果，传递给<code>drop()</code>方法的对应于乘客姓名的两行将从数据集中删除。</p>
+<p>现在，我们将继续仔细研究如何处理日期和时间数据。</p>
+<h1 id="处理日期和时间序列数据"><a href="#处理日期和时间序列数据" class="headerlink" title="处理日期和时间序列数据"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/3?id=处理日期和时间序列数据" target="_blank" rel="noopener">处理日期和时间序列数据</a></h1><p>在本节中，我们将仔细研究如何处理 Pandas 中的日期和时间序列数据。 我们还将看到如何：</p>
+<ul>
+<li>将字符串转换为<code>datetime</code>类型，以进行高级<code>datetime</code>序列操作</li>
+<li>选择并过滤<code>datetime</code>序列数据</li>
+<li>探索序列数据的属性</li>
+</ul>
+<p>我们首先将<code>pandas</code>模块导入到我们的 Jupyter 笔记本中：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<p>对于此示例，让我们创建自己的数据帧数据集。 我们可以使用以下代码来做到这一点：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dataset = pd.DataFrame(&#123;<span class="string">'DOB'</span>: [<span class="string">'1976-06-01'</span>, <span class="string">'1980-09-23'</span>, <span class="string">'1984-03-30'</span>, <span class="string">'1991-12-31'</span>, <span class="string">'1994-10-2'</span>, <span class="string">'1973-11-11'</span>], </span><br><span class="line">                        <span class="string">'Sex'</span>: [<span class="string">'F'</span>, <span class="string">'M'</span>, <span class="string">'F'</span>, <span class="string">'M'</span>, <span class="string">'M'</span>, <span class="string">'F'</span>], </span><br><span class="line">                        <span class="string">'State'</span>: [<span class="string">'CA'</span>, <span class="string">'NY'</span>, <span class="string">'OH'</span>, <span class="string">'OR'</span>, <span class="string">'TX'</span>, <span class="string">'CA'</span>], </span><br><span class="line">                        <span class="string">'Name'</span>: [<span class="string">'Jane'</span>, <span class="string">'John'</span>, <span class="string">'Cathy'</span>, <span class="string">'Jo'</span>, <span class="string">'Sam'</span>, <span class="string">'Tai'</span>]&#125;))</span><br></pre></td></tr></table></figure>
+<p>该数据集包含对应于五个虚构人物的四列和五行。 我们的数据集中存在的行之一是<code>DOB</code>，其中包含五个人的出生日期。</p>
+<p>必须检查，，，，<code>DOB</code>，， 列中的数据是否正确。 为此，我们使用以下代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset.dtypes</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/073f703e-6f64-4164-9a92-802429388ac8.png" alt="img"></p>
+<p>从输出中可以看出，在创建过程中<code>DOB</code>列可能设置为<code>object</code>或<code>string</code>数据类型。 要将其更改为<code>datetime</code>数据类型，我们使用<code>to_datetime()</code>方法并将<code>DOB</code>列传递给它，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset.DOB = pd.to_datetime(dataset.DOB)</span><br></pre></td></tr></table></figure>
+<p>再次，我们可以使用以下代码来验证是否已将<code>DOB</code>设置为<code>datetime</code>数据类型：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset.dtypes</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/7b086aac-88af-4f96-8b99-4859ed2360ac.png" alt="img"></p>
+<p>在继续选择和过滤<code>datetime</code>序列之前，我们需要确保为<code>DOB</code>列设置了索引。 为此，我们使用以下代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset.set_index(<span class="string">'DOB'</span>, inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>之后，我们的<code>DOB</code>列已准备好进行探索。 如果要查看数据集，可以使用代码字<code>dataset</code>如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/d977b14b-0c26-4f86-a117-d83fb064a619.png" alt="img"></p>
+<p>在开始过滤之前，我们需要了解有四种可能的方法可以过滤<code>DOB</code>列中的数据。 它们如下：</p>
+<ul>
+<li><strong>一年的记录</strong>：要显示一年的记录，我们使用以下代码：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset[<span class="string">'1980'</span>]</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/c26af422-8f77-4a73-b433-394939ce560d.png" alt="img"></p>
+<p>此代码表示将显示当年<code>1980</code>存在的所有记录。 Pandas 不需要我们提及整个日期，因为即使是日期的一部分也会帮助我们产生结果。</p>
+<ul>
+<li><strong>特定年份和之后的记录</strong>：要显示特定年份和之后的所有记录，我们使用以下代码：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset[<span class="string">'1980'</span>:]</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/f19cecbe-02c6-4392-8544-f0c54f2e645f.png" alt="img"></p>
+<ul>
+<li><strong>直到特定年份的记录</strong>：要显示直到特定年份（包括该年份）的所有记录，我们需要使用以下代码：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset[<span class="string">':1980'</span>]</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/98d4869b-c510-4549-a96f-10726c3c0056.png" alt="img"></p>
+<ul>
+<li><strong>几年范围内的记录</strong>：要显示给定年份范围内的记录，我们可以使用以下代码：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset[<span class="string">'1980'</span>:<span class="string">'1984'</span>]</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/b091769a-0f76-43e2-a739-4db062f757d6.png" alt="img"></p>
+<p>我们还可以使用时间序列属性来最有效地利用<code>datetime</code>序列数据。 使用此功能的缺点是<code>datetime</code>字段必须是列，而不是行。</p>
+<p>这可以通过将<code>DOB</code>重置为索引来完成。 这样做如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset.reset_index(inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>我们还需要为<code>datetime</code>列中的每个值获取一年中的相应日期。 可以通过调用<code>dayofyear</code>属性来完成此操作，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset.DOB.dt.dayofyear</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/44031484-6432-40ed-8db2-c9921e7c7f67.png" alt="img"></p>
+<p>我们还可以通过调用<code>weekday_name</code>属性来显示星期几，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset.DOB.dt.weekday_name</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/5f7bc3d4-27ab-44ea-9a41-7151729f87c6.png" alt="img"></p>
+<p>这些是<code>datetime</code>序列数据的方法和属性的一些示例。 在 Pandas 的参考文档中可以找到更多内容，网址为。</p>
+<h1 id="处理SettingWithCopyWarning"><a href="#处理SettingWithCopyWarning" class="headerlink" title="处理SettingWithCopyWarning"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/3?id=处理settingwithcopywarning" target="_blank" rel="noopener">处理<code>SettingWithCopyWarning</code></a></h1><p>在本节中，我们将学习<code>SettingWithCopyWarning</code>警告以及解决方法。</p>
+<p>我们还将看一下可能遇到<code>SettingWithCopyWarning</code>的一些情况，以便我们了解如何摆脱它。</p>
+<p>Pandas 的狂热用户肯定会遇到<code>SettingWithCopyWarning</code>。 各种网站，例如 Stack Overflow 和其他论坛，都充斥着有关处理此警告的查询。 它看起来像以下内容：</p>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/99c1872a-2a06-4e79-a76d-456171b7396f.png" alt="img"></p>
+<p>要了解如何摆脱它，我们需要了解<code>SettingWithCopyWarning</code>实际代表什么。</p>
+<p>我们都知道，Pandas 中的不同数据操作会返回数据视图或副本。 修改数据时，这可能会引起问题。<code>SettingWithCopyWarning</code>的目的是警告我们，当我们想修改副本时，我们可能正在尝试修改原始数据，反之亦然。 这种情况通常在链接分配期间发生。</p>
+<p>解决方案是使用<code>block</code>方法将患者链合并为一个手术。 这可以帮助 Pandas 知道必须修改哪个数据帧。</p>
+<p>为了更好地理解这一点，让我们看下面的示例。</p>
+<p>与往常一样，我们首先将<code>pandas</code>模块导入到 Jupyter 笔记本中，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<p>然后，我们读取 CSV 数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">'data-titanic.csv'</span>)</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/d34ecd82-06cf-446d-8c30-668e0f7a85c3.png" alt="img"></p>
+<p>此后，我们继续创建一个可能遇到<code>SettingWithCopyWarning</code>的场景。 对于此示例，我们选择<code>Age</code>列为空的记录，并将它们设置为等于<code>Age</code>列中值的平均值。 以下是生成的错误：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data[data.Age.isnull()].Age = data.Age.mean()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/c41fb03e-5e39-42bb-916d-c404bc71c93b.png" alt="img"></p>
+<p>为了确认我们的代码不起作用，我们需要检查是否还有<code>Age</code>为空的记录。 这是通过使用以下代码完成的：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data[data.Age.isnull()].Age.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/fec17d8d-d5b8-45b7-aad8-5eabae2ad04f.png" alt="img"></p>
+<p>很明显，存在这样的记录。 为了处理这种情况，我们使用<code>loc</code>方法，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.loc[data.Age.isnull(), <span class="string">'Age'</span>] = data.Age.mean</span><br></pre></td></tr></table></figure>
+<p>此时，我们需要返回以确认该方法是否已解决<code>SettingWithCopyWarning</code>，我们通过使用以下代码行来完成此操作：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data[data.Age.isnull()]</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/ecee02f7-d9d7-4a75-a907-34e25836c8c9.png" alt="img"></p>
+<p>我们可以看到，问题尚未解决，因此处理警告的另一种方法是将其关闭。 我们需要记住，我们能够并且应该将其关闭的唯一原因是因为它是警告，而不是错误。 为此，我们将<code>mode.chained_assignment</code>选项设置为<code>None</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.set_option(<span class="string">'mode.chained_assignment'</span>, <span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<p>不建议使用此解决方案，因为这可能会影响我们的运营结果。 解决此警告的另一种方法是使用<code>is_copy</code>方法。 在这里，我们创建数据帧的新副本并将<code>is_copy</code>设置为<code>None</code>，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data1 = data.loc[data.Age.isnull()]</span><br><span class="line">data1.is_copy = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<p>现在让我们看一下如何将函数应用于 Pandas 序列或数据帧。</p>
+<h1 id="将函数应用于-Pandas-序列或数据帧"><a href="#将函数应用于-Pandas-序列或数据帧" class="headerlink" title="将函数应用于 Pandas 序列或数据帧"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/3?id=将函数应用于-pandas-序列或数据帧" target="_blank" rel="noopener">将函数应用于 Pandas 序列或数据帧</a></h1><p>在本节中，我们将学习如何将 Python 的预构建函数和自构建函数应用于 pandas 数据对象。 我们还将学习有关将函数应用于 Pandas 序列和 Pandas 数据帧的知识。</p>
+<p>首先，将<code>pandas</code>模块导入 Jupyter 笔记本：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+<p>我们将读取我们的 CSV 数据集：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">'data-titanic.csv'</span>)</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/75b18b47-cf3d-48f0-b9df-43a6c93a3e03.png" alt="img"></p>
+<p>让我们继续使用 Pandas 的<code>apply</code>方法来应用函数。 在此示例中，我们将使用<code>lambda</code>创建一个函数，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func_lower = <span class="keyword">lambda</span> x: x.lower()</span><br></pre></td></tr></table></figure>
+<p>在这里，我们传递一个值<code>x</code>并将其转换为小写。 然后，我们使用<code>apply()</code>方法将此函数应用于数据集中的<code>Name</code>字段，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.Name.apply(func_lower)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/82b77d45-3183-45d7-941d-ffb1ea134237.png" alt="img"></p>
+<p>如果仔细观察，<code>Name</code>字段中的值已转换为小写。 接下来，我们了解如何将函数应用于多个列或整个数据帧中的值。 我们可以使用<code>applymap()</code>方法。 它以类似于<code>apply()</code>方法的方式工作，但是在多列或整个数据帧上。 以下代码描述了如何将<code>applymap()</code>方法应用于<code>Age</code>和<code>Pclass</code>列：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data[[<span class="string">'Age'</span>, <span class="string">'Pclass'</span>]].applymap(np.square)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/25049645-a0d2-478a-8f8e-1112922709d2.png" alt="img"></p>
+<p>我们还将 Numpy 的<code>secure</code>方法应用于这两个列。</p>
+<p>前面的步骤用于预定义函数。 现在，让我们继续创建自己的函数，然后将其应用于值，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span><span class="params">(i)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> i + <span class="number">20</span></span><br></pre></td></tr></table></figure>
+<p>创建的函数是一个简单的函数，它带有一个值，将<code>20</code>添加到其中，然后返回结果。 我们使用<code>applymap()</code>将此函数应用于<code>Age</code>和<code>Pclass</code>列中的每个值，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data[[<span class="string">'Age'</span>, <span class="string">'Pclass'</span>]].applymap(my_func)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/dcf93f0e-69c4-49fc-bcc1-65940f91727a.png" alt="img"></p>
+<p>让我们继续学习有关将多个数据帧合并和连接在一起的知识。</p>
+<h1 id="将多个数据帧合并并连接成一个"><a href="#将多个数据帧合并并连接成一个" class="headerlink" title="将多个数据帧合并并连接成一个"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/3?id=将多个数据帧合并并连接成一个" target="_blank" rel="noopener">将多个数据帧合并并连接成一个</a></h1><p>本节重点介绍如何使用 Pandas <code>merge()</code>和<code>concat()</code>方法组合两个或多个数据帧。 我们还将探讨<code>merge()</code>方法以各种方式加入数据帧的用法。</p>
+<p>我们将从导入<code>pandas</code>模块开始。 让我们创建两个数据帧，其中两个都包含具有相同数据但具有不同记录的相同参数：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dataset1 = pd.DataFrame(&#123;<span class="string">'Age'</span>: [<span class="string">'32'</span>, <span class="string">'26'</span>, <span class="string">'29'</span>],</span><br><span class="line">                         <span class="string">'Sex'</span>: [<span class="string">'F'</span>, <span class="string">'M'</span>, <span class="string">'F'</span>],</span><br><span class="line">                         <span class="string">'State'</span>: [<span class="string">'CA'</span>, <span class="string">'NY'</span>, <span class="string">'OH'</span>]&#125;,</span><br><span class="line">                         index=[<span class="string">'Jane'</span>, <span class="string">'John'</span>, <span class="string">'Cathy'</span>])</span><br><span class="line">dataset2 = pd.DataFrame(&#123;<span class="string">'Age'</span>: [<span class="string">'34'</span>, <span class="string">'23'</span>, <span class="string">'24'</span>, <span class="string">'21'</span>],</span><br><span class="line">                         <span class="string">'Sex'</span>: [<span class="string">'M'</span>, <span class="string">'F'</span>, <span class="string">'F'</span>, <span class="string">'F'</span>],</span><br><span class="line">                         State<span class="string">': ['</span>AZ<span class="string">', '</span>OR<span class="string">', '</span>CA<span class="string">', '</span>WA<span class="string">']&#125;, </span></span><br><span class="line"><span class="string">                         index=['</span>Dave<span class="string">', '</span>Kris<span class="string">', '</span>Xi<span class="string">', '</span>Jo<span class="string">'])</span></span><br><span class="line"><span class="string">dataset1</span></span><br><span class="line"><span class="string">dataset2</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/d036cee8-9597-4df6-b031-ff704a088768.png" alt="img"></p>
+<p>在此示例中，让我们将这两个数据帧垂直放置在一起。 使用 pandas <code>concat()</code>方法通过传递两个数据帧作为其参数来执行此操作：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.concat([dataset1, dataset2])</span><br></pre></td></tr></table></figure>
+<p>我们可以看到<code>dataset2</code>已垂直附加到<code>dataset1</code>。</p>
+<p>连接数据集的另一种方法是使用<code>append()</code>方法。 使用此方法获得的结果将与以前的方法相同：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset1.append(dataset2)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/e16e7fcc-5772-4f83-8ce3-d7963df43ac7.png" alt="img"></p>
+<p>到目前为止，我们已经连接了数据集中的行，但是也可以连接列。 对于此示例，让我们创建两个新的数据集，它们具有相同的行级别但具有不同的列，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dataset1 = pd.DataFrame(&#123;<span class="string">'Age'</span>: [<span class="string">'32'</span>, <span class="string">'26'</span>, <span class="string">'29'</span>],</span><br><span class="line">                         <span class="string">'Sex'</span>: [<span class="string">'F'</span>, <span class="string">'M'</span>, <span class="string">'F'</span>],</span><br><span class="line">                         <span class="string">'State'</span>: [<span class="string">'CA'</span>, <span class="string">'NY'</span>, <span class="string">'OH'</span>]&#125;,</span><br><span class="line">                         index=[<span class="string">'Jane'</span>, <span class="string">'John'</span>, <span class="string">'Cathy'</span>])</span><br><span class="line">dataset2 = pd.DataFrame(&#123;<span class="string">'City'</span>: [<span class="string">'SF'</span>, <span class="string">'NY'</span>, <span class="string">'Columbus'</span>],</span><br><span class="line">                         <span class="string">'Work Status'</span>: [<span class="string">'No'</span>, <span class="string">'Yes'</span>, <span class="string">'Yes'</span>]&#125;,</span><br><span class="line">                         index=[<span class="string">'Jane'</span>, <span class="string">'John'</span>, <span class="string">'Cathy'</span>])</span><br></pre></td></tr></table></figure>
+<p>在这种情况下，我们将水平连接。 要按列连接，我们需要将<code>axis</code>参数传递为<code>1</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.concat([dataset1, dataset2], axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/cb6c49ea-455d-4c80-b0de-084fb965c0c7.png" alt="img"></p>
+<p>数据集连接的第三个变体是连接具有不同行和列的数据集。 我们首先创建两个具有不同参数的数据集，如下所示：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dataset1 = pd.DataFrame(&#123;<span class="string">'Age'</span>: [<span class="string">'32'</span>, <span class="string">'26'</span>, <span class="string">'29'</span>],</span><br><span class="line">                         <span class="string">'Sex'</span>: [<span class="string">'F'</span>, <span class="string">'M'</span>, <span class="string">'F'</span>],</span><br><span class="line">                         <span class="string">'State'</span>: [<span class="string">'CA'</span>, <span class="string">'NY'</span>, <span class="string">'OH'</span>]&#125;,</span><br><span class="line">                         index=[<span class="string">'Jane'</span>, <span class="string">'John'</span>, <span class="string">'Cathy'</span>])</span><br><span class="line">dataset2 = pd.DataFrame(&#123;<span class="string">'City'</span>: [<span class="string">'SF'</span>, <span class="string">'NY'</span>, <span class="string">'Columbus'</span>],</span><br><span class="line">                         <span class="string">'Work Status'</span>: [<span class="string">'No'</span>, <span class="string">'Yes'</span>, <span class="string">'Yes'</span>]&#125;,</span><br><span class="line">                         index=[<span class="string">'Jane'</span>, <span class="string">'John'</span>, <span class="string">'Cathy'</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/70527ac5-3a00-4086-b993-596369d77585.png" alt="img"></p>
+<p>为了对这些数据集执行内部合并，我们将数据帧传递给<code>merge()</code>方法。 我们还指定必须在其上进行合并的列，同时确保我们指定它是内部合并。 您的数据集应类似于下表：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.merge(dataset1, dataset2, on=<span class="string">'Name'</span>, how=<span class="string">'inner'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/f3fe6209-6803-4a1f-bf0c-16d8d93d92d3.png" alt="img"></p>
+<p>现在，这意味着我们将两个数据集中的数据放在一起。 它仅包含在两个数据帧中具有通用标签的那些行。 接下来，我们进行外部合并。 这是通过将<code>how</code>参数作为<code>left</code>传递给<code>merge()</code>方法来完成的：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.merge(dataset1, dataset2, on=<span class="string">'Name'</span>, how=<span class="string">'left'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/15f8c78a-4dd8-4940-b37b-42adbdde7d88.png" alt="img"></p>
+<p>此操作的结果是将保留两个数据集中的行以及仅在第一个数据集中存在的行。 第二个数据集中仅存在的行将被丢弃。 为了进行右合并，我们将<code>how</code>参数设置为<code>right</code>：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.merge(dataset1, dataset2, on=<span class="string">'name'</span>, how=<span class="string">'right'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://ds.apachecn.org/docs/master-exp-analysis-pandas/img/383cabaa-c2e8-472e-adcb-cdc50361b69a.png" alt="img"></p>
+<p>为了保留所有内容，我们进行了完整的外部合并。 通过将<code>how</code>参数传递为<code>outer</code>来完成完整的外部合并：</p>
+<p>现在，即使对于没有值并标记为<code>NaN</code>的列，它也包含所有行，而不管它们是否存在于一个或另一个数据集中，或存在于两个数据集中。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="https://ds.apachecn.org/#/docs/master-exp-analysis-pandas/3?id=总结" target="_blank" rel="noopener">总结</a></h1><p>在本章中，我们学习了各种 Pandas 技术来操纵和重塑数据。 我们学习了如何使用<code>inplace</code>参数修改 Pandas 数据帧。 我们还学习了可以使用<code>groupby</code>方法的方案。 我们看到了如何处理 Pandas 中缺失的值。 我们探索了 Pandas 数据帧中的索引，以及重命名和删除 Pandas 数据帧中的列。 我们学习了如何处理和转换日期和时间数据。 我们学习了如何处理<code>SettingWithCopyWarning</code>，还了解了如何将函数应用于 Pandas 序列或数据帧。 最后，我们学习了如何合并和连接多个数据帧。</p>
+<p>在下一章中，我们将学习使用<code>seaborn</code> Python 库将数据可视化的技术，像一个专家一样。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
             <a href="/2020/12/29/精通Pandas探索性分析（二）：数据选择/" itemprop="url">精通Pandas探索性分析（二）：数据选择</a>
         
     </h1>
     <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
         <span class="column is-narrow">
-            <time datetime="2020-12-29T12:22:42.000Z" itemprop="datePublished">2 小时前</time>
+            <time datetime="2020-12-29T07:14:38.000Z" itemprop="datePublished">1 天前</time>
         </span>
         
         <span class="column is-narrow article-category">
@@ -201,7 +725,7 @@
     </h1>
     <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
         <span class="column is-narrow">
-            <time datetime="2020-12-28T15:19:36.000Z" itemprop="datePublished">1 天前</time>
+            <time datetime="2020-12-28T15:19:36.000Z" itemprop="datePublished">2 天前</time>
         </span>
         
         <span class="column is-narrow article-category">
@@ -1422,183 +1946,6 @@
 <p>catalog通过Presto配置文件目录下的属性文件进行定义。</p>
 <h2 id="Schema"><a href="#Schema" class="headerlink" title="Schema"></a>Schema</h2><p>schema是一种组织表的方式。一个catalog和模式定义了一组可以被查询的表。当使用Presto访问Hive或关系型数据库例如MySQL时，schema跟目标数据库中的具有相同的概念。其他类型的连接器可能会选择以一种对底层数据源有意义的方式将表组织为模式。</p>
 <h2 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h2><p>一个表是一组无序的行，这些行由不同类型的列组成。这与关系型数据库概念相同。源数据到表的映射关系由连接器进行定义。</p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2019/08/19/把数据基础做实做准/" itemprop="url">把数据基础做实做准</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2019-08-19T00:44:00.000Z" itemprop="datePublished">1 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            4 分钟 读完 (约 639 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>为把数据基础做实做准，需统筹考虑决策支持系统中数据从来源、分析处理到产生决策价值并提供决策使用等全生命周期的过程治理。数据基础是整个治理过程中最基本的工作，关系到后续各个过程。打牢数据基础，主要有三个方面的工作。</p>
-<p>一是建立清晰的数据目录。对于决策支持系统中的每类数据建立一个数据条目，包括名称、来源、数量、业务类别、更新频率、数据类型、访问权限等信息，从数据的业务、存储、使用和持续运营的多个角度进行梳理。数据目录作为决策支持系统最基础的战略性资产，用于数据登记、管理、更新和提供服务。</p>
-<p>二是做好不同类型数据的管理。用于信息研究和决策支持的数据从结构上分为三类，第一类是以舆情、情报、文献等知识数据组成的非结构化数据，第二类是以统计数据组成的非关系模式的半结构化数据，第三类是以业务系统产生的管理数据组成的结构化数据，它通常存储于关系型数据库中。上述分类可见他们在存储结构、更新方式、分析方法和使用方式上有较大的差异，需要因地制宜对每类数据使用与其相适应的管理方法和技术。</p>
-<p>三是做好数据的持续运营。打牢数据基础不是一蹴而就、一气呵成的, 需要一个持续的过程。积累的数据越多，周期越长,数据价值才越大，利用数据所做的研究也越多。数据的更新和积累属于决策支持系统运行维护的日常性工作，需要坚持不懈地去做。对于每一项数据资源需要从运营的角度建立常态化更新机制，尽量运用信息化手段实现自动更新并监控更新过程。对于无法自动化处理的更新过程，需要明确更新任务和工作量，作为日常数据处理任务进行统筹安排。</p>
-
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2019/08/14/基于MongoDB-Spark的大数据分析解决方案/" itemprop="url">基于MongoDB+Spark的大数据分析解决方案</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            <time datetime="2019-08-14T14:06:13.000Z" itemprop="datePublished">1 年前</time>
-        </span>
-        
-        <span class="column is-narrow article-category">
-            <i class="far fa-folder"></i>
-            <a class="article-category-link" href="/categories/Technology/">Technology</a>
-        </span>
-        
-        
-        <span class="column is-narrow">
-            
-            
-            37 分钟 读完 (约 5484 字)
-        </span>
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <p>本文转自：<a href="https://www.cnblogs.com/hanson1/p/7105288.html" target="_blank" rel="noopener">https://www.cnblogs.com/hanson1/p/7105288.html</a></p>
-<h3 id="Spark介绍"><a href="#Spark介绍" class="headerlink" title="Spark介绍"></a>Spark介绍</h3><p>按照官方的定义，<a href="http://lib.csdn.net/base/spark" target="_blank" rel="noopener">Spark</a> 是一个通用，快速，适用于大规模数据的处理引擎。</p>
-<ul>
-<li>通用性：我们可以使用Spark SQL来执行常规分析， Spark Streaming 来流数据处理， 以及用Mlib来执行机器学习等。Java，python，scala及R语言的支持也是其通用性的表现之一。</li>
-<li>快速： 这个可能是Spark成功的最初原因之一，主要归功于其基于内存的运算方式。当需要处理的数据需要反复迭代时，Spark可以直接在内存中暂存数据，而无需像Map Reduce一样需要把数据写回磁盘。官方的数据表明：它可以比传统的Map Reduce快上100倍。</li>
-<li>大规模：原生支持HDFS，并且其计算节点支持弹性扩展，利用大量廉价计算资源并发的特点来支持大规模数据处理。</li>
-</ul>
-<h3 id="我们能用它做什么"><a href="#我们能用它做什么" class="headerlink" title="我们能用它做什么"></a>我们能用它做什么</h3><p>那我们能用Spark来做什么呢？ 场景数不胜数。</p>
-<p>最简单的可以只是统计一下某一个页面多少点击量，复杂的可以通过<a href="http://lib.csdn.net/base/machinelearning" target="_blank" rel="noopener">机器学习</a>来预测。</p>
-<p><em>个性化</em> 是一个常见的案例，比如说，Yahoo的网站首页使用Spark来实现快速的用户兴趣分析。应该在首页显示什么新闻？原始的做法是让用户选择分类；聪明的做法就是在用户交互的过程中揣摩用户可能喜欢的文章。另一方面就是要在新闻进来时候进行分析并确定什么样的用户是可能的受众。新闻的时效性非常高，按照常规的MapReduce做法，对于Yahoo几亿用户及海量的文章，可能需要计算一天才能得出结果。Spark的高效运算可以在这里得到充分的运用，来保证新闻推荐在数十分钟或更短时间内完成。另外，如美国最大的有线电视商Comcast用它来做节目推荐，最近刚和滴滴联姻的uber用它实时订单分析，优酷则在Spark上实现了商业<a href="http://lib.csdn.net/base/aiplanning" target="_blank" rel="noopener">智能</a>的升级版。</p>
-<h3 id="Spark生态系统"><a href="#Spark生态系统" class="headerlink" title="Spark生态系统"></a>Spark生态系统</h3><p>在我们开始谈<a href="http://lib.csdn.net/base/mongodb" target="_blank" rel="noopener">MongoDB</a> 和Spark 之前，我们首先来了解一下Spark的生态系统。 Spark 作为一个大型分布式计算框架，需要和其他组件一起协同工作。</p>
-<p><img src="http://img1.tuicool.com/3uQ7j2J.png!web" alt="img"></p>
-<p>在Hdaoop里面，HDFS是其核心，作为一个数据层。</p>
-<p>Spark是<a href="http://lib.csdn.net/base/hadoop" target="_blank" rel="noopener">Hadoop</a>生态系统的一颗新星，原生就支持HDFS。大家知道HDFS是用来管理大规模非结构化数据的存储系统，具有高可用和巨大的横向扩展能力。</p>
-<p>而作为一个横向扩展的分布式集群，资源管理是其核心必备的能力，Spark 可以通过YARN或者MESOS来负责资源（CPU）分配和任务调度。如果你不需要管理节点的高可用需求，你也可以直接使用Spark standalone。</p>
-<p>在有了数据层和资源管理层后， 接下来就是我们真正的计算引擎。</p>
-<p><a href="http://lib.csdn.net/base/hadoop" target="_blank" rel="noopener">hadoop</a>技术的两大基石之一的MapReduce就是用来实现集群大规模并行计算。而现在就多了一个选项：Spark。 Map Reduce的特点是，用4个字来概括，简单粗暴。采用divide &amp; conquer战术，我们可以用Map Reduce来处理PB级的数据。 而Spark 作为打了鸡血的Map Reduce增强版，利用了内存价格大量下降的时代因素，充分把计算所用变量和中间结果放到内存里，并且提供了一整套机器学习的分析<a href="http://lib.csdn.net/base/datastructure" target="_blank" rel="noopener">算法</a>，在加上很多语言的支持，使之成为一个较之于Map Reduce更加优秀的选择。</p>
-<p>由于Map Reduce 是一个相对并不直观的程序接口，所以为了方便使用，一系列的高层接口如<a href="http://lib.csdn.net/base/hive" target="_blank" rel="noopener">Hive</a>或者Pig应运而生。 <a href="http://lib.csdn.net/base/hive" target="_blank" rel="noopener">hive</a>可以让我们使用非常熟悉的SQL语句的方式来做一些常见的统计分析工作。同理，在Spark 引擎层也有类似的封装，如Spark SQL、RDD以及2.0版本新推出的Dataframe等。</p>
-<p>所以一个完整的<a href="http://lib.csdn.net/base/hadoop" target="_blank" rel="noopener">大数据</a>解决方案，包含了存储，资源管理，计算引擎及接口层。 那么问题来了：我们画了这么大这么圆的大饼，<a href="http://lib.csdn.net/base/mongodb" target="_blank" rel="noopener">mongodb</a>可以吃哪一块呢？</p>
-<p><img src="http://img1.tuicool.com/rYbm63Q.png!web" alt="img"></p>
-<p>MongoDB是个什么？是个database。 所以自然而然，MongoDB可以担任的角色，就是数据存储的这一部分。在和 Spark一起使用的时候，MongoDB就可以扮演HDFS的角色来为Spark提供计算的原始数据，以及用来持久化分析计算的结果。</p>
-<h3 id="HDFS-vs-MongoDB"><a href="#HDFS-vs-MongoDB" class="headerlink" title="HDFS vs. MongoDB"></a>HDFS vs. MongoDB</h3><p>既然我们说MongoDB可以用在HDFS的地方，那我们来详细看看两者之间的差异性。</p>
-<p>在说区别之前，其实我们可以先来注意一下两者的共同点。HDFS和MongoDB都是基于廉价x86服务器的横向扩展<a href="http://lib.csdn.net/base/architecture" target="_blank" rel="noopener">架构</a>，都能支持到TB到PB级的数据量。数据会在多节点自动备份，来保证数据的高可用和冗余。两者都支持非结构化数据的存储，等等。</p>
-<p>但是，HDFS和MongoDB更多的是差异点：</p>
-<ul>
-<li>如在存储方式上 HDFS的存储是以文件为单位，每个文件64MB到128MB不等。而MongoDB则是细颗粒化的、以文档为单位的存储。</li>
-<li>HDFS不支持索引的概念，对数据的操作局限于扫描性质的读，MongoDB则支持基于二级索引的快速检索。</li>
-<li>MongoDB可以支持常见的增删改查场景，而HDFS一般只是一次写入后就很难进行修改。</li>
-<li>从响应时间上来说，HDFS一般是分钟级别而MongoDB对手请求的响应时间通常以毫秒作为单位。</li>
-</ul>
-<h3 id="一个日志的例子"><a href="#一个日志的例子" class="headerlink" title="一个日志的例子"></a>一个日志的例子</h3><p>如果说刚才的比较有些抽象，我们可以结合一个实际一点的例子来理解。</p>
-<p>比如说，一个比较经典的案例可能是日志记录管理。在HDFS里面你可能会用日期范围来命名文件，如7月1日，7月2日等等，每个文件是个日志文本文件，可能会有几万到几十万行日志。</p>
-<p>而在MongoDB里面，我们可以采用一个JSON的格式，每一条日志就是一个JSON document。我们可以对某几个关心的字段建索引，如时间戳，错误类型等。</p>
-<p>我们来考虑一些场景，加入我们相对7月份所有日志做一些全量的统计，比如每个页面的所有点击量，那么这个HDFS和MongoDB都可以正常处理。</p>
-<p>如果有一天你的经理告诉你：他想知道网站上每天有多少404错误在发生，这个时候如果你用HDFS，就还是需要通过全量扫描所有行，而MongoDB则可以通过索引，很快地找到所有的404日志，可能花数秒钟就可以解答你经理的问题。</p>
-<p>又比如说，如果你希望对每个日志项加一个自定义的属性，在进行一些预处理后，MongoDB就会比较容易地支持到。而一般来说，HDFS是不支持更新类型操作的。</p>
-<p>好的，我们了解了MongoDB为什么可以替换HDFS并且为什么有这个必要来做这个事情，下面我们就来看看Spark和MongoDB怎么玩！</p>
-<h2 id="Spark-MongoDB"><a href="#Spark-MongoDB" class="headerlink" title="Spark + MongoDB"></a>Spark + MongoDB</h2><p>Spark的工作流程可以概括为三部曲：创建并发任务，对数据进行transformation操作，如map， filter，union，intersect等，然后执行运算，如reduce，count，或者简单地收集结果。</p>
-<p><img src="http://img1.tuicool.com/jEne2qF.png!web" alt="img"></p>
-<p>这里是Spark和MongoDB部署的一个典型架构。</p>
-<p>Spark任务一般由Spark的driver节点发起，经过Spark Master进行资源调度分发。比如这里我们有4个Spark worker节点，这些节点上的几个executor 计算进程就会同时开始工作。一般一个core就对应一个executor。</p>
-<p>每个executor会独立的去MongoDB取来原始数据，直接套用Spark提供的分析算法或者使用自定义流程来处理数据，计算完后把相应结果写回到MongoDB。</p>
-<p>我们需要提到的是：在这里，所有和MongoDB的交互都是通过一个叫做Mongo-Spark的连接器来完成的。</p>
-<p><img src="http://img0.tuicool.com/ZNb2Yz3.png!web" alt="img"></p>
-<p>另一种常见的架构是结合MongoDB和HDFS的。Hadoop在非结构化数据处理的场景下要比MongoDB的普及率高。所以我们可以看到不少用户会已经将数据存放在HDFS上。这个时候你可以直接在HDFS上面架Spark来跑，Spark从HDFS取来原始数据进行计算，而MongoDB在这个场景下是用来保存处理结果。为什么要这么麻烦？几个原因：</p>
-<ul>
-<li>Spark处理结果数量可能会很大，比如说，个性化推荐可能会产生数百万至数千万条记录，需要一个能够支持每秒万级写入能力的数据库</li>
-<li>处理结果可以直接用来驱动前台APP，如用户打开页面时获取后台已经为他准备好的推荐列表。</li>
-</ul>
-<h3 id="Mongo-Spark-Connector-连接器"><a href="#Mongo-Spark-Connector-连接器" class="headerlink" title="Mongo Spark Connector 连接器"></a>Mongo Spark Connector 连接器</h3><p>在这里我们在介绍下MongoDB官方提供的 <a href="https://github.com/mongodb/mongo-spark" target="_blank" rel="noopener">Mongo Spark连接器</a> 。目前有3个连接器可用，包括社区第三方开发的和之前Mongo Hadoop连接器等，这个Mongo-Spark是最新的，也是我们推荐的连接方案。</p>
-<p><img src="http://img1.tuicool.com/nyMj2a2.png!web" alt="img"></p>
-<p>这个连接器是专门为Spark打造的，支持双向数据，读出和写入。但是最关键的是 条件下推 ，也就是说：如果你在Spark端指定了查询或者限制条件的情况下，这个条件会被下推到MongoDB去执行，这样可以保证从MongoDB取出来、经过网络传输到Spark计算节点的数据确实都是用得着的。没有下推支持的话，每次操作很可能需要从MongoDB读取全量的数据，性能体验将会很糟糕。拿刚才的日志例子来说，如果我们只想对404错误日志进行分析，看那些错误都是哪些页面，以及每天错误页面数量的变化，如果有条件下推，那么我们可以给MongoDB一个限定条件：错误代码=404， 这个条件会在MongoDB服务器端执行，这样我们只需要通过网络传输可能只是全部日志的0.1%的数据，而不是没有条件下推情况下的全部数据。</p>
-<p>另外，这个最新的连接器还支持和Spark计算节点Co-Lo 部署。就是说在同一个节点上同时部署Spark实例和MongoDB实例。这样做可以减少数据在网络上的传输带来的资源消耗及时延。当然，这种部署方式需要注意内存资源和CPU资源的隔离。隔离的方式可以通过Linux的cgroups。</p>
-<h2 id="Spark-MongoDB-成功案例"><a href="#Spark-MongoDB-成功案例" class="headerlink" title="Spark + MongoDB 成功案例"></a>Spark + MongoDB 成功案例</h2><p>目前已经有很多案例在不同的应用场景中使用Spark+MongoDB。</p>
-<p>法国航空是法国最大的航空公司，为了提高客户体验，在最近施行的360度客户视图中，使用Spark对已经收集在MongoDB里面的客户数据进行分类及行为分析，并把结果（如客户的类别、标签等信息）写回到MongoDB内每一个客户的文档结构里。</p>
-<p>Stratio是美国硅谷一家著名的金融大数据公司。他们最近在一家在31个国家有分支机构的跨国银行实施了一个实时监控平台。该银行希望通过对日志的监控和分析来保证客户服务的响应时间以及实时监测一些可能的违规或者金融欺诈行为。在这个应用内， 他们使用了：</p>
-<p>Stratio是美国硅谷一家著名的金融大数据公司。他们最近在一家在31个国家有分支机构的跨国银行实施了一个实时监控平台。该银行希望通过对日志的监控和分析来保证客户服务的响应时间以及实时监测一些可能的违规或者金融欺诈行为。在这个应用内， 他们使用了：</p>
-<ul>
-<li>Apache Flume 来收集log</li>
-<li>Spark来处理实时的log</li>
-<li>MongoDB来存储收集的log以及Spark分析的结果，如Key Performance Indicators等</li>
-</ul>
-<p>东方航空最近刚完成一个Spark运价的POC测试。</p>
-<h3 id="东方航空的挑战"><a href="#东方航空的挑战" class="headerlink" title="东方航空的挑战"></a>东方航空的挑战</h3><p>东方航空作为国内的3大行之一，每天有1000多个航班，服务26万多乘客。过去，顾客在网站上订购机票，平均资料库查询200次就会下单订购机票，但是现在平均要查询1.2万次才会发生一次订购行为，同样的订单量，查询量却成长百倍。按照50%直销率这个目标计算，东航的运价系统要支持每天16亿的运价请求。</p>
-<h3 id="思路：空间换时间"><a href="#思路：空间换时间" class="headerlink" title="思路：空间换时间"></a>思路：空间换时间</h3><p>当前的运价是通过实时计算的，按照现在的计算能力，需要对已有系统进行100多倍的扩容。另一个常用的思路，就是采用空间换时间的方式。与其对每一次的运价请求进行耗时300ms的运算，不如事先把所有可能的票价查询组合穷举出来并进行批量计算，然后把结果存入MongoDB里面。当需要查询运价时，直接按照 出发+目的地+日期的方式做一个快速的DB查询，响应时间应该可以做到几十毫秒。</p>
-<p>那为什么要用MongoDB？因为我们要处理的数据量庞大无比。按照1000多个航班，365天，26个仓位，100多渠道以及数个不同的航程类型，我们要实时存取的运价记录有数十亿条之多。这个已经远远超出常规RDBMS可以承受的范围。</p>
-<p>MongoDB基于内存缓存的数据管理方式决定了对并发读写的响应可以做到很低延迟，水平扩展的方式可以通过多台节点同时并发处理海量请求。</p>
-<p>事实上，全球最大的航空分销商，管理者全世界95%航空库存的Amadeus也正是使用MongoDB作为其1000多亿运价缓存的存储方案。</p>
-<h3 id="Spark-MongoDB-方案"><a href="#Spark-MongoDB-方案" class="headerlink" title="Spark + MongoDB 方案"></a>Spark + MongoDB 方案</h3><p>我们知道MongoDB可以用来做我们海量运价数据的存储方案，在大规模并行计算方案上，就可以用到崭新的Spark技术。</p>
-<p><img src="http://img0.tuicool.com/rUjuYv.png!web" alt="img"></p>
-<p>这里是一个运价系统的架构图。 左边是发起航班查询请求的客户端，首先会有API服务器进行预处理。一般航班请求会分为库存查询和运价查询。库存查询会直接到东航已有的库存系统（Seat Inventory），同样是实现在MongoDB上面的。在确定库存后根据库存结果再从Fare Cache系统内查询相应的运价。</p>
-<p>Spark集群则是另外一套计算集群，通过Spark MongoDB连接套件和MongoDB Fare Cache集群连接。Spark 计算任务会定期触发（如每天一次或者每4小时一次），这个任务会对所有的可能的运价组合进行全量计算，然后存入MongoDB，以供查询使用。右半边则把原来实时运算的集群换成了Spark+MongoDB。Spark负责批量计算一年内所有航班所有仓位的所有价格，并以高并发的形式存储到MongoDB里面。每秒钟处理的运价可以达到数万条。</p>
-<p>当来自客户端的运价查询达到服务端以后，服务端直接就向MongoDB发出按照日期，出发到达机场为条件的mongo查询。</p>
-<h3 id="批处理计算流程"><a href="#批处理计算流程" class="headerlink" title="批处理计算流程"></a>批处理计算流程</h3><p><img src="http://img2.tuicool.com/MNruymF.png!web" alt="img"></p>
-<p>这里是Spark计算任务的流程图。需要计算的任务，也就是所有日期航班仓位的组合，事先已经存放到MongoDB里面。</p>
-<p>任务递交到master，然后预先加载所需参考数据，broadcast就是把这些在内存里的数据复制到每一个Spark计算节点的JVM，然后所有计算节点多线程并发执行，从Mongodb里取出需要计算的仓位，调用东航自己的运价逻辑，得出结果以后，并保存回MongoDB。</p>
-<h3 id="Spark-任务入口程序"><a href="#Spark-任务入口程序" class="headerlink" title="Spark 任务入口程序"></a>Spark 任务入口程序</h3><p>Spark和MongoDB的连接使用非常简单，下面就是一个代码示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// initialization dependencies including base prices, pricing rules and some reference data</span><br><span class="line">Map dependencies = MyDependencyManager.loadDependencies();</span><br><span class="line">// broadcasting dependencies</span><br><span class="line">javaSparkContext.broadcast(dependencies);</span><br><span class="line"></span><br><span class="line">// create job rdd</span><br><span class="line">cabinsRDD = MongoSpark.load(javaSparkContext).withPipeline(pipeline)</span><br><span class="line"></span><br><span class="line">// for each cabin, date, airport pair, calculate the price</span><br><span class="line">cabinsRDD.map(function calc_price);</span><br><span class="line"></span><br><span class="line">// collect the result, which will cause the data to be stored into MongoDB</span><br><span class="line">cabinsRDD.collect()</span><br><span class="line">cabinsRDD.saveToMongo()</span><br></pre></td></tr></table></figure>
-<h3 id="处理能力和响应时间比较"><a href="#处理能力和响应时间比较" class="headerlink" title="处理能力和响应时间比较"></a>处理能力和响应时间比较</h3><p>这里是一个在东航POC的简单测试结果。从吞吐量的角度，新的API服务器单节点就可以处理3400个并发的运价请求。在显著提高了并发的同时，响应延迟则降低了10几倍，平均10ms就可以返回运价结果。按照这个性能，6台 API服务器就可以应付将来每天16亿的运价查询。</p>
-<p><img src="http://img0.tuicool.com/3u6fqe.png!web" alt="img"></p>
-<h2 id="Spark-＋-MongoDB-演示"><a href="#Spark-＋-MongoDB-演示" class="headerlink" title="Spark ＋ MongoDB 演示"></a>Spark ＋ MongoDB 演示</h2><p>接下来是一个简单的Spark+MongoDB演示。</p>
-<h3 id="安装-Spark"><a href="#安装-Spark" class="headerlink" title="安装 Spark"></a>安装 Spark</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># curl -OL http://d3kbcqa49mib13.cloudfront.net/spark-1.6.0-bin-hadoop2.6.tgz</span><br><span class="line"># mkdir -p ~/spark</span><br><span class="line"># tar -xvf spark-1.6.0-bin-hadoop2.6.tgz -C ~/spark --strip-components=1</span><br></pre></td></tr></table></figure>
-<h3 id="测试连接器"><a href="#测试连接器" class="headerlink" title="测试连接器"></a>测试连接器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># cd ～／spark</span><br><span class="line"># ./bin/spark-shell \</span><br><span class="line">--conf &quot;spark.mongodb.input.uri=mongodb://127.0.0.1/flights.av&quot; \</span><br><span class="line">--conf &quot;spark.mongodb.output.uri=mongodb://127.0.0.1/flights.output&quot; \</span><br><span class="line">--packages org.mongodb.spark:mongo-spark-connector_2.10:1.0.0</span><br><span class="line"></span><br><span class="line">import com.mongodb.spark._</span><br><span class="line">import org.bson.Document</span><br><span class="line"></span><br><span class="line">MongoSpark.load(sc).take(10).foreach(println)</span><br></pre></td></tr></table></figure>
-<h3 id="简单分组统计"><a href="#简单分组统计" class="headerlink" title="简单分组统计"></a>简单分组统计</h3><p>数据： 365天，所有航班库存信息，500万文档</p>
-<p>任务： 按航班统计一年内所有余票量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MongoSpark.load(sc)</span><br><span class="line">     .map(doc=&gt;(doc.getString(&quot;flight&quot;) ,doc.getLong(&quot;seats&quot;)))</span><br><span class="line">     .reduceByKey((x,y)=&gt;(x+y))</span><br><span class="line">      .take(10)</span><br><span class="line">     .foreach(println)</span><br></pre></td></tr></table></figure>
-<h3 id="简单分组统计加条件过滤"><a href="#简单分组统计加条件过滤" class="headerlink" title="简单分组统计加条件过滤"></a>简单分组统计加条件过滤</h3><p>数据： 365天，所有航班库存信息，500万文档</p>
-<p>任务： 按航班统计一年内所有库存，但是只处理昆明出发的航班</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import org.bson.Document</span><br><span class="line"></span><br><span class="line">MongoSpark.load(sc)</span><br><span class="line">          .withPipeline(Seq(Document.parse(&quot;&#123; $match: &#123; orig :  &apos;KMG&apos;  &#125; &#125;&quot;)))</span><br><span class="line">    .map(doc=&gt;(doc.getString(&quot;flight&quot;) ,doc.getLong(&quot;seats&quot;)))</span><br><span class="line">    .reduceByKey((x,y)=&gt;(x+y))</span><br><span class="line">    .take(10)</span><br><span class="line">    .foreach(println)</span><br></pre></td></tr></table></figure>
-<h3 id="性能优化事项"><a href="#性能优化事项" class="headerlink" title="性能优化事项"></a>性能优化事项</h3><ul>
-<li>使用合适的chunksize (MB)<br>Total data size / chunksize = chunks = RDD partitions = spark tasks</li>
-<li>不要将所有CPU核分配给Spark<br>预留1-2个core给操作系统及其他管理进程</li>
-<li>同机部署<br>适当情况可以同机部署Spark+MongoDB，利用本地IO提高性能</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面只是一些简单的演示，实际上Spark + MongoDB的使用可以通过Spark的很多种形式来使用。我们来总结一下Spark ＋ Mongo的应用场景。在座的同学可能很多人已经使用了MongoDB，也有些人已经使用了Hadoop。我们可以从两个角度来考虑这个事情：</p>
-<ul>
-<li>对那些已经使用MongoDB的用户，如果你希望在你的MongoDB驱动的应用上提供个性化功能，比如说像Yahoo一样为你找感兴趣的新闻，能够在你的MongoDB数据上利用到Spark强大的机器学习或者流处理，你就可以考虑在MongoDB集群上部署Spark来实现这些功能。</li>
-<li>如果你已经使用Hadoop而且数据已经在HDFS里面，你可以考虑使用Spark来实现更加实时更加快速的分析型需求，并且如果你的分析结果有数据量大、格式多变以及这些结果数据要及时提供给前台APP使用的需求，那么MongoDB可以用来作为你分析结果的一个存储方案。</li>
-</ul>
 
     
     </div>

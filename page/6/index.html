@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>自然资源大数据分析——肖飞的博客</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+</head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.png" alt height="28">
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item " href="/archives">文章列表</a>
+            
+            <a class="navbar-item " href="/categories/Lifestyle">Lifestyle</a>
+            
+            <a class="navbar-item " href="/categories/Music">Music</a>
+            
+            <a class="navbar-item " href="/categories/Technology">Technology</a>
+            
+            <a class="navbar-item " href="/categories/Research">Research</a>
+            
+            <a class="navbar-item " href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" href="https://github.com/xyfigo">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/06/20/Jeffrey-Dean论文：基于学习的索引结构/" itemprop="url">Jeffrey Dean论文：基于学习的索引结构</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-06-20T00:41:50.000Z" itemprop="datePublished">3 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            2 分钟 读完 (约 327 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>索引即是模型：B树索引是一个在排序数组中用键映射记录位置的模型，哈希索引是一个在非排序数组中用键映射记录位置的模型，位图索引是一个指示记录是否存在的模型。本文假设现有的索引结构都可以被替换为其他的模型，包括深度学习模型，我们称此<em>学习索引</em>。其核心思想是，模型可以学习查找键的顺序或结构，并使用这个信息有效地预测记录的位置或是否存在。我们从理论上分析了在何种情况下学习索引优于传统索引，并且概况了设计学习索引的诀窍和调整。初步结果表明，通过神经网络，学习索引比高速缓存优化的B树速度快70%，并且在多个真实的结果集上节省一个数量级的内存。更重要的是，我们相信通过深度学习模型取代数据管理系统的核心组件对未来系统设计有着深远的影响，并且这只是未来应用的冰山一角。</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2018/06/12/Services/" itemprop="url">Services</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-06-12T06:42:38.000Z" itemprop="datePublished">3 年前</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Technology/">Technology</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1608 字)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <p><img src="https://blog.zhangruipeng.me/hexo-theme-minos/gallery/forest.jpg" alt="forest"></p>
+<p>Kubenetes Pods 不是永生的。当他们生命结束后无法复活。实际上<a href="https://v1-9.docs.kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/" target="_blank" rel="noopener">ReplicationController</a>动态的创建和销毁Pods（例如，应用扩展、停用或者回滚更新时）。由于每个Pod拥有各自的Ip地址，所以这些IP地址无法被固定下来。这导致一个问题：如果某些Pods（所谓后端）在kubenetes集群中向其他Pods提供了某些功能，这些前端是怎么样找到并记录与哪一个后端关联的呢？<strong>通过Services</strong></p>
+<p>Kubenetes Service是一组有内在逻辑Pods的抽象，并且定义了如何访问他们的策略，有时称为微服务。一组成为Service的Pods通常使用<a href="https://v1-9.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors" target="_blank" rel="noopener">Label Selector</a>进行定义。</p>
+<p>举个例子，假如一个图像处理后端程序运行3个副本。这些副本是可替代的，前端不关心使用哪一个副本。而实际上组成后端的Pods会改变，前端业务无法知道和跟踪后端的列表。Services抽象使这种解耦变得可能。</p>
+<p>对于Kubenetes原生的应用，kubenetes提供简单的Endpoints API，每当服务中的Pods改变的时候都会进行更新。对于非原生的应用，kubenetes提供虚拟Ip的网桥，转至后端的Pods。</p>
+<h1 id="定义服务"><a href="#定义服务" class="headerlink" title="定义服务"></a>定义服务</h1><p>Kubenetes服务是一个REST对象，与Pod类似。像所有的REST对象一样，Service 定义能够被提交至apiserver用来创建新的实例。例如，有一组具有“app=MyApp”标签的Pods，对外暴露9376端口。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">spec:</span> </span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">app:</span> <span class="string">MyApp</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - protocol:</span><span class="string">TCP</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">      targetPort:</span><span class="number">9376</span></span><br></pre></td></tr></table></figure></p>
+<p>这个配置将创建一个新的服务对象，命名为“my-service”，在任何标签是“app=MyApp”的Pod上映射目标端口是9376。这个服务会被分配一个IP地址（有时被称为“cluster IP”），改地址被服务代理使用。这个服务的选择器会持续不断地进行检索，结果会被提交到一样被命名为“my-service”的Endpoints对象。</p>
+<p>注意，一个服务能够映射一个入栈端口到一个出栈端口。默认地，目标端口会被设置与上面“port”字段一样的值。更有意思的是，目标端口能够被设置成为一个字符串，引用在后端Pods中一样的端口名。在每个后端pod中，被分配给那个名称的实际端口可以是不同的。这给部署和演化服务提供了很大的灵活性。例如，你可以在下一个后端软件版本中改变pods暴露的端口，而对前端没有影响。</p>
+<p>kubenetes服务支持TCP和UDP协议。默认是TCP。</p>
+<h2 id="没有选择器的服务"><a href="#没有选择器的服务" class="headerlink" title="没有选择器的服务"></a>没有选择器的服务</h2><p>服务通常是对kubenetes Pods的访问抽象，但是他们也可以抽象其他类型的后端。例如：</p>
+<ul>
+<li><p>在生产环境中使用外部数据库，而在测试环境中使用自己的数据库。</p>
+</li>
+<li><p>在另一个命名空间或者另一个集群中将一个服务咨询另一个服务。</p>
+</li>
+<li><p>将一部分负载迁移到kubenetes中，而其中一些负载在kubenetes外的后端。</p>
+</li>
+</ul>
+<p>在上面的情景下，你可以定义一个没有选择器的服务：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="number">9376</span></span><br></pre></td></tr></table></figure>
+<p>因为这个服务没有选择器，相关联的Endpoints对象是不会被创建。你可以手动的映射服务到自己的特定endpoints：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Endpoints</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">subsets:</span></span><br><span class="line"><span class="attr">  - addresses:</span></span><br><span class="line"><span class="attr">      - ip:</span> <span class="number">1.2</span><span class="number">.3</span><span class="number">.4</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="attr">      - port:</span> <span class="number">9376</span></span><br></pre></td></tr></table></figure>
+<p>注意：Endpoint IP不能设置为回环地址 (127.0.0.0/8) ,本地连接地址(169.254.0.0/16) ，或者本地广播地址(224.0.0.0/24)。</p>
+<p>访问一个没有选择器的服务同有选择器的服务一样。流量会被路由至用户定义的endpoints（在上面的例子中是<code>1.2.3.4:9376</code>）</p>
+<p>一个ExternalName服务是另一类没有选择器的特殊服务。它不定义任何端口和endpoints。它提供了一种向集群外的外部服务返回别名的方式。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">prod</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">ExternalName</span></span><br><span class="line"><span class="attr">  externalName:</span> <span class="string">my.database.example.com</span></span><br></pre></td></tr></table></figure>
+<p>当查找my-service.prod.svc.CLUSTER主机时，集群DNS服务会返回一个值为my.database.example.com的CNAME记录。访问这个服务的方式跟访问其他服务一样，仅有的不同只是在DNS级别进行重定向，没有进行代理和转发。如果以后决定将数据库迁移到集群中，可以启动pods，添加适当的选择器和端点并改变服务的类型。</p>
+<h1 id="虚拟IP和服务代理"><a href="#虚拟IP和服务代理" class="headerlink" title="虚拟IP和服务代理"></a>虚拟IP和服务代理</h1><p>kubenetes中的每一个节点都会运行kube-proxy。kube-proxy负责实现一种ExternalName以外的虚拟IP形式。在kubenetes1.0版本中，服务是4层的（IP上的TCP/UDP）结构，代理纯粹在用户空间。在kubenetes1.1中，添加了Ingress API表示7层（HTTP）服务，也添加了iptables 代理，并从1.2版本后成为默认的操作模式。在kubenetes1.8-beta.0中，增加了ipvs proxy。</p>
+<h2 id="Proxy-mode：userspace"><a href="#Proxy-mode：userspace" class="headerlink" title="Proxy-mode：userspace"></a>Proxy-mode：userspace</h2><p>在这个模式下，kube-proxy观察kubenetes master添加和删除Service和endpoint对象。对于每一个服务它都会在本地节点打开一个端口（任意选择）。任意与代理端口的连接都会被代理到其中一个服务后端Pods（在endpoints中报告的）。使用哪一个后端pod是基于服务的SessionAffinity决定。最终它会安装iptables规则，这个规则捕获到服务cluster IP（虚拟IP）和端口的流量，并转发流量到代理后端pod的代理端口。默认地，后端选择使用轮询方式。</p>
+<p><img src="https://v1-9.docs.kubernetes.io/images/docs/services-userspace-overview.svg" alt="services-userspace-overview "></p>
+<p>注意，在上图中clusterIP被写成ServiceIP</p>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+    
+        
+<nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
+    <div class="pagination-previous">
+        <a href="/page/5/">上一页</a>
+    </div>
+    <div class="pagination-next is-invisible is-hidden-mobile">
+        <a href="/page/7/">下一页</a>
+    </div>
+    <ul class="pagination-list is-hidden-mobile">
+        
+        <li><a class="pagination-link" href="/">1</a></li>
+        
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+        
+        <li><a class="pagination-link" href="/page/5/">5</a></li>
+        
+        <li><a class="pagination-link is-current" href="/page/6/">6</a></li>
+        
+    </ul>
+</nav>
+    
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 肖飞&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" href="https://github.com/xyfigo">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+</script>
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+
+    
+
+
+<script src="/js/script.js"></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+</body>
+</html>
